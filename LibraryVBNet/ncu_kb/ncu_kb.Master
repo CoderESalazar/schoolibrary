@@ -1,0 +1,93 @@
+<%@ Master Language="VB" AutoEventWireup="false" CodeFile="ncu_kb.master.vb" Inherits="ncu_kb" %>
+<%@ Register TagPrefix="LibraryControls" TagName="Footer" Src="~/footer.ascx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Northcentral University Library</title>
+    
+<style type="text/css"> 
+#breadcrumb 
+{
+    font-family:Calibri; font-size: .9em;color:Black;
+}
+#ContentPlaceHolder1 
+{ 
+    color: red;
+}
+.links { 
+    color: white;
+    margin-left: 5px;
+    font-size:1em;
+} 
+.links:hover
+{
+    text-decoration: none;	
+}
+.links1 {
+    font-size: .9em;
+}
+.Label1  
+{
+    color: White;
+    margin-left: 5px;
+    font-size: .9em;
+}
+.user_name  
+{
+    color: #00467F;
+}
+.portal
+{
+color:White;
+font-size:.9em;
+margin-right:5px;	
+}
+</style>    
+</head>
+<body style="margin: 0px 0px 0px 0px;font-family:Calibri;">
+<table width="100%" cellpadding="0" cellspacing="0"> 
+    <tr> 
+        <td><a href="/"><img src="/images/library_header.jpg" alt="" border="0" /></a></td>  
+        <td align="right" valign="top"><asp:Label ID="user_name" CssClass="user_name" runat="server" Text=""></asp:Label>&nbsp;<!--<asp:HyperLink ID="sign_out" runat="server" Visible="false">Sign Out</asp:HyperLink>--></td> 
+    </tr>
+ </table>
+ <table width="100%" cellpadding="0" cellspacing="0">        
+    <tr>
+           <td style="background-color:#C27B13; margin-left: 5px;">
+            <a class="links" href="/ncu_kb/user/user_page.aspx">Ask a Librarian</a> |
+            <a class="links" href="/request_forms/fdbk/fdbk_frm.asp">Leave Feedback</a> |
+            <a class="links" href="/dw_template.aspx?parent_id=20">About Us</a></td>
+    </tr> 
+ </table>
+<table style="background-color:#00467F;color: White;" width="100%">
+    <tr> 
+<td style="background-color:#00467F;"><a style="text-indent:5px; font-family: verdana; color: white; font-size: .9em;" href="/">Library</a> <span style="color: White;"> > </span> <a style="text-indent:5px; font-family: verdana; color: white; font-size: .9em;" href="/ncu_kb/Default.aspx">Knowledge Base</a> <asp:Label
+                ID="Label1" CssClass="Label1" runat="server" Text=">" Visible="false"></asp:Label>
+            <asp:Label ID="BreadLinks" runat="server" Text=""></asp:Label></td>
+        <td><asp:Label ID="Label2" runat="server" Text="" CssClass="Label1"></asp:Label></td>
+        <td align="right"><asp:HyperLink ID="LearnerPortal" CssClass="portal" runat="server">Learner Portal </asp:HyperLink>| 
+        <asp:HyperLink ID="MentorsPortal" CssClass="portal" runat="server">Mentor Portal</asp:HyperLink> | 
+        <asp:HyperLink ID="StaffPortal" CssClass="portal" runat="server">Staff Portal</asp:HyperLink></td> 
+    </tr> 
+</table>     
+
+  
+    <form id="form1" runat="server">
+    <div>
+    
+    
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+       
+    
+        </asp:ContentPlaceHolder>
+ 
+ <!--Footer Information-->    
+       <LibraryControls:Footer ID="Footer1" runat="server" />
+<!--End of Footer Information-->  
+    
+    </div>
+    </form>
+</body>
+</html>

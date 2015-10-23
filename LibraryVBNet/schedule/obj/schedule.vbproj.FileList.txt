@@ -1,0 +1,17 @@
+bin\AJAXExtensionsToolbox.dll
+bin\compass.dll
+bin\obout_Editor.dll
+bin\obout_Grid_NET.dll
+bin\System.Web.Extensions.Design.dll
+bin\System.Web.Extensions.dll
+bin\compass.pdb
+bin\compass.xml
+obj\Debug\schedule.vbproj.GenerateResource.Cache
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\calendar.Resources.resources
+obj\Debug\calendar.dll
+obj\Debug\calendar.xml
+obj\Debug\calendar.pdb
+bin\calendar.dll
+bin\calendar.pdb
+bin\calendar.xml

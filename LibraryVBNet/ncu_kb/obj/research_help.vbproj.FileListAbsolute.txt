@@ -1,0 +1,14 @@
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\research_help.dll
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\research_help.pdb
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\research_help.xml
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\AJAXExtensionsToolbox.dll
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\compass.dll
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\System.Web.Extensions.dll
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\compass.pdb
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\bin\compass.xml
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\obj\Debug\ResolveAssemblyReference.cache
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\obj\Debug\research_help.Resources.resources
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\obj\Debug\research_help.vbproj.GenerateResource.Cache
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\obj\Debug\research_help.dll
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\obj\Debug\research_help.xml
+C:\depot\Main\Website\edu\ncu\mentors\library\research_help\obj\Debug\research_help.pdb

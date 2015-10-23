@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<breeze-manifest version="1.0" xmlns="http://breeze.macromedia.com/ns/breeze-manifest" generator="Adobe Captivate 2">
+	<document type="captivate" icon="captivate" />
+	<assets>
+		<asset type="document-view">
+			
+			<entry href="ncu_library_tour_1.swf" width="1016" height="591" />
+			<file href="ncu_library_tour_1.swf"/>
+			
+			
+			
+		</asset>
+		
+		<asset type="document-metadata" location="file"><file href="ncu_library_tour_1_BDMetadata.xml"/></asset>
+		
+	</assets>
+</breeze-manifest>

@@ -1,0 +1,92 @@
+﻿.staff{
+border: 2px solid black;
+padding: 5px;
+z-index: 999;
+background-color:#F1C585;
+}
+
+.assignment
+{
+	padding: 5px;
+	z-index: 999;
+	height:550px;
+}
+
+.redirect
+{
+	border: 2px solid black;
+	padding: 5px;
+	z-index: 999;
+	background-color:#F1C585;
+	width:25%;
+	height:15%;
+}
+.AddNew
+{
+	border: 2px solid black;
+	padding: 5px;
+	z-index: 999;
+	background-color:#F1C585;
+	width:400px;
+	height:250px;
+	overflow:hidden;
+}
+
+.email
+{
+	border: 2px solid black;
+	padding: 5px;
+	z-index: 999;
+	background-color:#F1C585;
+	width:60%;
+	height:80%;
+	overflow:scroll;
+}
+
+.CloseButton
+{
+	position:absolute;
+	right:10px;
+}
+
+.misc
+{
+	padding:0px;
+	margin:0px;
+	border:solid 1px white;
+}
+
+
+.inner_content img {
+	border:0px solid #CCCCCC;
+	float:right;
+	margin:0px;
+}
+
+.table
+{
+	border:solid 2px white;
+}
+
+.ModalImage
+{
+ filter: Alpha(Opacity=80); -moz-opacity:0.4; opacity: 0.4;     
+ background-color: #999999; 
+} 
+
+.allBorders 
+{
+	border-collapse:collapse;
+}
+
+.allBorders th
+{
+	border:solid 1px black;
+	padding-left:1px;
+	padding-right:1px;
+}
+
+.allBorders td
+{
+	border:solid 1px black;
+}

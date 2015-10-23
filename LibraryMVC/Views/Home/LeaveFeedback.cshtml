@@ -1,0 +1,34 @@
+﻿@model LibraryMVC4.Models.home
+
+@{
+    ViewBag.Title = "LeaveFeedback";
+}
+
+<h2>Leave Feedback</h2>
+
+<p>Please let us know how we are doing by entering comments into the box below. 
+If you have a reference question or are experiencing difficulties accessing the site or database, 
+please complete the <a href="/asklib/getquestion/">Ask a Librarian form</a>.</p>
+
+<fieldset>
+    @using (Html.BeginForm("LeaveFeedbackPost", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <div class="col-lg-10">
+
+                <span style="color: red;">@Html.ValidationMessageFor(m => m.Comments)</span><br />
+                @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", @rows = 5 })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            
+            <div class="col-lg-10">
+                <input type="submit" value="Send" />
+
+            </div>
+        </div>
+
+    }
+</fieldset>

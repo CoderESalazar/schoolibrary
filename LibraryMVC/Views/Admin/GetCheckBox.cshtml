@@ -1,0 +1,13 @@
+﻿@model LibraryMVC4.Models.admin
+
+
+@if (Model.CheckBox == true)
+{
+    @Html.CheckBoxFor(m => m.CheckBox, new { @checked = Model.CheckBox})
+}
+else
+{
+    @Html.CheckBoxFor(m => m.CheckBox)
+}
+
+

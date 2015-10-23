@@ -1,0 +1,134 @@
+﻿@model LibraryMVC4.Models.admin
+
+@{
+    ViewBag.Title = "PhoneChatEmail";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<h2>Phone Chat Email</h2>
+
+<a href="/admin/GetAskLibqs">Return to admin</a>
+<br />
+@ViewBag.LibUserId @(" ")  
+
+<br/> 
+@if (ViewBag.UrlPath == "devmvc-library.ncu.edu" || ViewBag.UrlPath == "qa-library.ncu.edu" || ViewBag.UrlPath == "localhost")
+{
+    @("Search for ") <a href="https://beta-my.ncu.edu" target="_blank">StudentID or MentorID</a>
+}
+else if (@ViewBag.UrlPath == "library.ncu.edu")
+{
+    @("Search for ") <a href="https://my.ncu.edu" target="_blank">StudentID or MentorID</a>
+}
+<br />
+<br />
+<input type="submit" value="Add Id" id="getInfo" />
+<br />
+<br />
+@using (Html.BeginForm("PostPhoneChatEmail", "admin", FormMethod.Post, new { @id = "valForm" }))
+{
+    <div>PatronID (Must be integer only): @Html.TextBox("PatronId")</div>
+   
+    <br />
+    <div>Patron FirstName: @Html.TextBox("PatronFirstName")</div>
+    <br />
+    <div>Patron LastName: @Html.TextBox("PatronLastName")</div>
+    <br />
+    <div>Patron Email: @Html.TextBox("PatronEmail")</div>
+    <br />
+    <div>Type of Question: @Html.Action("QType", "admin")</div>
+    <br />
+    <br />
+    <div>Category of Question @Html.Action("GetCatList", "admin")</div>
+    <br />
+    <div>Course Number: @Html.TextBoxFor(m => m.CourseNum)</div>
+    <br />
+    <div>Assignment Number: @Html.TextBoxFor(m => m.AssignNum)</div>
+
+    <br />
+    @("Question Taken:")
+    <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.UserQuestion)</span>
+    @Html.TextAreaFor(m => m.UserQuestion, new { @class = "form-control", @rows = 5 })
+
+    <br />
+    <br />
+    @("Librarian Response:")
+    <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.LibrarianResponse)</span>
+    @Html.TextAreaFor(m => m.LibrarianResponse, new { @class = "form-control", @rows = 5 })
+    
+    <br />
+    <input type="submit" id="submit" value="Submit" />
+
+}
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+
+        $('#valForm').validate({
+
+            rules: {
+                PatronId:
+                {
+                    required: true                    
+                },
+                PatronFirstName:
+                {
+                    required: true
+                },
+                PatronLastName:
+                {
+                    required: true
+                },
+                PatronEmail:
+                {
+                    required: true,
+                    email: true
+                },
+            messages: {
+                PatronId:
+                {
+                    required: "Patron first name is required"
+                },
+                PatronFirstName:
+                {
+                    required: "Patron first name is required"
+                },
+                PatronLastName:
+                {
+                    required: "Patron first name is required"
+                },
+                PatronEmail:
+                {
+                    required: "Patron first name is required"
+
+                }
+              }
+            }
+        });
+    });
+
+
+
+    jQuery(document).ready(function ($) {
+
+        $('#getInfo').click(function () {
+
+            var sSearchString = $('#PatronId').val();
+
+            //$.get('/admin/GetPatronDetails/' + sSearchString, function (data) {
+            $.get('@Url.Action("GetPatronDetails", "admin")', { SearchString: sSearchString }, function (data) {
+                $('#PatronId').val(data.PatronId);
+                $('#PatronFirstName').val(data.PatronFirstName);
+                $('#PatronLastName').val(data.PatronLastName);
+                $('#PatronEmail').val(data.PatronEmail);
+
+            }).fail(function () {
+                alert(" Nothing Found! ");
+            })
+
+        });
+
+    });
+
+
+</script>

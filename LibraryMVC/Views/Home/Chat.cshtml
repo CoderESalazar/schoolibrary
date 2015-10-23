@@ -1,0 +1,26 @@
+﻿@model LibraryMVC4.Models.home
+@{
+    Layout = null;
+}
+@try
+{
+
+    if (Model.LibChat == true)
+    {
+        @*<li>
+            <div class="leave_feedback">*@
+
+        @( "|") <a target="_blank" href="skype:library-ncu?chat">Chat</a> <i class="fa fa-weixin fa-lg"></i>
+
+   
+    }
+}
+
+catch
+{
+
+    @(" ")
+
+
+
+}

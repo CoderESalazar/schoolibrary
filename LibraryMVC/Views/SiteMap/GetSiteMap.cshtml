@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LibraryMVC4.Models.SiteMapRecursion>
+
+@{
+    ViewBag.Title = "GetSiteMap";
+}
+
+<a href="/">Library Home</a>
+
+<h2 align="center">Library Sitemap</h2>
+
+
+@SiteMap(Model, 0)
+
+@helper SiteMap(IEnumerable<LibraryMVC4.Models.SiteMapRecursion> root, int? iParentId)
+    { 
+    
+        if (root.Any(c => c.ParentId == iParentId))
+        {
+    
+            <ul>
+            @foreach (var c in root.Where(c => c.ParentId == iParentId))
+            {
+                <li> 
+                @if (c.ParentId != null)
+                {
+
+                    if (c.PageType == "dw")
+                    {
+                
+                        <a href="/dw/index/@c.HighId">@Html.Raw(c.PageTitle)</a>
+                            
+                    }
+                    else if (c.PageType == "fa")
+                    {
+
+                        <a href="/fa/index/@c.HighId">@Html.Raw(c.PageTitle)</a>
+
+                    }
+                    else if (c.PageType == "wl")
+                    {
+
+
+                        <a href="/wl/index/@c.HighId">@Html.Raw(c.PageTitle)</a>
+
+                    }
+                    else if (c.PageType == "mm")
+                    {
+
+                        <a href="/mm/index/@c.HighId">@Html.Raw(c.PageTitle)</a>
+
+                    }   
+                    else
+                    {
+                        <a href="@c.LinkData">@Html.Raw(c.PageTitle)</a>
+                
+                        
+                    }
+          
+                     @SiteMap(root, c.HighId)    
+                    
+                }
+
+            </li>
+        
+        } 
+    
+        </ul>  
+    }       @*end of if statement*@
+    
+}        
+     
+  
+        
+    
+

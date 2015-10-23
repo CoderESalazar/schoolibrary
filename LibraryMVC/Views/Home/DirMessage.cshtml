@@ -1,0 +1,23 @@
+﻿@model LibraryMVC4.Models.home
+@{
+    Layout = null;
+}
+
+
+@try
+{
+
+    @Html.ActionLink(Model.LetterTitle, "index", "dirmessage", new { entryId = Model.EntryId }, FormMethod.Post)
+
+}
+
+catch
+{
+
+    @(" ")
+
+
+}
+
+
+

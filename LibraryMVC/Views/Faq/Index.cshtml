@@ -1,0 +1,17 @@
+﻿@model IEnumerable<LibraryMVC4.Models.admin>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<a href="/">Library Home</a>
+
+<h2 align="center">Welcome to the Library FAQs</h2>
+
+<p>Find answer to frequently asked questions by searching or browsing the FAQs. For immediate assistance, please click the Ask a Librarian
+link. For help with database problems, such as access issues, please search the Library FAQs or submit a database problem form.</p>
+
+<div align="center">
+   @Html.Action("libfaq", "home")
+</div>
+

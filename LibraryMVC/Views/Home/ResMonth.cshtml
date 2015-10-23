@@ -1,0 +1,27 @@
+﻿@model LibraryMVC4.Models.home
+
+@{
+    Layout = null;
+}
+
+
+@*@Model.ResourceTitle*@
+
+
+@try
+{
+    //let's have this go to a different page. I mean this is a link and we can just direct students to a page that invites them to provide feedback that might encourage others to give it a try, right?
+
+
+    @Html.ActionLink(Model.ResourceTitle, "ReturnResMonth", "Home", new { entryId = Model.REntryId }, FormMethod.Post)
+
+
+}
+
+catch
+{
+
+    @(" ")
+
+}
+

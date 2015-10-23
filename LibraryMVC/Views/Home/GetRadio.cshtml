@@ -1,0 +1,25 @@
+﻿@model LibraryMVC4.Models.home
+
+@{
+    Layout = null;
+}
+
+@* @using (Html.BeginForm("GetStuff", "home", FormMethod.Post))
+ {*@
+    <span style="color: red;">@Html.ValidationMessageFor(c => c.SelectRadioItem)</span>   
+     @foreach (var item in Model.RadioItemR)
+     {        
+        @(" ")      
+             
+        @Html.RadioButtonFor(c => c.SelectRadioItem, item.Id)
+        
+        @item.Desc 
+   
+                 
+     }
+
+@*    <button type="submit">Submit</button>
+ }
+  *@  
+    <br /> 
+    <br /> 

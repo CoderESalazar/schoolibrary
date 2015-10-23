@@ -1,0 +1,16 @@
+﻿@model LibraryMVC4.Models.user
+
+
+@if (!string.IsNullOrEmpty(ViewBag.thisId))
+{
+    @Html.ActionLink("Logout", "Logout", "Home")@(" ")<i class="fa fa-lock fa-lg"></i>
+    <br />
+    @Model.PatronFirstName @(" ") @Model.PatronLastName
+}
+
+else
+{
+    @Html.ActionLink("Login", "LoggedIn", "Home")@(" ")<i class="fa fa-unlock fa-lg"></i>
+
+}
+

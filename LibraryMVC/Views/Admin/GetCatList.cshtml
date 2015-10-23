@@ -1,0 +1,7 @@
+﻿@model LibraryMVC4.Models.admin
+
+
+
+@Html.DropDownListFor(m => m.CatId, new SelectList(Model.GetCatList, "Value", "Text"), "--Please Select--") &nbsp;&nbsp;<span style="color:red;"><strong>@Html.ValidationMessageFor(x => x.CatId)</strong></span>
+
+

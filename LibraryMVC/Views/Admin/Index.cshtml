@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Library Admin Area</title>
+</head>
+<body>
+    <div>
+        @ViewBag.LibUserId
+
+        <h1>Librarian Workspace</h1>
+        @Html.ActionLink("Back to Library", "index", "home")
+        <br/>
+         <br/>    
+        @*@Html.ActionLink("Librarian Workspace Area", "GetAskLibqs", "admin", new { target = "_blank"} )*@
+        @Html.ActionLink("Librarian Workspace Area", "GetAskLibqs", "admin")
+        <ul>
+            <li>@Html.ActionLink("Questions Submitted to KB", "LibraryWkSpace", "admin")</li>
+            <li>@Html.ActionLink("Search Workspace", "Index", "Search")</li>
+            <li>@Html.ActionLink("Categories", "Categories", "admin")</li>
+
+        </ul>
+
+        @Html.ActionLink("Leave Feedback Area", "GetFeedback", "admin")
+
+        <br />
+        <br />
+        
+        @Html.ActionLink("Library Chat Area", "chat", "structure")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("Library Pages Area", "index", "structure" )
+
+        <br />
+        <br />
+
+        @Html.ActionLink("DW Area", "", "")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("WL Area", "", "")
+
+        <br />
+        <br />
+        
+        @Html.ActionLink("Find an Article", "", "")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("DB Index Area", "", "")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("Specialization Guides Area", "", "")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("Course Guides Area", "", "")
+
+        <br />
+        <br />       
+        
+        @Html.ActionLink("Library Schedule Area", "GetAdminSchedule", "schedule")
+
+        <br />
+        <br />    
+        
+        @Html.ActionLink("Resource of the Month", "", "")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("Director's Message", "", "")
+
+        <br />
+        <br />
+
+        @Html.ActionLink("Library Alert Message", "", "")
+
+        <br />
+
+    </div>
+</body>
+</html>

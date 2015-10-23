@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<LibraryMVC4.Models.admin>
+@using PagedList.Mvc;
+
+<link href="../../Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "GetAskLibQs";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+}
+
+<a href="/admin">Return to Admin Area</a>
+<h2>Ask a Librarian Qs</h2>
+
+<hr />
+
+<a href="/admin/LibraryWkSpace">Go to Questions Submitted to Library KB</a>
+<br /><br /> 
+@Html.ActionLink("Add Phone/Email/Chat Question", "PhoneChatEmail", "admin")
+
+
+
+
+
+
+
+<h3>Submitted Ask a Librarian Questions</h3>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            QuestId
+        </th>
+        <th>
+            DateTime
+        </th>
+        <th>
+            PatronName
+        </th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@Html.ActionLink(item.QuestId.ToString(), "AssignQ", new { id = item.QuestId.ToString() }, null)</td>
+            <td>@Html.DisplayFor(modelItem => item.DateTime.Value)</td>
+            <td>@Html.DisplayFor(modelItem => item.PatronName)</td>
+        </tr>
+
+    }
+</table>
+
+<br />
+
+@("Page") @(" ") @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @(" ")  @("of") @(" ") @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("GetAskLibQs", new { page, currentFilter = ViewBag.CurrentFilter }))
+
+<hr />
+<h3>Librarian Assigned Qs</h3>
+
+@Html.Action("LibAssignQs", "Admin")
+
+<hr />
+
+<h3>Questions Not Submitted to Library Knowledgebase</h3>
+
+@Html.Action("GetLibQsNo", "Admin")
+
+
+

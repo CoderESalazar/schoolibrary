@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+@{
+    Layout = null;
+}
+
+<div class="accordion" id="accordion2">
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@item.BlogHeaderId">
+                        @Html.Partial("_PBList", item)
+                    </a>
+                    <hr />
+                </div>
+                <div id="@item.BlogHeaderId" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        @Html.Raw(item.BlobBlob)
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        }
+       
+       }
+    else
+    {
+        Response.Write("Error!");
+    }
+</div>

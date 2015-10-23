@@ -1,0 +1,21 @@
+﻿@model LibraryMVC4.Models.user
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("UserInfoPost", "AskLib", FormMethod.Post))
+
+{ 
+    
+    @*@Html.Partial("_userControl", Model);*@
+    
+    <h2>This is a test</h2>
+
+    @Html.Partial("_userInfo", Model.PatronFirstName)
+
+
+
+    <input type="submit" value="Submit" />
+
+}

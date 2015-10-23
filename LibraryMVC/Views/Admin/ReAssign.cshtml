@@ -1,0 +1,15 @@
+﻿@model LibraryMVC4.Models.admin
+
+
+@using (Html.BeginForm("ReAssignLib", "admin"))
+{
+    <fieldset>
+
+        @Html.DropDownListFor(m => m.LibStringId, new SelectList(Model.GetLibrarian, "Value", "Text"), "--Please Select--") <span style="color:red;"><strong>@Html.ValidationMessageFor(x => x.LibStringId)</strong></span>
+
+        <input type="submit" value="Submit" />
+
+    </fieldset>
+}
+
+

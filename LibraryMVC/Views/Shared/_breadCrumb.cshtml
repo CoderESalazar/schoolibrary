@@ -1,0 +1,51 @@
+﻿@model IEnumerable<LibraryMVC4.Models.structure>
+
+@{
+    Layout = null;
+}
+
+@*these are the breadcrumbs*@
+<a href="/">Library Home</a> @(" > ")
+
+@{ int counter = 1; }
+
+@foreach (var item in ViewData["getBread"] as List<LibraryMVC4.Models.structure>)
+{
+
+    if (item.PageType == "dw")
+    {
+        <a href="/dw/index/@item.HighId">@item.PageTitle</a>
+
+
+    }
+    else if (item.PageType == "fa")
+    {
+
+        <a href="/fa/index/@item.HighId">@item.PageTitle</a>
+
+    }
+    else if (item.PageType == "wl")
+    {
+
+
+        <a href="/wl/index/@item.HighId">@item.PageTitle</a>
+
+    }
+    else if (item.PageType == "mm")
+    {
+
+        <a href="/mm/index/@item.HighId">@item.PageTitle</a>
+
+    }
+
+    if (counter < ViewBag.getCount)
+    {
+
+        @( " ")  @( " > ")
+
+
+    }
+
+    counter++;
+
+}

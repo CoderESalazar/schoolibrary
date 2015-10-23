@@ -1,0 +1,254 @@
+﻿@model  IEnumerable<LibraryMVC4.Models.structure>
+
+
+@{
+    ViewBag.Title = "Library Pages";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    //var grid = new WebGrid(Model, canPage: true, rowsPerPage: 30);
+    var grid = new WebGrid(Model, canPage: false);
+}
+
+<style type="text/css">
+    /*Here we will add css for style webgrid*/
+    .webgrid-table {
+        font-family: Verdana, Helvetica, sans-serif;
+        font-size: 1.2em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 1px #98BF21;
+        background-color: white;
+    }
+    .webgrid-table td, th {
+        border: 1px solid #98BF21;
+        padding: 3px 7px 2px;
+    }
+    .webgrid-header {
+        background-color: #A7C942;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+    }
+    .webgrid-footer {
+    }
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+    }
+    .webgrid-alternating-row {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }
+</style>
+<div id="top"></div>
+<h2>Library Pages Area</h2>
+
+<div id="content">
+
+    @Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+    <br />
+    <br />
+    <div id="divmsg" style="color: red; font-weight:bold;"></div>
+
+
+    <button id="add">Add New Page</button>@(" ") <button id="refresh">Refresh Grid</button>@(" ")
+
+
+    <a href="#bottom" style="float: right; font-weight: bold;">Go to Bottom</a>
+
+
+    <br />
+    @*<a href="#" class="add">Add New Library Page</a>*@
+
+    @grid.GetHtml(
+                htmlAttributes: new { id = grid },                
+                tableStyle: "webgrid-table",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                alternatingRowStyle: "webgrid-alternating-row",
+                rowStyle: "webgrid-row-style",
+                columns: grid.Columns(
+                    grid.Column(columnName: "HighId", canSort: true,
+                                format: @<text>
+                        <span class="display-mode">@item.HighId</span>
+                        <label id="HighId" class="edit-mode">@item.HighId</label>
+                                </text>),
+                    grid.Column(columnName: "Title", canSort: true,
+                                format: @<text>
+                        <span class="display-mode"><label id="lblTitle">@item.Title</label></span>
+                        <input type="text" id="Title" value="@item.Title" class="edit-mode" />
+                                </text>),
+                    grid.Column(columnName: "PageType", canSort: true,
+                                format: @<text>
+                        <span class="display-mode"><label id="lblPageType">@item.PageType</label></span>
+                        <input type="text" id="PageType" value="@item.PageType" class="edit-mode" />
+                                </text>),
+                    grid.Column(columnName: "ParentId", canSort: true,
+                                format: @<text>
+                        <span class="display-mode"><label id="lblParentId">@item.ParentId</label></span>
+                        <input type="text" id="ParentId" value="@item.ParentId" class="edit-mode" />
+                                </text>),
+                    grid.Column(columnName: "LinkData", canSort: false,
+                                format: @<text>
+                        <span class="display-mode"><label id="lblLinkData">@item.LinkData</label></span>
+                        <input type="text" id="LinkData" value="@item.LinkData" class="edit-mode" />
+                                </text>),
+                    grid.Column(columnName: "DisplayOrder", canSort: false,
+                                format: @<text>
+                        <span class="display-mode"><label id="lblDisplayOrder">@item.DisplayOrder</label></span>
+                        <input type="text" id="DisplayOrder" value="@item.DisplayOrder" class="edit-mode" />
+                                </text>),
+                grid.Column(header:"Action",
+                    format:
+                    @<text>
+                        <button class="edit-highId display-mode">Edit</button>
+                        <button class="save-highId edit-mode">Update</button>
+                        <button class="cancel-highId edit-mode">Cancel</button>
+                        <button class="delete-highId edit-mode">Delete</button>
+                    </text>))
+                )
+
+
+    <div id="bottom"></div>
+    <a href="#top" style="float: right; font-weight: bold;">Go to Top</a>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#add').on('click', function () {
+
+                window.location.assign('/structure/addpage/')
+
+            });
+            $('#refresh').on('click', function () {
+
+                window.location.reload();
+
+            });
+            $('.edit-mode').hide();
+            $('.edit-highId, .cancel-highId').on('click', function () {
+                var tr = $(this).parents('tr:first');
+                tr.find('.edit-mode, .display-mode').toggle();
+            });
+
+            $('.save-highId').on('click', function () {
+
+                var tr = $(this).parents('tr:first');
+                var Title = tr.find("#Title").val();
+                var PageType = tr.find("#PageType").val();
+                var ParentId = tr.find("#ParentId").val();
+                var LinkData = tr.find("#LinkData").val();
+                var DisplayOrder = tr.find("#DisplayOrder").val();
+                var HighId = tr.find("#HighId").html();
+                tr.find("#libTitle").text(Title);
+                tr.find("#lblPageType").text(PageType);
+                tr.find("#lblParentId").text(ParentId);
+                tr.find("#lblLinkData").text(LinkData);
+                tr.find("#lblDisplayOrder").text(DisplayOrder);
+                tr.find('.edit-mode, .display-mode').toggle();
+
+                if (Title != '' && PageType != '') {
+
+                    var LibraryPageModel =
+                    {
+                        "HighId": HighId,
+                        "Title": Title,
+                        "ParentId": ParentId,
+                        "PageType": PageType,
+                        "LinkData": LinkData,
+                        "DisplayOrder": DisplayOrder
+                    };
+                    $.ajax({
+                        url: '/structure/UpdateLibraryAdmin/',
+                        data: JSON.stringify(LibraryPageModel),
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert(data);
+                        }
+                    });
+
+                }
+
+                else {
+
+                    alert("Title and PageType cannot be null. Please try again.")
+
+                }
+            });
+            $('.delete-highId').on('click', function () {
+                var flag = confirm('Are you sure you want to delete?');
+
+                if (flag) {
+
+                    var tr = $(this).parents('tr:first');
+                    var HighId = tr.find("#HighId").html();
+                    tr.find('.edit-mode, .display-mode').toggle();
+                    var LibraryDeleteItem =
+                        {
+                            "HighId": HighId
+                        };
+                    $.ajax({
+                        url: '/structure/DeleteLibPage/',
+                        data: JSON.stringify(LibraryDeleteItem),
+                        type: 'Delete',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            alert(data);
+                        }
+                    });
+                }
+            });
+
+
+        })
+        //$('#add').on('click', function () {
+
+
+        //    $('table').append('<tr>' +
+        //                 '<td><span><input id="' + Title + '" type="text" /></span></td>' +
+        //                 '<td><span><input id="' + PageType + '" type="text" /></span></td>' +
+        //                 '<td><span><input id="' + ParentId + '" type="text" /></span></td>' +
+        //                 '<td><span><input id="' + LinkData + '" type="text" /></span></td>' +
+        //                 '<td><span><input id="' + DisplayOrder + '" type="text" /></span></td>' +
+        //                 '</tr>');
+
+
+
+        //var existrow = $('.save').length;
+        //if (existrow == 0) {
+        //    var index = $('#grid tbody tr').length + 1;
+
+        //var Title = "Title" + index;
+        //var PageType = "PageType" + index;
+        //var ParentId = "ParentId" + index;
+        //var LinkData = "LinkData" + index;
+        //var DisplayOrder = "DisplayOrder" + index;
+        //var Save = "Save_" + index;
+        //var Cancel = "Cancel_" + index;
+
+        //var tr = '<tr class="webgrid-alternating-row"><td></td>' +
+        //         '<td><span><input id="' + Title + '" type="text" /></span></td>' +
+        //         '<td><span><input id="' + PageType + '" type="text" /></span></td>' +
+        //         '<td><span><input id="' + ParentId + '" type="text" /></span></td>' +
+        //         '<td><span><input id="' + LinkData + '" type="text" /></span></td>' +
+        //         '<td><span><input id="' + DisplayOrder + '" type="text" /></span></td>' +
+        //         '</tr>'
+        //$('#grid tbody').append(tr);
+
+        //}
+        //else {
+
+        //    alert('First save your previous record!')
+
+        //}
+        //});
+    </script>
+
+
+
+
+</div>

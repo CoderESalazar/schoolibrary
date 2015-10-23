@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+@{
+    ViewBag.Title = "GetCBody";
+}
+@{
+    Layout = null;
+}
+
+  
+    <table>
+    @foreach (var item in Model)
+    { 
+        <tr>
+          @(" ")
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.Raw(item.HeaderBody)
+            </td>
+        </tr>
+    }
+</table>

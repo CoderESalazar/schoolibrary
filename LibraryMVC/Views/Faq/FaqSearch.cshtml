@@ -1,0 +1,21 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+
+@{
+    ViewBag.Title = "FaqSearch";
+}
+
+<h2>Search Results</h2>
+
+<table style="line-height: 25px;">
+   
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Html.Raw(item.LibResponseEdit)
+        </td>
+        
+    </tr>
+}
+
+</table>

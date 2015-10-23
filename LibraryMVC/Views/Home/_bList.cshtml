@@ -1,0 +1,23 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+@if (Model != null)
+{
+
+
+
+    foreach (var item in Model)
+    {
+
+
+        @Html.Partial("_PBList", item)
+    }
+
+}
+
+else
+{
+
+
+    Response.Write("This keep returning a null!");
+
+
+}

@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    @Styles.Render("~/Content/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+  
+    <meta name="viewport" content="width=device-width" />
+    <title>Library Admin Area</title>
+
+    <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/Images/favicon.ico" type="image/x-icon" />
+
+    @*<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">*@
+
+    <link href="/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="/Scripts/library.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui-1.10.4.custom.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+</head>
+<body style="background-color: #EDEDED;">
+
+
+    <div class="container" style="background-color: White;">
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/Scripts/bootstrap.js")
+
+</body>
+</html>

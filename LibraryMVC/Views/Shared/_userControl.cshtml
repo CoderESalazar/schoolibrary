@@ -1,0 +1,4 @@
+﻿@model LibraryMVC4.Models.user
+
+@Html.DropDownListFor(m => m.CatId, new SelectList(Model.CatList, "Value", "Text"), "--Please Select--")
+

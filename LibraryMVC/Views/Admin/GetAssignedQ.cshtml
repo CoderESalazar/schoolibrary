@@ -1,0 +1,135 @@
+﻿@model LibraryMVC4.Models.admin
+
+@{
+    ViewBag.Title = "GetAssignedQ";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<h2>Library Assigned Q</h2>
+
+<hr />
+<a href="/admin/GetAskLibqs">Return to admin</a>
+<br/> 
+@ViewBag.LibUserId
+
+<br/> 
+
+@*This is will be re-assign dropdown menu. Just select desired and re-assignment is complete.*@
+
+<b>Re-assign this question to someone else</b>
+
+@Html.Action("ReAssign", "admin")
+
+<h3>Patron Info</h3>
+User Name: @Html.DisplayFor(m => Model.PatronName)
+<br />
+<br />
+User Id: @Html.DisplayFor(m => Model.PatronId)
+<br />
+<br />
+Address: @Html.DisplayFor(m => Model.PatronPhysicalAddress) 
+<br />
+<br />
+Phone: @Html.DisplayFor(m => Model.PatronPhone)
+<br />
+<br />
+Email: @Html.DisplayFor(m => Model.PatronEmail)
+
+<h3>Question Info</h3>
+
+Date/Time Question Posted: @Html.DisplayFor(m => Model.DateTime)
+<br />
+<br />
+Category: @Html.DisplayFor(m => Model.Category)
+<br />
+<br />
+Course Number (if provided): @Html.DisplayFor(m => Model.CourseNum)
+<br />
+<br />
+Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
+<br />
+<br />
+@* Form section can begin here.*@
+
+@using (Html.BeginForm("LibAreaPost", "Admin", new { Model.QuestId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @*<form id="thisTest">*@
+        <fieldset>
+            <h3>Questions Status</h3>
+
+            @Html.Action("GetCatQs", "admin")
+            
+            <h3>Editing Areas</h3>
+            @*<span style="color: red;">@Html.ValidationMessageFor(m => m.CatId)</span>*@
+            Select Category: @Html.Action("GetCatList", "admin")
+
+            <br />
+            <br />
+            Patron Question 
+            <br />
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.UserQuestion)</span>
+            <div class="editor-field">
+            @Html.EditorFor(model => model.UserQuestion)
+            </div>
+            <br />
+            <br />
+            Librarian Response
+            <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.LibrarianResponse)</span>
+            <div class="editor-field">
+            @Html.EditorFor(model => model.LibrarianResponse, new { id = "myTextArea" })
+            </div> 
+            
+            @*See if we can limit file name "FileUpload to only 50characters, which is what this is set to in the database, otherwise this will bomb."*@     
+           
+            <input type="file" id="uploadfile" name="FileUpload" />  <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.FileUpload)</span>       
+   
+            <br/> 
+            <script type="text/javascript">        
+            
+                jQuery(document).ready(function($) {
+
+                    $('#submit').bind("click", function () {
+
+                        var len = $("#uploadfile").val().length;
+
+                        if (len > 50)
+                        {
+                            alert('File name exceeds 50 characters! Please rename file and reselect.');
+                            //alert($('#uploadfile').val().length);
+                            return false;
+                        }
+
+                    });
+                });
+
+
+                jQuery(document).ready(function ($) {
+                    $('#submit').click(function () {
+                        tinyMCE.triggerSave('#LibrarianResponse');
+
+                    });
+                });
+        
+            </script>
+            
+            <input type="submit" id="submit" value="Submit" />
+
+      
+
+        </fieldset>
+    @*</form>*@
+
+}
+@*<div align="right">
+    <input type="submit" id="delete" value="Delete?" name="@Model.QuestId" />
+</div>*@
+
+<div align="right">
+    @using (Html.BeginForm("Delete", "admin", new { id = Model.QuestId }, FormMethod.Post  ))
+    {     
+
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+              
+    }
+</div>

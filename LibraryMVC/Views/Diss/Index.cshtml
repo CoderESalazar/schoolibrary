@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LibraryMVC4.Models.diss>
+
+
+<a href="/">Library Home</a>
+
+<h2 align="center">Northcentral University Dissertations</h2>
+
+<p>
+    To get started, please click any of the links below to browse dissertations by program or use the search
+    box to locate a specific title or author. Dissertations are ordered by date.
+</p>
+
+
+<div>
+    <p class="text-center">
+        @foreach (var item in Model)
+        {            
+            @Html.ActionLink(item.DeptName, "GetDept", new { id = item.DeptId }, new { @style = "font-size: 1.1em;" }) @( "  |  ")
+        }
+
+    </p>
+    <h3 align="center">Search by: </h3>
+
+    @*<span style="color: red; font-weight: 400;">Note: To search by author, please either use first name or last name only.</span>*@
+
+    @Html.Action("GetSearchPartial")
+    
+
+</div>
+
+
+
+
+
+
+
+
+
+

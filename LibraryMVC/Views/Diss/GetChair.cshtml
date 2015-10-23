@@ -1,0 +1,59 @@
+﻿@model IEnumerable<LibraryMVC4.Models.diss>
+
+@{
+    ViewBag.Title = "GetChair";
+}
+
+<a href="/">Library Home</a> @(" > ") <a href="/diss/index/">NCU Dissertations</a>
+
+
+
+
+@foreach (var c in Model.GroupBy(item => item.Name))
+{
+    
+    <h2>Chairperson: @c.Key</h2>
+    
+@*
+    <h2>Chairperson: @item.cFirstName @(" ") @item.cMidName @(" ") @item.cLastName</h2>*@
+
+}
+
+<table class="table table-striped table-hover">
+    <tr>
+         <th>Conferred Date</th>
+         <th>
+            Degree Program 
+        </th>
+        <th>
+            Dissertation Title
+        </th>
+      
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        
+         <td>@item.statDate.Value.ToString("MM/yyyy")</td>
+         <td>
+            @item.degProgCode
+        </td>
+        <td>
+            @Html.ActionLink("View Abstract", "GetAbstract", new { id = item.dissId.ToString() }, null)
+        </td>
+        <td>
+            @Html.ActionLink(item.dissTitle.ToString(), "FileDownload", new { id = item.dissId.ToString() })
+        
+            @*@Html.Raw(item.dissTitle)*@
+
+        </td>
+       
+
+   
+    </tr>
+}
+
+</table>

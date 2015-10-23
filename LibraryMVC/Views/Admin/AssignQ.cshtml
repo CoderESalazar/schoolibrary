@@ -1,0 +1,77 @@
+﻿@model LibraryMVC4.Models.admin
+
+@{
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Librarian Assign Page</title>
+</head>
+<body>
+    <div>
+       
+        <h1>Library Assign Area</h1>
+
+        <a href="/admin/GetAskLibqs">Return to admin</a>
+        <br/> 
+
+        @ViewBag.LibUserId
+
+        @using (Html.BeginForm("postassignq", "admin", FormMethod.Post))
+        {
+
+            <form class="form-horizontal">
+                <fieldset>
+                    <h3>Patron Info</h3>
+                    <div class="form-group">
+                        @Html.HiddenFor(c => Model.QuestId)
+                        @Html.HiddenFor(c => Model.PatronLastName)
+
+                        User Name: @Html.DisplayFor(m => Model.PatronName) 
+                        <br/><br />
+
+                        User Id: @Html.DisplayFor(m => Model.PatronId) 
+                        <br /><br />
+                        Address: @Html.DisplayFor(m => Model.PatronPhysicalAddress)                  
+
+                        <br /><br />
+                        Phone: @Html.DisplayFor(m => Model.PatronPhone) 
+                        <br /><br />
+                        Email: @Html.DisplayFor(m => Model.PatronEmail) 
+                    </div>
+                    <h3>Question Info</h3>
+                    <div class="form-group">
+
+
+                        Date/Time Question Posted: @Html.DisplayFor(m => Model.DateTime)
+                        <br />
+                        <br /> 
+                        Category: @Html.DisplayFor(m => Model.Category) 
+
+                        <br />
+                        <br /> 
+                        Course Number (if provided): @Html.DisplayFor(m => Model.CourseNum) 
+                        <br />
+                        <br /> 
+                        Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum) 
+                        <br />
+        
+                        <h3>Patron Question Below:</h3>
+
+                        @Html.Raw(Model.UserQNoValidation) @Html.HiddenFor(f => f.UserQNoValidation)
+                        <br />
+                        <br />
+                        <input type="submit" value="Assign" />
+
+                    </div>
+                </fieldset>
+            </form>
+
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<LibraryMVC4.Models.structure>
+
+@{
+    ViewBag.Title = "Chat";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var chatGrid = new WebGrid(Model, canPage: false, canSort: false);
+}
+
+<h2>Chat</h2>
+
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<br />
+
+<div>Please select what you want to do.</div>
+<br />
+
+@using (Html.BeginForm("chatstart", "structure", FormMethod.Post))
+{
+    <input type="submit" value="Start Chat" />
+}
+<br />
+
+@using (Html.BeginForm("chatend", "structure", FormMethod.Post))
+{
+    if (ViewBag.LibId != null)
+    {
+
+        @Html.Hidden("id", (int)ViewBag.LibId)
+
+    }
+
+    <input type="submit" value="Stop Chat" />
+}
+
+<hr />
+
+
+<style type="text/css">
+    /*Here we will add css for style webgrid*/
+    .webgrid-table {
+        font-family: Verdana, Helvetica, sans-serif;
+        font-size: 1.2em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 1px #98BF21;
+        background-color: white;
+        }
+
+    .webgrid-table td, th {
+        border: 1px solid #98BF21;
+        padding: 3px 7px 2px;
+        }
+
+    .webgrid-header {
+        background-color: #A7C942;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+        }
+
+    .webgrid-footer {
+     }
+
+    .webgrid-row-style {
+       padding: 3px 7px 2px;
+        }
+
+    .webgrid-alternating-row {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }
+</style>
+
+<div id="content">
+
+    @chatGrid.GetHtml(
+        htmlAttributes: new { id = chatGrid },
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        rowStyle: "webgrid-row-style",
+        columns: chatGrid.Columns(
+        chatGrid.Column(columnName: "LibLastName", header: " Librarian"),
+        chatGrid.Column(columnName: "StartTime"),
+        chatGrid.Column(columnName: "EndTime"),
+        chatGrid.Column(columnName: "ChatActive", header: "Chat Active"))
+        )
+
+</div>

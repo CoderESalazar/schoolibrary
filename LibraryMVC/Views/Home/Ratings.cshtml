@@ -1,0 +1,19 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+
+@if (ViewData["ratecomm"] != null)
+{
+
+    //foreach (var item in ViewData["ratecomm"] as List<LibraryMVC4.Models.home>)
+
+    foreach(var i in ViewData.Model.GroupBy(i => i.RadioItem))
+    
+    {
+        
+        @i.Count();
+
+
+
+    }
+     
+    
+}   

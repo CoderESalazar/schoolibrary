@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<LibraryMVC4.Models.diss>
+@using PagedList.Mvc;
+
+<link href="../../Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "GetDept";
+}
+<a href="/">Library Home</a> @(" > ") <a href="/diss/index/">NCU Dissertations</a>
+
+@*@(DateTime.Now)*@
+
+@foreach (var g in Model.GroupBy(item => item.DeptName))
+{
+    <h2 align="center">@Html.DisplayFor(modelItem => g.Key)</h2>
+
+    <table class="table table-striped table-hover">
+
+        <tr>
+
+            <th>
+                Student Name
+            </th>
+            <th>
+                @Html.ActionLink("Degree", "getdept", new { sortOrder = ViewBag.DegreeSortParm })
+                @*Degree*@
+            </th>
+            <th>
+                @Html.ActionLink("Conferral Date", "getdept", new { sortOrder = ViewBag.DateSortParm })
+                @*@Html.ActionLink("Conferral Date", "getdept", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })*@
+                @*Conferral Date*@
+            </th>
+            <th>
+                &nbsp;
+            </th>
+            <th>
+                Dissertation Title
+            </th>
+
+        </tr>
+
+        @foreach (var c in g)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => c.lLearnerName), @Html.DisplayFor(modelItem => c.fLearnerName) @Html.DisplayFor(modelItem => c.mLearnerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => c.degProgCode)
+                </td>
+                <td>
+                    @c.statDate.Value.ToString("MM/yyyy")
+                </td>
+                <td>
+                    @Html.ActionLink("View Abstract", "GetAbstract", new { id = c.dissId.ToString() }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(c.dissTitle.ToString(), "FileDownload", new { id = c.dissId.ToString() })
+                    @*  @Html.DisplayFor(modelItem => c.dissTitle)*@
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+    <br />
+    @("Page") @(" ") @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @(" ")  @("of") @(" ") @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("getdept", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+}
+

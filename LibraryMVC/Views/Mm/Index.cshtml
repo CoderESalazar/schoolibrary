@@ -1,0 +1,59 @@
+﻿@model IEnumerable<LibraryMVC4.Models.structure>
+
+@{
+
+    Layout = "~/Views/Shared/_bootStrap2.cshtml";
+    ViewBag.Title = "Index";
+
+}
+
+
+@*these are the breadcrumbs*@
+@Html.Partial("_breadCrumb", ViewData["getBread"])
+
+@foreach (var item in ViewData["getMmTitle"] as List<LibraryMVC4.Models.structure>)
+{
+
+    <h2 align="center">@item.Title</h2>
+
+}
+
+<ul>
+    @foreach (var item in Model)
+    {
+
+        <li>
+
+            @if (item.PageType == "dw")
+            {
+                <a href="/dw/index/@item.HighId">@item.Title</a>
+
+            }
+            else if (item.PageType == "fa")
+            {
+                
+                <a href="/fa/index/@item.HighId">@item.Title</a>
+                
+            }
+            else if (item.PageType == "wl")
+            {
+                <a href="/wl/index/@item.HighId">@item.Title</a>
+
+            }
+            else if (item.PageType == "mm")
+            {
+
+                <a href="/mm/index/@item.HighId">@item.Title</a>
+
+            }
+            else
+            {
+                <a href="@item.LinkData">@item.Title</a>
+
+
+            }
+
+        </li>
+
+    }
+</ul>

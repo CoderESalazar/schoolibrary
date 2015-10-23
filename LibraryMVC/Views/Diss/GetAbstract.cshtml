@@ -1,0 +1,52 @@
+﻿@model LibraryMVC4.Models.diss
+@using LibraryMVC4.Utilities
+
+@{
+    ViewBag.Title = "GetAbstract";
+}
+
+<a href="/">Library Home</a> @(" > ") <a href="/diss/index/">NCU Dissertations</a> >
+
+@if (Model.DeptId == "BUS")
+{
+    @Html.ActionLink(Model.DeptName, "getdept", new { id = Model.DeptId })
+}
+else if (Model.DeptId == "PSY")
+{
+    @Html.ActionLink(Model.DeptName, "getdept", new { id = Model.DeptId })
+}
+else if (Model.DeptId == "EDU")
+{
+    @Html.ActionLink(Model.DeptName, "getdept", new { id = Model.DeptId })
+}
+else
+{
+    @Html.ActionLink(Model.DeptName, "getdept", new { id = Model.DeptId })
+}
+
+<h3>Author: @Html.DisplayFor(m => Model.lLearnerName), @Html.DisplayFor(m => Model.fLearnerName)  @Html.DisplayFor(m => Model.mLearnerName)</h3>
+
+<h3 style="line-height: 25px;">Title: @Html.DisplayFor(m => Model.dissTitle)</h3>
+
+<h3>Doctoral Degree: @Html.DisplayFor(m => Model.degProgCode)</h3>
+
+<p>
+    <strong>Chair: </strong><a href="/diss/GetChair?chairId=@Model.chairId">@Model.cFirstName @Model.cMidName @Model.cLastName</a> Click link to view other disserations chaired by this person.
+
+
+    @*@Html.ActionLink("Other dissertations chaired by " + Model.cLastName, "GetChair", new { chairId = Model.chairId } )*@
+
+    <h3>Abstract</h3>
+
+    @Html.Raw(Model.dissAbstract)
+
+    <hr />
+
+<p>
+    Note that NCU Dissertations are only available to currently enrolled students, faculty, and staff. If you are not affiliated with the University, please purchase this dissertation
+    through <a href="http://dissexpress.umi.com/dxweb/search.html" target="_blank">UMI</a>.
+</p><br />
+<p>To download this dissertation, click @Html.ActionLink("here", "FileDownload", new { id = Model.dissId.ToString() }).</p>
+
+
+

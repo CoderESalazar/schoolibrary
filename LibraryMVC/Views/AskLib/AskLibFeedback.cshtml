@@ -1,0 +1,24 @@
+﻿@model LibraryMVC4.Models.mail
+
+@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "AskLibFeedback";
+}
+
+<fieldset>
+    @using (Html.BeginForm("SendEmail", "AskLib", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.Comments)</span><br />
+        @Html.TextAreaFor(m => m.Comments, new { style = "width: 500px; height: 100px;" })
+
+        <br />
+        <br />
+
+        <input type="submit" value="Send" />
+
+    }
+</fieldset>

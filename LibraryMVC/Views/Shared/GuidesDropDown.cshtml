@@ -1,0 +1,38 @@
+﻿@model LibraryMVC4.Models.guides
+
+
+@if (Request.RawUrl == "/guide/index")
+{
+    Layout = "~/Views/Shared/_bootStrap2.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Library Guides</h2>
+<div>Library Guides contain library resources and research strategies for you to use. To get started, select your course or specialization guide from the drop down menus below.</div>
+
+<h3>Course Guides</h3>
+
+@using (Html.BeginForm("GetCGuide", "guide"))
+{
+    @Html.DropDownListFor(t => Model.GuidesId, Model.GuideList, "--Select guide--", new { @id = "guidesId", @class = "form-control" })
+}
+<h3>Specialization Guides</h3>
+
+@using (Html.BeginForm("GetGuide", "guide"))
+{
+
+    @Html.DropDownListFor(t => Model.DeptGuideId, Model.SpecList, "--Select guide--", new { @id = "deptguideid", @class = "form-control" })
+
+}
+<script>
+    $("#guidesId").change(function () {
+
+        var url = "/guide/getcguide?guidesId=" + $(this).val();
+        window.location.replace(url);
+    });
+    $("#deptguideid").change(function () {
+
+        var url = "/guide/getguide?deptguideid=" + $(this).val();
+        window.location.replace(url);
+    });
+</script>

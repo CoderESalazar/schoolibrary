@@ -1,0 +1,4 @@
+﻿@model LibraryMVC4.Models.home
+
+<span style="color: red;">@Html.ValidationMessageFor(m => m.comments)</span><br /> 
+@Html.TextAreaFor(m => m.comments, new { style = "width: 500px; height: 100px;" })

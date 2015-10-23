@@ -1,0 +1,77 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+@{
+    ViewBag.Title = "GetCGuide";
+    Layout = "~/Views/Shared/_bootStrap2.cshtml";
+
+}
+
+<a href="/">Library Home</a> @(" > ") <a href="/guide/index">Library Guides</a> @(" ")
+
+
+@if (ViewData["GuideBody"] != null)
+{
+
+    foreach (var g in ViewData.Model.GroupBy(item => item.CGuideTitle))
+    {
+        <h2>@Html.DisplayFor(modelItem => g.Key)</h2>
+
+        foreach (var t in g)
+        {
+            @Html.ActionLink(t.TitleHeader, "getcguide", new { controller = "guide", guidesId = t.GuideId.ToString(), headerId = t.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
+
+            @* @Html.ActionLink(t.TitleHeader, "getcguide", "guide1", new { guidesId = t.GuideId.ToString(), headerId = t.HeaderId.ToString() }, FormMethod.Post) *@
+
+            <span>@( "  ")</span> <span>@( "  ")</span>
+        }
+
+        <br />
+        <br />
+
+        foreach (var item in ViewData["GuideBody"] as List<LibraryMVC4.Models.guides>)
+        {
+
+            if (item.TitleHeader == "Home")
+            {
+
+                @Html.Raw(item.GuideBody)
+            }
+            else
+            {
+                @Html.Raw(item.HeaderBody)
+
+            }
+
+        }
+    }
+}
+
+@if (ViewData["guideNoTabs"] != null)
+{
+    foreach (var item in ViewData["guideNoTabs"] as List<LibraryMVC4.Models.guides>)
+    {
+
+        <h2>@item.GuideTitle</h2>
+
+        foreach (var g in ViewData.Model.GroupBy(q => item.CGuideTitle))
+        {
+            //this is the title
+
+            foreach (var t in g)
+            {
+                //these are the tabs
+
+                @Html.ActionLink(t.TitleHeader, "getcguide", new { controller = "guide", guidesId = t.GuideId.ToString(), headerId = t.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
+
+                <span>@( "  ")</span> <span>@( "  ")</span>
+
+            }
+        }
+
+        <br />
+        <br />
+
+        @Html.Raw(item.GuideBody)
+
+    }
+}
+

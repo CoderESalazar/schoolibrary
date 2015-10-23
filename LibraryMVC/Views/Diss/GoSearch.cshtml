@@ -1,0 +1,25 @@
+﻿@model  IEnumerable<LibraryMVC4.Models.diss>
+
+@{
+    ViewBag.Title = "GoSearch";
+}
+<a href="/">Library Home</a> @(" > ") <a href="/diss/index/">NCU Dissertations</a> 
+
+
+<h2>Dissertation Search Results - "Items sorted by student last name"</h2>
+
+
+
+<table class="table table-striped table-hover">
+@foreach (var item in Model)
+
+{
+<tr>
+
+    <td><a href="/diss/GetAbstract/@item.dissId">@item.fLearnerName @item.mLearnerName @item.lLearnerName</a></td>    
+    
+    <td>@item.dissTitle </td>
+</tr>
+}
+
+</table>

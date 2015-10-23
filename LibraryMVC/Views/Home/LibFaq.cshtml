@@ -1,0 +1,32 @@
+﻿@model LibraryMVC4.Models.home
+
+@{
+    Layout = null;
+}
+
+<h3>Search FAQs</h3>
+
+<div class="ui-widget">
+
+    <input id="tags" type="text" class="form-control col-lg-4" placeholder="Type slowly">&nbsp;<input type="button" id="clear" value="Clear">
+</div>
+
+<h3>Browse by Category</h3>
+@using (Html.BeginForm("FaqDrop", "faq", new { Model.CatId }.ToString(), FormMethod.Post))
+{
+    @Html.DropDownListFor(m => Model.CatId, Model.FaqList, "--Select Category--", new { @id = "catId" })
+}
+
+<script>
+    $("#catId").change(function () {
+
+        var url = "/faq/libcat/" + $(this).val();
+        window.location.replace(url);
+    });
+    $('#clear').click(function () {
+
+        window.location.replace(window.location.href)
+
+    });
+
+</script>

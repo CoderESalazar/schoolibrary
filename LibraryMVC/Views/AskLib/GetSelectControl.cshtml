@@ -1,0 +1,37 @@
+﻿@model LibraryMVC4.Models.user
+
+@{
+    Layout = null;
+}
+
+
+@*@if(Model != null)
+{
+    @Html.Partial("_userInfo", Model)
+    
+    
+    
+}*@
+    
+
+
+@using (Html.BeginForm("UserInfoPost", "AskLib",  new { Model.CatId }.ToString(), FormMethod.Post))
+{ 
+
+        @Html.DisplayFor(m => m.uFirstName)
+       
+    
+        @Html.Partial("_userInfo", Model)
+
+       
+
+        @Html.DropDownListFor(m => m.CatId, new SelectList(Model.CatList, "Value", "Text"), "--Please Select--")
+
+    
+    <input type="submit" value="Submit" />
+
+}    
+
+
+<br/> 
+

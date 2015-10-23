@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<LibraryMVC4.Models.admin>
+@using PagedList.Mvc;
+
+<link href="../../Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@*<h3>Librarian Assigned Qs</h3>*@
+<div id="myGridContainer1">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>
+                LibLastName
+            </th>
+            <th>
+                QID
+            </th>
+            <th>
+                Date/Time
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                PLastName
+            </th>
+
+        </tr>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@Html.ActionLink(item.LibLastName, "GetAssignedQ", new { id = item.QuestId.ToString() }, null)</td>
+                <td>@Html.DisplayFor(modelItem => item.QuestId)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateTime.Value)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                <td>@Html.DisplayFor(modelItem => item.PatronLastName)</td>
+            </tr>
+
+        }
+    </table>
+
+    <div id="myPager1">
+        @("Page") @(" ") @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @(" ")  @("of") @(" ") @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("LibAssignQs", new { page, currentFilter = ViewBag.CurrentFilter }),
+        new PagedListRenderOptions
+                        {
+                            LinkToFirstPageFormat = "<<",
+                            LinkToPreviousPageFormat = "prev",
+                            LinkToNextPageFormat = "next",
+                            LinkToLastPageFormat = ">>",
+                            
+                        })
+    </div>
+
+</div>
+
+<script type="text/javascript">
+$(function() {
+    $('#myPager1').on('click', 'a', function() {
+        $.ajax({
+            url: this.href,
+            type: 'GET',
+            cache: false,
+            success: function(result) {
+                $('#myGridContainer1').html(result);
+            }
+        });
+        return false;
+    });
+});
+</script>

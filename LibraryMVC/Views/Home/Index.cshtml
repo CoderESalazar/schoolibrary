@@ -1,0 +1,415 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+
+@{
+    Layout = "~/Views/Shared/_bootstrap1.cshtml";
+    ViewBag.Title = "Index";
+
+}
+
+@* middle column - content column *@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.carousel').carousel({ interval: 7000 });
+    });
+</script>
+
+<div class="col-md-7 col-md-push-2">
+    <div class="bs-component">
+        
+       @if (ViewBag.IsLoggedIn != null )
+        {
+            
+            <span style="color: red; font-weight: 700;">@Session["theCount"]. Click @Html.ActionLink("here", "index", "asklib") to view your messages.</span> 
+            
+        }
+                        
+    @Html.Action("getalert", "home")
+
+        <div class="panel panel-info">
+        <div class="panel-body"><h2>Northcentral University Library</h2>
+                <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#TabsId-1">Roadrunner Search</a></li>
+            <li class=""><a data-toggle="tab" href="#TabsId-2">Find a Resource</a></li>
+            <li class=""><a data-toggle="tab" href="#TabsId-3">Library Guides</a></li>
+            <li class=""><a data-toggle="tab" href="#TabsId-4">Library FAQs</a></li>
+        </ul>
+        <div class="tab-content">
+
+            <br /> 
+            <div class="tab-pane active" id="TabsId-1">
+           
+
+           
+            <form action="https://search-ebscohost-com.proxy1.ncu.edu/login.aspx" method="get" target="_blank" onsubmit="ebscoPreProcess(this)" >
+                @*<form action="https://proxy1.ncu.edu/login?url=https://search.ebscohost.com/login.aspx" method="get" target="_blank" onsubmit="ebscoPreProcess(this)">*@
+            @*    <input type="text" class="input-medium search-query">*@
+                <input name="direct" value="true" type="hidden" />
+                <input name="scope" value="site" type="hidden" />
+                <input name="site" value="eds-live" type="hidden" />
+                <!-- Authentication and Profile Values -->
+                <input name="authtype" value="uid" type="hidden" />
+                <input name="profile" value="eds" type="hidden" />
+                <input name="user" value="northcentraluniv" type="hidden" />
+                <input name="password" value="ebsco" type="hidden" />
+                <!-- Limiter: Full Text -->
+                <input name="cli0" value="FT" type="hidden" />
+                <input name="clv0" value="N" type="hidden" />
+                <!-- Limiter: Scholarly/Peer-Reviewed -->
+                <input name="cli1" value="RV" type="hidden" />
+                <input name="clv1" value="N" type="hidden" />
+                <!-- search box and submit button -->
+                <input name="bquery" value="" type="hidden" />
+                                                  
+                <input type="text" name="uquery" class="form-control col-lg-6" placeholder="Type keywords here">
+             
+  
+                            <select onchange="bquery" size="1" name="search_prefix" style="width: 100px">
+                                <option selected="selected" value="">Keyword</option>
+                                <option value="TI ">Title</option>
+                                <option value="AU ">Author</option>
+                            </select>
+                            &nbsp;&nbsp;
+                            <input name="fulltext_checkbox" id="fulltext_checkbox_all" onclick="limittoFullText(this.form)" type="checkbox" />
+                            <label for="fulltext_checkbox_all">Full Text</label>
+                            &nbsp;&nbsp;
+                            <input name="scholarly_checkbox" id="scholarly_checkbox_articles" onclick="limittoScholarly(this.form)" type="checkbox" />
+                            <label for="scholarly_checkbox_articles">Scholarly/Peer Reviewed Journals</label>
+                &nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                <div>
+
+                    <span style="float:right;">@Html.ActionLink("Advanced Search", "EbscoAdvancedSearch", "home", new { target = "_blank" })</span> 
+
+                </div>
+
+
+                @*<div><a target="_blank" style="margin-left: 250px;" href="http://search.ebscohost.com.proxy1.ncu.edu/login.aspx?direct=true&type=1&authtype=uid&user=northcentraluniv&password=ebsco&profid=eds">Advanced Search!</a></div>*@
+            
+            </form>
+            
+            
+        </div>
+            <div class="tab-pane" id="TabsId-2">
+                <form target="_blank" action="https://xt6nc6eu9q.search.serialssolutions.com/">
+                    <div>
+                        <span style="color:red; font-size: medium;">
+                            <strong>
+                                Search by journal or book title NOT by article
+                                title
+                            </strong>
+                        </span>
+                        <br />
+                        <br />
+                        <input type="hidden" name="V" value="1.0" />
+                        <input type="hidden" name="L" value="xt6nc6eu9q" />
+                        @*<input type="text" name="C" value="" size="70" style="padding: 5px; margin: 5px" />*@
+                        <input type="text" name="C" class="form-control col-lg-8" placeholder="Type journal or book title here.">
+
+                        <select name="S" style="padding: 5px; margin: 5px">
+                            <option value="AC_T_B">Title begins with</option>
+                            <option value="AC_T_M">Title equals</option>
+                            <option value="T_W_A">Title contains all words</option>
+                            <option value="I_M">ISSN equals</option>
+                        </select>
+                        <input type="submit" value=" Search " />
+                    </div>
+                    </form>
+                </div>
+           
+            <div class="tab-pane" id="TabsId-3">
+
+                @Html.Action("index", "guide")
+            
+            </div>
+            <div class="tab-pane" id="TabsId-4">
+                
+                @Html.Action("libfaq", "home")
+            
+            </div>
+          </div>
+        </div>
+       </div>
+      </div>
+     </div>
+
+
+<div class="bs-component">
+    <div class="panel panel-default">
+        <div class="panel-body">
+                  
+<!-- Carousel ================================================== -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+                <li data-target="#myCarousel" data-slide-to="5"></li>
+              </ol>
+              <div class="carousel-inner">
+                @*<div class="item active">
+                  
+                  <a href="/Home/GetFeedback/" target="_blank"><img src="/Images/carousel/Library_Survey_w.jpg" alt="First slide" /></a> 
+                               
+                  <div class="container">
+                    <div class="carousel-caption">*@
+                     @* <h1>Example headline.</h1>*@
+                      @*<p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>*@
+             @*         <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>*@
+                    @*</div>
+                  </div>
+                </div>*@
+                  <div class="item active">
+
+                      <a href="/asklib/getquestion/" target="_blank"><img src="/Images/carousel/Library_Ask.jpg" alt="Second slide" /></a> 
+
+                      <div class="container">
+                          <div class="carousel-caption">
+                              @*<h1>Another example headline.</h1>*@
+                              @* <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>*@
+                              @*<p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>*@
+                          </div>
+                      </div>
+                   </div>
+                <div class="item">
+                  
+                    <a href="http://illiad.ncu.edu/illiad/logon.html" target="_blank"><img src="/Images/carousel/Library_ILL.jpg" alt="Third slide"/></a> 
+                               
+                  <div class="container">
+                    <div class="carousel-caption">
+                      @*<h1>Another example headline.</h1>*@
+                     @* <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>*@
+                      @*<p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>*@
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  
+                   <a href="/dw/index/179" target="_blank"><img src="/Images/carousel/Library_Research_Process.jpg" alt="Fourth slide"/></a> 
+                 @*<img src="/Images/were_listening_web.jpg" alt="Third slide">*@
+                                
+                  <div class="container">
+                    <div class="carousel-caption">
+                    @*<h1>One more for good measure.</h1>*@
+                      @*<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>*@
+                     @* <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>*@
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  
+                  <a href="/dw/index/170" target="_blank"><img src="/Images/carousel/Library_Researcher.jpg" alt="Fifth slide"/></a> 
+                 @*<img src="/Images/were_listening_web.jpg" alt="Third slide">*@
+                                
+                  <div class="container">
+                    <div class="carousel-caption">
+                    @*<h1>One more for good measure.</h1>*@
+                      @*<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>*@
+                     @* <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>*@
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="item">
+                  
+                 <a href="/schedule/" target="_blank"><img src="/Images/carousel/Library_Workshop.jpg" alt="Sixth slide"/></a> 
+                 @*<img src="/Images/were_listening_web.jpg" alt="Third slide">*@
+                                
+                  <div class="container">
+                    <div class="carousel-caption">
+                    @*<h1>One more for good measure.</h1>*@
+                      @*<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>*@
+                     @* <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>*@
+                    </div>
+                  </div>
+                </div>
+               </div>
+              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">@*<i style="margin-top: 135px;" class="fa fa-chevron-left fa-2x"></i>*@ <span class="glyphicon glyphicon-chevron-left"></span></a>
+              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">@*<i style="margin-top: 135px; position: relative;" class="fa fa-chevron-right fa-2x"></i>*@ <span class="glyphicon glyphicon-chevron-right"></span></a>
+                @*<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>*@
+
+
+            </div><!-- /.carousel -->
+
+        </div>
+       </div>
+
+    </div>
+    
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                Popular Library Workshops
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="http://www.viddler.com/v/6ff1764 " target="_blank">Library Orientation</a></li>
+                            <li class="list-group-item"><a href="http://www.viddler.com/v/e5e5d141" target="_blank">RefWorks</a></li>
+                            <li class="list-group-item"><a href="http://www.viddler.com/v/33f2a014" target="_blank">Searching 101</a></li>
+                            @* <li class="list-group-item"><a href="http://search.proquest.com.proxy1.ncu.edu/advanced" target="_blank">ProQuest</a></li>
+                               <li class="list-group-item"><a href="http://www.refworks.com.proxy1.ncu.edu/refworks" target="_blank">RefWorks</a></li>*@
+
+
+                        </ul>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="http://www.viddler.com/v/22afafd" target="_blank">Learn the Library - Business</a></li>
+                            <li class="list-group-item"><a href="http://www.viddler.com/v/b8898d6" target="_blank">Learn the Library - Education</a></li>
+                            <li class="list-group-item"><a href="http://www.viddler.com/v/a88bddd3" target="_blank">Learn the Library - Psychology & MFS</a></li>
+                            @*<li class="list-group-item"><a href="http://www.ulrichsweb.serialssolutions.com.proxy1.ncu.edu/" target="_blank">Ulrich's</a></li>
+                              <li class="list-group-item"><a href="http://apps.webofknowledge.com.proxy1.ncu.edu/" target="_blank">Web of Knowledge</a> </li>*@
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-12">View all Library <a href="/wl/index/271">Workshops</a> @*@Html.ActionLink("Worshops", "index", "wl", new { id = "271" })*@</div>
+
+                </div>
+
+        </div>
+    </div>
+    </div>
+        
+@*end  of middle column *@
+
+
+@*Left column *@
+
+<div class="col-md-2  col-md-pull-7">
+
+
+    <div class="panel panel-default">
+    <div class="panel-heading">How Can I?</div>
+    <div class="panel-body">
+        
+        
+            <table class="table table-striped table-hover">
+            
+                 <tbody>
+                    <tr>
+                        <td><a href="/dw/index/170">Learn to Use the Library</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/schedule/">Sign up for a Library Workshop</a></td>
+                    </tr>
+                    <tr >
+                        <td><a href="/home/scheduleconsult/">Request a One-on-one Research Consultation</a></td>
+                    </tr>
+                     <tr>
+                         <td><a href="http://illiad.ncu.edu/illiad/logon.html" target="_blank">Request Interlibrary Loan Items</a></td>
+                     </tr>
+                     <tr>
+                         <td>@Html.ActionLink("Test My Library Skills", "ILTutorial", "home", new { target = "_blank" })</td>
+                     </tr>
+                     <tr>
+                         <td>@Html.ActionLink("Access Alumni Databases", "Index", "Dw", new { id = 280 }, null)</td>
+                     </tr>
+                </tbody>
+            
+            </table>
+
+        @*   @Html.Action("index", "guide")*@
+    </div>
+    </div>
+
+     <div class="panel panel-default">
+        <div class="panel-heading">Resource of the Month</div>
+        <div class="panel-body">
+            @Html.Action("ResMonth", "home")
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Director's Message</div>
+        <div class="panel-body">
+            @Html.Action("dirmessage", "home")
+        </div>
+    </div>
+
+ 
+
+</div>
+
+
+
+
+@*start of right column *@
+
+
+<div class="col-md-3">
+    <div class="panel panel-default">
+        <div class="panel-heading">Contact Us</div>
+        <div class="panel-body">
+            <div>@*<a href="/asklib/getquestion/">Ask a Librarian</a>*@ @Html.ActionLink("Ask a Librarian", "GetQuestion", "AskLib") <i class="fa fa-question-circle fa-lg"></i> @*<span class="glyphicon glyphicon-question-sign"></span>*@</div>
+            <div>Email: <a href="mailto:library@ncu.edu">library@ncu.edu</a> <i class="fa fa-envelope fa-lg"></i> @*<span class="glyphicon glyphicon-envelope">*@</div>
+            <div>Phone: 888-628-1569 <i class="fa fa-mobile fa-2x"></i> @*<span class="glyphicon glyphicon-phone">*@</div>
+            
+            
+            <br /> 
+            <strong>Library Staffed Hours (not including observed holidays)</strong>
+            <br /> 
+
+            <table class="table table-striped table-hover">
+            
+                <thead>
+                    <tr>
+                      <th>Days</th>
+                      <th>Hours (AZ time)</th>
+                    
+                   </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mon.</td>
+                        <td>8am - 9pm</td>
+                    </tr>
+                    <tr>
+                        <td>Tue.</td>
+                        <td>8am - 9pm</td>
+                    </tr>
+                    <tr>
+                        <td>Wed.</td>
+                        <td>8am - 9pm</td>
+                    </tr>
+                    <tr>
+                        <td>Thurs.</td>
+                        <td>8am - 9pm</td>
+                    </tr>
+                    <tr>
+                        <td>Fri.</td>
+                        <td>8am - 5pm</td>
+                    </tr>
+                    <tr>
+                        <td>Sat.</td>
+                        <td>8am - 5pm</td>
+                    </tr>
+                    <tr>
+                        <td>Sun.</td>
+                        <td>8am - 5pm</td>
+                    </tr>
+             </tbody>
+            
+            </table>
+        
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">What's New!</div>
+        <div class="panel-body">
+             @Html.Action("blist", "home")
+
+        </div>
+    </div>
+ </div>
+
+
+

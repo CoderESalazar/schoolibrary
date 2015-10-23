@@ -1,0 +1,18 @@
+﻿@model LibraryMVC4.Models.admin
+
+@{
+    ViewBag.Title = "AddCategory";
+
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<h2>Add Category</h2>
+
+    @using (Html.BeginForm("PostCategory", "admin", FormMethod.Post))
+    { 
+        @Html.TextBoxFor(t => t.CatName, new { @size = 40 })
+
+        <br/> 
+        <br/>
+        <input type="submit" name="Submit" value="Submit"/>
+    }

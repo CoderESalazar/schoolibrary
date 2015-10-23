@@ -1,0 +1,72 @@
+﻿@model LibraryMVC4.Models.asklib
+
+@using LibraryMVC4.Security
+
+@{
+    ViewBag.Title = "GetQuestion";
+}
+
+<a href="/">Library Home</a>
+<br />
+<br />
+
+<p>
+    Please fill out the form below. <strong>
+        Have you checked the Library FAQs for
+        an answer to your question?
+    </strong> To search the Library FAQs, click @Html.ActionLink("here", "index", "faq").
+</p>
+
+
+@using (Html.BeginForm("UserInfoPost", "AskLib", new { Model.CatId }.ToString(), FormMethod.Post))
+{
+
+    <form class="form-horizontal">
+        <fieldset>
+
+            <div class="form-group">
+                <div class="col-lg-5">
+
+                    @("Category of your question: ")&nbsp;&nbsp;<span style="color:red;">@Html.ValidationMessageFor(x => x.CatId)</span>
+
+
+                    @Html.DropDownListFor(m => m.CatId, new SelectList(Model.GetCatList, "Value", "Text"), "--Please Select--", new { @class = "form-control" })
+
+                </div>
+
+            </div>
+
+            <br /><br />
+            <div class="form-group">
+                <div class="col-lg-3">
+                    <p>Course Number: @Html.TextBoxFor(m => m.CourseNum, new { @class = "form-control" })</p>
+
+                    <p>Activity Number: @Html.TextBoxFor(m => m.AssignNum, new { @class = "form-control" })</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <span>Please type your question into the box below.</span>
+                    <span style="color: red;">@Html.ValidationMessageFor(m => m.QuestDetail)</span>
+                    @Html.TextAreaFor(m => m.QuestDetail, new { @class = "form-control", @rows = 5 })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-lg-10">
+
+                    <input type="submit" value="Submit" />
+
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+
+
+}
+
+

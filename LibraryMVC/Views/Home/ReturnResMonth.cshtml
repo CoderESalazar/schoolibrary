@@ -1,0 +1,83 @@
+﻿@model  IEnumerable<LibraryMVC4.Models.home>
+
+@*@model LibraryMVC4.Models.home*@
+
+@{
+    ViewBag.Title = "ReturnResMonth";
+}
+
+<a href="/">Library Home</a>
+
+<br />
+<br />
+
+@foreach (var c in Model.GroupBy(item => item.ResourceTitle))
+{
+    <h2>@c.Key</h2>
+
+    foreach (var m in c.GroupBy(item => item.ResourceContent))
+    {
+        @Html.Raw(m.Key)
+
+    }
+}
+
+@*This is the rating score for the resource*@
+
+@foreach (var k in Model.GroupBy(item => item.REntryId))
+{
+
+    @*<h3>@k.Key</h3>*@
+
+    <h3>Resource Rating Score: @(Math.Round(Convert.ToDouble(ViewBag.GetSum) / (@k.Count()), 2)) (5 = highest, 1 = Lowest)</h3>
+    
+    @("Total number of respondents: ") @ViewBag.theCount 
+
+    <h3>Rate this Resource</h3>
+    
+    if(ViewBag.Id != true)
+
+            { 
+        
+            using (Html.BeginForm("GetRadioId", "home", new { id = k.Key }, FormMethod.Post))
+            {
+                @Html.Action("getradio", "home")
+
+                <button type="submit">Submit</button>
+            }
+
+
+
+            }
+    else
+    {
+        <div style="color: red; font-weight: 700;">@ViewBag.Message</div>
+
+    }
+    @*<h3>Let us know what you think. Post a comment (only your first name will be appear).</h3>
+
+
+
+        using (Html.BeginForm("GetRadioId", "home", new { id = k.Key }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+
+               @Html.Action("GetResMonthFdbk")
+
+               <br />
+
+              <button type="submit">Submit</button>
+
+        }*@
+
+}
+
+@*<h3>Posted Comments Below</h3>
+    <hr />*@
+
+
+
+
+
+
+

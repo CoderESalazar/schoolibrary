@@ -1,0 +1,51 @@
+﻿@model IEnumerable<LibraryMVC4.Models.wl>
+
+@{
+    ViewBag.Title = "GetWlPage";
+}
+
+<h2>GetWlPage</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            TitleName
+        </th>
+        <th>
+            HighId
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Links
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HighId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Links)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

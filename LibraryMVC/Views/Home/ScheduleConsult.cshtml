@@ -1,0 +1,204 @@
+﻿@model LibraryMVC4.Models.mail
+@{
+    ViewBag.Title = "ScheduleConsult";
+}
+<a href="/">Library Home</a>
+
+<h2 align="center">
+    Schedule a Research Consultation
+</h2>
+<p>
+    The NCU Library offers a research consultation service for students, faculty, and
+    staff. This is an in-depth, customized, one-on-one meeting with a reference librarian
+    to discuss possible information resources and search strategies for class assignments,
+    papers, presentations, Masters theses, and doctoral dissertations.
+</p>
+<p>
+    <strong>Need help right away?</strong>
+</p>
+<p>
+    If your deadline is within the next four business days (M-F), request immediate
+    help (i.e., not a research consultation). Here are ways to get help right away:
+</p>
+<p>
+    <a href="http://library.ncu.edu/ncu_kb/user/user_page.aspx">Ask a Librarian</a>
+</p>
+<p>
+    Phone 888-628-1569
+</p>
+<p>
+    <strong>Already completed a consultation?</strong>
+</p>
+<p>
+    Please take the @Html.ActionLink("Research Consultation Satisfaction Survey", "LeaveConsultFdbk", "home", new { target = "_blank" })  @*<a href="http://ncu.checkboxonline.com/Survey.aspx?s=01fcd593c7ea4307890d1f7a3e0271f7">*@
+    and let us know if your consultation
+    helped you! We appreciate your comments and suggestions.
+</p>
+<strong>Research Consultation Policies</strong>
+<ol>
+    <li>
+        This service is available to NCU students, faculty and staff. <strong>
+            However, we are unable to schedule consultations with students who are currently taking their
+            comprehensive exam course nor can we provide any assistance, advice, or preparation
+            related to the comprehensive exam course.
+        </strong>
+    </li>
+    <li>
+        Consultations are scheduled during <a href="/dw/index/22" target="_blank" style="color: darkblue;">normal operating hours</a>.
+    </li>
+    <li>
+        Requests must be made at least 3 business days in advance to allow time for the
+        librarian to prepare. <b>You may have only one consultation scheduled at any one time.</b>
+    </li>
+    <li>
+        Once your request is received, a librarian will contact you within 24 hours (excluding
+        weekends and holidays) to schedule your appointment.
+    </li>
+    <li>
+        It is expected that you review the <a target="_blank" href="/dw/index/179">
+    Research
+    Process
+</a> prior to your scheduled consultation.
+    </li>
+    <li>
+        It is expected that you will meet your appointment time, or contact us within
+        a reasonable time period to cancel. The Library relies on the punctuality and consistency
+        of students in order to continue providing the Research Consultation service. Repeated
+        cancellations and "no shows" may result in suspension of scheduling privileges.
+    </li>
+    <li>
+        The reference librarians will not do the actual research for you, nor will they
+        answer questions that a professor has assigned as part of a class activity.
+    </li>
+    <li>
+        The reference librarians may not help you with the mechanics and style of writing
+        a research paper. You are advised to contact the Writing Center for assistance at asc@ncu.edu or 888-327-2877 ext. 8052.
+    </li>
+    <li>
+        Consultations take place through GoToMeeting, the Library’s online meeting software.
+        Once the meeting time is confirmed, you will be sent a meeting invitation containing
+        access and call-in information. <strong>
+            IT IS YOUR RESPONSIBILITY TO CHECK YOUR EMAIL
+            FOR THE MEETING INVITATION.
+        </strong>
+    </li>
+    <li>You will be asked to complete a satisfaction survey following the consultation session.</li>
+    <li><strong>The Library reserves the right to refuse this service.</strong></li>
+</ol>
+<br />
+<strong>Areas of Assistance</strong>
+<ol>
+    <li>Developing your research strategy</li>
+    <li>Identifying relevant databases and journals </li>
+    <li>Finding and evaluating information resources </li>
+    <li>Discovering alternative search terms for your topic</li>
+    <li>Using advanced search techniques for specific databases</li>
+    <li>Narrowing your search results</li>
+</ol>
+<p>
+    Use the form below to request a consultation appointment with a reference librarian.
+    Please be as thorough as possible to ensure that both you and the librarian are
+    prepared for your session. <font color="darkred" style="font-weight: 700;">Failure to provide detailed information about your research topic may delay the scheduling process.</font>
+</p>
+<br />
+
+
+    @using (Html.BeginForm("SendEmail", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <form class="form-horizontal">
+        <fieldset>
+
+
+    <div class="form-group">
+        <div class="col-lg-3">
+            @("Course#")
+            @Html.TextBoxFor(m => m.Course, new { @class = "form-control" })
+            <br/> 
+            @("Activity#")
+            @Html.TextBoxFor(m => m.Activity, new { @class = "form-control" })
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br />
+            @("Describe your research topic as thoroughly as possible.")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.Question)</span>
+            @Html.TextAreaFor(m => m.Question, new { @class = "form-control", @rows = 5 })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br />
+            @("What is the status of your research project?")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.projectStatus)</span>
+            @Html.DropDownListFor(m => m.projectStatus, Model.projectDesc, "--Please Select--", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br />
+            @("If you have already done research, what resources and search terms have you used?")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.StepsTaken)</span><br />
+            @Html.TextAreaFor(m => m.StepsTaken, new { @class = "form-control", @rows = 5 })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br />
+            @("Describe any difficulties you have encountered with locating research on your topic.")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.Difficulties)</span><br />
+            @Html.TextAreaFor(m => m.Difficulties, new { @class = "form-control", @rows = 5 })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br />
+            @("Are there any additional resources or questions that you would like assistance with?")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.RequestedAssistance)</span><br />
+            @Html.TextAreaFor(m => m.RequestedAssistance, new { @class = "form-control", @rows = 5 })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br />
+            @("How did you hear about the Research Consultation service?")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.referral)</span>
+            @Html.DropDownListFor(m => m.referral, Model.referralType, "--Please Select--", new { @class = "form-control" })
+        </div>
+    </div>     
+    @*<div class="form-group">
+        <div class="col-lg-5">
+            <br/> 
+            @("Select desired date:")
+
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.DayOfWeek)</span><br />
+            @Html.TextBoxFor(m => m.DayOfWeek, new
+               {
+                   id = "date",
+                   data_date_format = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower(),
+                   data_date_language = System.Globalization.CultureInfo.CurrentCulture.Name
+               })
+
+       </div>
+    </div>*@   
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br/> 
+             @("Select desired time of day for consultation (Arizona time).")
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.timeOfDay)</span>
+            @Html.DropDownListFor(m => m.timeOfDay, Model.SelectedDay, "--Please Select--", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10">
+            <br/> 
+            <input type="submit" value="Send" />
+        </div>
+    </div>
+
+    </fieldset>
+    </form>
+
+    }
+

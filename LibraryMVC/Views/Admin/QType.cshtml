@@ -1,0 +1,3 @@
+﻿@model LibraryMVC4.Models.admin
+
+@Html.DropDownListFor(m => m.GetQTypeId, new SelectList(Model.QType, "Value", "Text"), "--Please Select--") &nbsp;&nbsp;<span style="color:red;"><strong>@Html.ValidationMessageFor(x => x.GetQTypeId)</strong></span>

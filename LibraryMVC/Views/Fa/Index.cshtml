@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LibraryMVC4.Models.fa>
+
+    @{
+
+        Layout = "~/Views/Shared/_bootStrap2.cshtml";
+        ViewBag.Title = "Index";
+
+    }
+
+    @Html.Partial("_breadCrumb", ViewData["getBread"])
+
+    @foreach (var item in ViewData["getTitle"] as List<LibraryMVC4.Models.fa>)
+    {
+
+        <h2 align="center">@item.Title</h2>
+
+    }
+    @foreach (var item in Model)
+    {
+
+        <div>
+            <a href="@item.dbUrl" target="_blank">
+                <strong>@item.dbTitle</strong>
+            </a>
+            @(" - ")
+            @Html.Raw(item.dbDescript)
+        </div>
+        <br />
+
+    }

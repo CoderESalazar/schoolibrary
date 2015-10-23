@@ -1,0 +1,126 @@
+﻿@model PagedList.IPagedList<LibraryMVC4.Models.admin>
+@using PagedList.Mvc;
+
+<link href="../../Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<div id="myGridContainer2">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>
+                LibLastName
+            </th>
+            <th>
+                QId
+            </th>
+            <th>
+                <span id="sortdate2">@Html.ActionLink("DateTime", "GetLibQsNo", new { sortOrder = ViewBag.DateParam })</span>
+            </th>
+            <th>
+                <span id="sortcat2">@Html.ActionLink("Category", "GetLibQsNo", new { sortOrder = ViewBag.CatSortParam })</span>
+            </th>
+            <th>
+                PLastName
+            </th>
+            <th>
+                DegProg
+            </th>
+            <th>
+                CourseNum
+            </th>
+            <th>
+                EmailSent
+            </th>
+            <th>
+                @Html.ActionLink("QType", "GetLibQsNo", new { sortOrder = ViewBag.QTypeParam })
+            </th>
+            <th>
+                FileAvail
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@Html.ActionLink(item.LibLastName, "GetAskLibQ", new { id = item.QuestId.ToString() }, null)</td>
+                <td>@Html.DisplayFor(modelItem => item.QuestId)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateTime.Value)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                <td>@Html.DisplayFor(modelItem => item.PatronLastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.DegProg)</td>
+                <td>@Html.DisplayFor(modelItem => item.CourseNum)</td>
+                <td>@Html.DisplayFor(modelItem => item.EmailSent)</td>
+                <td>@Html.DisplayFor(modelItem => item.QuestType)</td>
+
+                @if (item.FileName != null)
+                {
+                    <td>@Html.ActionLink(item.FileName, "filedownload", "asklib", new { id = item.QuestId.ToString() }, null)</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(modelItem => item.FileName)</td>
+                }
+
+            </tr>
+
+        }
+
+
+    </table>
+
+
+    <div id="myPager2">
+        @("Page") @(" ") @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @(" ")  @("of") @(" ") @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("GetLibQsNo", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+                        new PagedListRenderOptions
+                        {
+                            LinkToFirstPageFormat = "<<",
+                            LinkToPreviousPageFormat = "prev",
+                            LinkToNextPageFormat = "next",
+                            LinkToLastPageFormat = ">>",
+                        })
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#myPager2').on('click', 'a', function () {
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $('#myGridContainer2').html(result);
+                }
+            });
+            return false;
+        });
+    });
+    $(function () {
+        $('#sortdate2').on('click', 'a', function () {
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $('#myGridContainer2').html(result);
+                }
+            });
+            return false;
+        });
+    });
+    $(function () {
+        $('#sortcat2').on('click', 'a', function () {
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+                    $('#myGridContainer2').html(result);
+                }
+            });
+            return false;
+        });
+    });
+
+</script>

@@ -1,0 +1,40 @@
+﻿@model LibraryMVC4.Models.structure
+
+@{
+    ViewBag.Title = "AddPage";
+
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<h2>Add Library Page</h2>
+
+<a href="/structure/index">Go back to Library Pages Area</a>
+
+<br/>
+<br/>
+
+
+@using (Html.BeginForm("AddLibPage", "structure", FormMethod.Post))
+{
+    
+    //need to add client-side validation. 
+    <form>
+       
+        Title of Page: @Html.TextBoxFor(m => m.Title)&nbsp;&nbsp;<span style="color: red;font-weight: bold;">@Html.ValidationMessageFor(m => m.Title)</span>
+        <br />
+        <br />
+        Page Type: @Html.DropDownListFor(m => m.PageType, new SelectList(new LibraryMVC4.Models.structure().GetPageTypeDd, "PageType", "Text"), "--Select--")&nbsp;&nbsp;<span style="color:red;"><strong>@Html.ValidationMessageFor(x => x.PageType)</strong></span>
+        <br />
+        <br />
+        ParentId (use HighId here): @Html.TextBoxFor(m => m.ParentId)
+        <br />
+        <br />
+        LinkData or KeyId (use ID from DW table): @Html.TextBoxFor(m => m.LinkData)
+        <br />
+        <br />
+        DisplayOrder: @Html.TextBoxFor(m => m.DisplayOrder)
+        <br/>
+        <br/>
+        <input type="submit" value="Submit" />
+    </form>    
+}

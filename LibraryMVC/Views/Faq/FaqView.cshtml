@@ -1,0 +1,41 @@
+﻿@model LibraryMVC4.Models.admin
+
+@{
+    ViewBag.Title = "FaqView";
+
+}
+
+<a href="/">Library Home</a> @(" > ") <a href="/faq/index/">Library FAQs</a> @(" ") > <a href="/faq/LibCat/@Model.CatId">@Model.CatName</a>
+
+
+<h3 style="line-height:25px;">@Html.Raw(Model.LibResponseEdit)</h3>
+
+<strong>Resolution:</strong>
+
+@Html.Raw(Model.LibrarianResponse)
+
+<br />
+<br />
+<strong>Category Assigned to Question:</strong>@Model.CatName
+<br />
+<strong>Date and Time Question Submitted:</strong>@Model.LibDateTime
+<br />
+<hr />
+<p>Did you find the answer to your question?</p> &nbsp;&nbsp;<div style="color: red; font-weight: 700;">@ViewBag.Message</div>
+
+<fieldset>
+    @using (Html.BeginForm("FaqAnswer", "faq", new { id = Model.QuestId }, FormMethod.Post))
+    {
+
+        <input type="submit" id=@Model.QuestId name="button" value="Yes" />
+        <input type="submit" id=@Model.QuestId name="button" value="No" />
+
+    }
+
+
+
+
+
+</fieldset>
+
+

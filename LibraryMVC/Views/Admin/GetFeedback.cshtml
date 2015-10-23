@@ -1,0 +1,72 @@
+﻿@model IEnumerable<LibraryMVC4.Models.admin>
+
+@{
+    ViewBag.Title = "GetFeedback";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 30, canSort: false);    
+}
+    
+<h2>Library User Feedback</h2>
+
+    @Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+    <style type="text/css">
+        /*Here we will add css for style webgrid*/
+        .webgrid-table {
+            font-family: Verdana, Helvetica, sans-serif;
+            font-size: 1.2em;
+            width: 100%;
+            display: table;
+            border-collapse: separate;
+            border: solid 1px #98BF21;
+            background-color: white;
+        }
+
+        .webgrid-table td, th {
+            border: 1px solid #98BF21;
+            padding: 3px 7px 2px;
+        }
+
+        .webgrid-header {
+            background-color: #A7C942;
+            color: #FFFFFF;
+            padding-bottom: 4px;
+            padding-top: 5px;
+            text-align: left;
+        }
+
+        .webgrid-footer {
+        }
+
+        .webgrid-row-style {
+            padding: 3px 7px 2px;
+        }
+
+        .webgrid-alternating-row {
+            background-color: #EAF2D3;
+            padding: 3px 7px 2px;
+        }
+    </style>
+
+<div id="content">
+
+    @grid.GetHtml(
+        htmlAttributes: new { id = grid },
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        rowStyle: "webgrid-row-style",
+        columns: grid.Columns(
+        grid.Column(columnName: "PatronName", header: "UserName"),
+        grid.Column(columnName: "Comments"),
+        grid.Column(columnName: "PatronEmail"),
+        grid.Column(columnName: "DegProg", header: "Degree Program"),
+        grid.Column(columnName: "DateTime"),
+        grid.Column(columnName: "PatronId", header: "UserId"))
+        )
+
+    
+
+
+</div>

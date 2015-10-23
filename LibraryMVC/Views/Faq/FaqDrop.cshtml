@@ -1,0 +1,27 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+
+<a href="/">Library Home</a> @(" > ") <a href="/faq/index">Library FAQs</a>
+
+
+
+@foreach (var g in Model.GroupBy(item => item.CatName))
+{
+
+    <h2 align="center">@Html.DisplayFor(modelItem => g.Key)</h2>
+
+    <table class="table table-striped table-hover">
+
+        @foreach (var t in g)
+        {
+
+            <tr>
+
+                <td><a href="/Faq/FaqView/@t.CatId">@Html.Raw(t.LibQEdit)</a></td>
+
+            </tr>
+
+        }
+
+    </table>
+
+}

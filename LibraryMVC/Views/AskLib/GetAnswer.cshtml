@@ -1,0 +1,59 @@
+﻿@model LibraryMVC4.Models.asklib
+@{
+    ViewBag.Title = "GetAnswer";
+}
+
+<a href="/">Library Home</a> > <a href="/asklib/">My eReference</a>
+
+
+
+<h3>
+    Librarian Response
+</h3>
+<p>
+    @Html.Raw(Model.LibrarianResponse)
+</p>
+<h3>Attached Documents</h3>
+
+@if (ViewBag.thisFile != null)
+{
+
+    @*need to add link so that file can be downloaded properly*@
+
+    string _theFileName = ViewBag.thisFile;
+    @Html.ActionLink(_theFileName, "FileDownload", new { id = ViewBag.thisId })
+
+}
+else
+{
+    <p>No document attached.</p>
+
+}
+<h3>
+    Your Question
+</h3>
+@Html.Raw(Model.QuestDetail)
+<h3>Need Additional Assistance?</h3>
+
+<h3>Leave Feedback</h3>
+@*@Html.Action("AskLibFeedback", "AskLib")*@
+
+<fieldset>
+    @using (Html.BeginForm("SendEmail", "AskLib", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(c => c.QuestId)    
+
+        <div class="form-group">
+            <div class="col-lg-10">
+                <span style="color: red;">@Html.ValidationMessageFor(m => m.Comments)</span><br />
+                @Html.TextAreaFor(m => m.Comments, new { @class = "form-control", @rows = 5 })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10">
+                <input type="submit" value="Send" />
+            </div>
+        </div>
+    }
+</fieldset>

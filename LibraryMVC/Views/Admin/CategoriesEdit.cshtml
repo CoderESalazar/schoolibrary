@@ -1,0 +1,43 @@
+﻿@model LibraryMVC4.Models.admin
+
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CategoriesEdit</title>
+</head>
+<body>
+    <div>
+
+
+@using (Html.BeginForm("UpdateCategories", "admin", new { Model.CatId }, FormMethod.Post))
+    {    
+        <h3>@("Category Name: ")</h3> 
+            @Html.TextBoxFor(t => t.CatName)
+
+            <br/> 
+
+            <h3>@("Display: ")</h3> 
+
+            if (Model.CheckBox == true)
+            {
+                @Html.CheckBoxFor(t => t.CheckBox, "checked")
+            }
+            else
+            {
+                @Html.CheckBoxFor(t => t.CheckBox)           
+            
+            }
+            <br /><br />
+            <input type="submit" value="Submit" name="Submit"/> 
+     }     
+        
+    </div>
+</body>
+</html>

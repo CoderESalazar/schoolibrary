@@ -1,209 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<document-metadata version="1.0" xmlns="http://breeze.macromedia.com/ns/document-metadata" generator="Adobe Captivate 2">
-<document-info>
-	<title>Project</title>
-	<summary>Description of your project.</summary>
-	<author>Your Name</author>
-	<keywords>Adobe Captivate Project Project</keywords>
-	<view-link href="article_search.swf?slide={position}"/>
-</document-info>
-<section type="slide" position="1">
-	<title>Objectives</title>
-
-	<content>
-	<text>Search model</text>
-
-	<text>The objective for this tutorial is to demonstrate a refined or reiterative search that enables you to locate articles within a database. You will learn to create a keyword search, locate articles, identify subject identifiers, and then use those identifiers to build new search strings. This, you will find, is a very effective method for locating articles. </text>
-
-	<text>Module 1: How to do Something </text>
-
-	<text>Your search</text>
-</content>
-</section>
-<section type="slide" position="2">
-	<title>Scenario</title>
-
-	<content>
-	<text>Let&apos;s say you must write an essay on the topic &quot;age and cultural issues as they relate to online education.&quot; We want to begin selecting keywords that best describe the types of articles we want. Begin by jotting potential keywords down on a piece of a paper. Later we will later use these words to build a string that can be entered into a database. </text>
-
-	<text>Getting Started</text>
-</content>
-</section>
-<section type="slide" position="3">
-	<title>Concept</title>
-
-	<content>
-	<text>AssignmentOn the right side of this slide is our topic and keyword string that we can enter into the ERIC database. Please note that selecting the correct database is critcal, so reading database descriptions are important. Try it out! Create your own keywords and string. </text>
-
-	<text>Topic: age and cultural issues as they relate to online educationKeyword string: age AND culture AND (online education OR distance education)*Notice that we are using boolean operators and parenethesis to connect our keywords. </text>
-</content>
-</section>
-<section type="slide" position="4">
-	<title>Simulation</title>
-
-	<content>
-	<text>ERIC Simulation</text>
-
-	<text>The next few slides will show us entering the keywords into the ERIC database as well as selecting the full text only option; this way we only retrieve full text documents instead of abstracts. </text>
-</content>
-</section>
-<section type="slide" position="5">
-	<title></title>
-
-	<content>
-	<text>Click on the pull down menu.</text>
-
-	<text>This is the FirstSeach home screen. </text>
-</content>
-</section>
-<section type="slide" position="6">
-	<title></title>
-
-	<content>
-	<text>Select the ERIC database</text>
-</content>
-</section>
-<section type="slide" position="9">
-	<title></title>
-
-	<content>
-	<text>Type keywords into these boxes.</text>
-</content>
-</section>
-<section type="slide" position="10">
-	<title></title>
-
-	<content>
-	<text>Select the Full text check box</text>
-</content>
-</section>
-<section type="slide" position="11">
-	<title></title>
-
-	<content>
-	<text>Click the Search button</text>
-</content>
-</section>
-<section type="slide" position="13">
-	<title></title>
-
-	<content>
-	<text>ERIC retrieves 63 results when using our string of keywords. </text>
-</content>
-</section>
-<section type="slide" position="14">
-	<title></title>
-
-	<content>
-	<text>Select the What Parents Want To Know about Foreign Language Immersion Programs. ERIC Digest. link</text>
-</content>
-</section>
-<section type="slide" position="16">
-	<title></title>
-
-	<content>
-	<text>The FirstSearch: ERIC Detailed Record page appears</text>
-</content>
-</section>
-<section type="slide" position="17">
-	<title></title>
-
-	<content>
-	<text>Here are the subject descriptors that we want to use. </text>
-</content>
-</section>
-<section type="slide" position="18">
-	<title>How to do something</title>
-
-	<content>
-	<text>AssignmentSo now that we have a list of articles, begin browsing for articles that appear related to your topic. While you are doing this begin jotting down subject identifiers that best describe your topic. Something you will want to remember is that content within a database is organized by these subject identifiers, so using identifiers allow you to retreive articles related to your topic. Later we will use these identifiers to perform a subject search.   </text>
-
-	<text>Summary1. Keyword search2. Browse for articles3. Write down subject identifiers related to your topic4. Perform a subject search using subject identifiers. </text>
-</content>
-</section>
-<section type="slide" position="19">
-	<title>Copy of Scenario</title>
-
-	<content>
-	<text>On the right is a list of subject identifiers that were taken from articles appearing in our result list.  Let&apos;s go ahead and create another search using the subject identifiers on the right. For example: Cultural Education AND Distance Education. </text>
-
-	<text>List of Subject of Identifiers</text>
-
-	<text>Keyword string from subject identifiers: (&quot;cultural education&quot; AND &quot;distance education&quot;). Note: surrounding words with quotes allows us to perform a phrase search instead of keyword search.  </text>
-
-	<text>Immersions ProgramsSecond Language InstructionCultural EducationAdult LearningDistance Education</text>
-</content>
-</section>
-<section type="slide" position="20">
-	<title>Copy of Simulation</title>
-
-	<content>
-	<text>ERIC Simulation</text>
-
-	<text>The next few slides demonstrate how we take the subject identifiers and enter them into a database. Remember to select Subject from the drop down menus. You will see the number of results are smaller and more specific to your topic. **Mixing search strings with keywords and subject identifiers is the way to go. </text>
-</content>
-</section>
-<section type="slide" position="21">
-	<title></title>
-
-	<content>
-	<text>Begin by entering subject identifier in the &quot;Search for box&quot;</text>
-</content>
-</section>
-<section type="slide" position="25">
-	<title></title>
-
-	<content>
-	<text>Select the Subject item</text>
-</content>
-</section>
-<section type="slide" position="26">
-	<title></title>
-
-	<content>
-	<text>Enter the second subject identifier. Note the quotes surrounding the phrase.</text>
-</content>
-</section>
-<section type="slide" position="30">
-	<title></title>
-
-	<content>
-	<text>Select the Subject item</text>
-</content>
-</section>
-<section type="slide" position="31">
-	<title></title>
-
-	<content>
-	<text>Select the Full text check box</text>
-</content>
-</section>
-<section type="slide" position="32">
-	<title></title>
-
-	<content>
-	<text>Click the Search button</text>
-</content>
-</section>
-<section type="slide" position="34">
-	<title></title>
-
-	<content>
-	<text>Notice that we have refined and limited our search from 63 to 10 documents! This is much more manageable. </text>
-</content>
-</section>
-<section type="slide" position="35">
-	<title></title>
-
-	<content>
-	<text>Now that you know how to search like the experts, give it a try. It&apos;s the only way to really grasp the concept. </text>
-</content>
-</section>
-<section type="slide" position="36">
-	<title>End</title>
-
-	<content>
-	<text>Congratulations! You have completed this guide. You can return to the Guides and Quizzes page by clicking the Back button on your browser. </text>
-</content>
-</section>
-</document-metadata>

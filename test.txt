@@ -1,1 +1,2 @@
-Test
+Test. 
+I want to double check that I get latest from the website and bring this down to my local repository. 

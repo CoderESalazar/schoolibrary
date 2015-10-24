@@ -1,0 +1,83 @@
+<%@ Language=VBScript %>
+<!-- #include virtual="/adovbs.inc" -->
+<!-- #include virtual="/letmeinlite/CurrentLetmeinUserID.asp"-->
+<!-- #include virtual="/letmeinlite/WhoIsIt.asp"-->
+<!-- #include virtual="/includes_shared/GetUniversityCode.asp"-->
+<!-- #include virtual="/includes_shared/dbThisUniversity.asp"-->
+<!-- #include virtual="/includes/Header.asp"-->
+
+<html>
+<head>
+	<title>Course Related Subject Guides</title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" type="text/css" href="/style_list.css">
+	<style>
+		H2 { font-family: verdana;  background-color: green; color: white; 
+		padding: 2; margin-top: 0; 
+		}
+		a.crglink {text-decoration: none; color: SaddleBrown; font-weight: 700; font-size: 14px; font-family: verdana; }
+		color: #996633; text-decoration: none; align: right; font-weight: bold; }
+		a.crglink:hover {text-decoration: underline; } 
+		TD.crg { width: 300px;}
+		
+		
+		
+		</style>
+</head>
+
+<body topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+
+<% Call Header( "Course Related Guides", HEADER_BACK_ARRAY, array( "/elrc" ) ) %>
+
+<table align="center" cellpadding= "10" width="75%" > 
+<tr>
+
+<% Set rsECC = dbThisUniversity.Execute( "SELECT * FROM elrc_cr_categories ORDER BY display_order")
+while not rsECC.eof %>
+	<td><a style="font-size: 16pt; font-weight: 700; color: #996633;" href="#<%=rsECC("cr_cat_id")%>"><%=rsECC("category_title")%></a></td>
+	<% rsECC.MoveNext
+wend 
+Set rsECC = nothing %>  
+</tr>
+</table> 
+
+
+<div style="margin: 5px 10px 0 10px;">
+<% ' --- loop through all categories
+Set rsECC = dbThisUniversity.Execute( "SELECT * FROM elrc_cr_categories ORDER BY display_order")
+while not rsECC.eof %>
+
+	<div style="border: solid 2px black; margin-bottom: 10px; padding: 1 1 1 1 ; align:center" >
+	<a id="<%=rsECC("cr_cat_id")%>"></a>
+	<h2><%=rsECC("category_title")%></h2>
+
+		<% ' --- find out how many crg's are in this category
+		Set rsNLMain = dbThisUniversity.Execute("SELECT count(*) AS the_count FROM elrc_cr_guides ecg WHERE cr_cat_id = " & rsECC("cr_cat_id") ) 
+		iMaxCrgs = rsNLMain("the_count") 
+		iMaxCols = 3 
+		iMaxRows = Int( iMaxCrgs / iMaxCols ) + 1%>
+		<table align="center">
+		<tr valign="top">
+			<td class="crg">
+				<% ' --- now loop through all crg for this category
+				Set rsNLMain = dbThisUniversity.Execute("SELECT ecg.* FROM elrc_cr_guides ecg WHERE cr_cat_id = " & rsECC("cr_cat_id") & " ORDER BY guide_title" )
+				iRowCount = 0
+				while not rsNLMain.EOF 
+					iRowCount = iRowCount + 1 %>
+						<a class="crglink" href="crg.asp?guide_id=<%=rsNLMain("guide_id")%>"><%=rsNLMain("guide_title")%></a><br>
+					<% 
+					if ( iRowCount mod iMaxRows ) = 0 then Response.Write("</td><td class=""crg"">")
+					rsNLMain.MoveNext
+				wend
+				Set rsNLMain = nothing %>
+			</td>
+		</tr>
+		</table>
+
+	</div>
+	<% rsECC.MoveNext
+wend 
+Set rsECC = nothing %>  
+</div> 
+</body>
+</html>

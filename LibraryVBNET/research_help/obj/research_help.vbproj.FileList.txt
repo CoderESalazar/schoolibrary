@@ -1,0 +1,14 @@
+bin\research_help.dll
+bin\research_help.pdb
+bin\research_help.xml
+bin\AJAXExtensionsToolbox.dll
+bin\compass.dll
+bin\System.Web.Extensions.dll
+bin\compass.pdb
+bin\compass.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\research_help.Resources.resources
+obj\Debug\research_help.vbproj.GenerateResource.Cache
+obj\Debug\research_help.dll
+obj\Debug\research_help.xml
+obj\Debug\research_help.pdb

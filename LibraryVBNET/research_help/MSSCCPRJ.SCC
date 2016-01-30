@@ -1,0 +1,9 @@
+SCC = This is a source code control file
+
+[research_help.sln]
+SCC_Aux_Path = "P4SCC#ncuwapqa001:1666##esalazar##EdDevelopment"
+SCC_Project_Name = Perforce Project
+
+[research_help.vbproj]
+SCC_Aux_Path = "P4SCC#ncuwapqa001:1666##esalazar##EdDevelopment"
+SCC_Project_Name = Perforce Project

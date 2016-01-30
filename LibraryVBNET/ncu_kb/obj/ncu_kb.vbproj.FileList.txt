@@ -1,0 +1,17 @@
+bin\ncu_kb.dll
+bin\ncu_kb.pdb
+bin\ncu_kb.xml
+bin\AJAXExtensionsToolbox.dll
+bin\compass.dll
+bin\obout_Editor.dll
+bin\obout_Grid_NET.dll
+bin\System.Web.Extensions.Design.dll
+bin\System.Web.Extensions.dll
+bin\compass.pdb
+bin\compass.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ncu_kb.Resources.resources
+obj\Debug\ncu_kb.vbproj.GenerateResource.Cache
+obj\Debug\ncu_kb.dll
+obj\Debug\ncu_kb.xml
+obj\Debug\ncu_kb.pdb

@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{644EC81E-C0E6-4774-BB7C-0B0DCF0B6B00}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>research_help</RootNamespace>
+    <AssemblyName>research_help</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>research_help.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>research_help.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AJAXExtensionsToolbox, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\admin\bin\AJAXExtensionsToolbox.dll</HintPath>
+    </Reference>
+    <Reference Include="compass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\admin\compass\bin\compass.dll</HintPath>
+    </Reference>
+    <Reference Include="obout_Editor, Version=1.8.307.2, Culture=neutral, PublicKeyToken=3758f1b5e9d8196b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\admin\includes_shared\oboutSuite\bin\obout_Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="obout_Grid_NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5ddc49d3b53e3f98, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\admin\includes_shared\oboutSuite\bin\obout_Grid_NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="course_guides\admin\add.aspx" />
+    <Content Include="course_guides\admin\addnew\default.asp" />
+    <Content Include="course_guides\admin\addnew\default_action.asp" />
+    <Content Include="course_guides\admin\addnew_guide\catcher_page1.asp" />
+    <Content Include="course_guides\admin\addnew_guide\catcher_page2.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default1.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default2.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default3.asp" />
+    <Content Include="course_guides\admin\addnew_guide\defaultbus.asp" />
+    <Content Include="course_guides\admin\addnew_guide\defaultpsy.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default_action.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default_action2.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default_action3.asp" />
+    <Content Include="course_guides\admin\addnew_guide\default_action_res.asp" />
+    <Content Include="course_guides\admin\course_enrollees.aspx" />
+    <Content Include="course_guides\admin\default.asp" />
+    <Content Include="course_guides\admin\default.aspx" />
+    <Content Include="course_guides\admin\default_subject.asp" />
+    <Content Include="course_guides\admin\edit.aspx" />
+    <Content Include="course_guides\admin\edit\default.asp" />
+    <Content Include="course_guides\admin\edit\default1.asp" />
+    <Content Include="course_guides\admin\edit\default_action.asp" />
+    <Content Include="course_guides\admin\edit_guide\default1.asp" />
+    <Content Include="course_guides\admin\edit_guide\default3.asp" />
+    <Content Include="course_guides\admin\edit_guide\default_action.asp" />
+    <Content Include="course_guides\admin\edit_guide\default_action1.asp" />
+    <Content Include="course_guides\admin\edit_guide\default_action3.asp" />
+    <Content Include="course_guides\admin\edit_guide\default_action_res.asp" />
+    <Content Include="course_guides\admin\edit_guide\default_head.asp" />
+    <Content Include="course_guides\admin\edit_guide\default_res.asp" />
+    <Content Include="course_guides\admin\edit_psy\default1.asp" />
+    <Content Include="course_guides\admin\edit_psy\default3.asp" />
+    <Content Include="course_guides\admin\edit_psy\default_action.asp" />
+    <Content Include="course_guides\admin\edit_psy\default_action1.asp" />
+    <Content Include="course_guides\admin\edit_psy\default_action3.asp" />
+    <Content Include="course_guides\admin\edit_psy\default_action_res.asp" />
+    <Content Include="course_guides\admin\edit_psy\default_head.asp" />
+    <Content Include="course_guides\admin\edit_psy\default_res.asp" />
+    <Content Include="course_guides\admin\guide.asp" />
+    <Content Include="course_guides\admin\search.aspx" />
+    <Content Include="course_guides\band_aid.asp" />
+    <Content Include="course_guides\breadcrumb.asp" />
+    <Content Include="course_guides\bus_template.asp" />
+    <Content Include="course_guides\crg.asp" />
+    <Content Include="course_guides\crg_template.asp" />
+    <Content Include="course_guides\default.asp" />
+    <Content Include="course_guides\default1.asp" />
+    <Content Include="course_guides\ed_template.asp" />
+    <Content Include="course_guides\psy_template.asp" />
+    <Content Include="course_guides\search.asp" />
+    <Content Include="default.aspx" />
+    <None Include="Web References\DataLayer\DataLayer.disco" />
+    <Content Include="guide.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="course_guides\admin\add.aspx.designer.vb">
+      <DependentUpon>add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="course_guides\admin\add.aspx.vb">
+      <DependentUpon>add.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="course_guides\admin\course_enrollees.aspx.designer.vb">
+      <DependentUpon>course_enrollees.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="course_guides\admin\course_enrollees.aspx.vb">
+      <DependentUpon>course_enrollees.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="course_guides\admin\default.aspx.designer.vb">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="course_guides\admin\default.aspx.vb">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="course_guides\admin\edit.aspx.designer.vb">
+      <DependentUpon>edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="course_guides\admin\edit.aspx.vb">
+      <DependentUpon>edit.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="course_guides\admin\search.aspx.designer.vb">
+      <DependentUpon>search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="course_guides\admin\search.aspx.vb">
+      <DependentUpon>search.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="course_guides\crg_template.asp.designer.vb">
+      <DependentUpon>crg_template.asp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="course_guides\crg_template.asp.vb">
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.vb">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default.aspx.vb">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="guide.aspx.designer.vb">
+      <DependentUpon>guide.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="guide.aspx.vb">
+      <DependentUpon>guide.aspx</DependentUpon>
+      <SubType>ASPXCodeFile</SubType>
+    </Compile>
+    <Compile Include="Web References\DataLayer\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="course_guides\admin\edit\default.asp.bak" />
+    <None Include="course_guides\default.asp.bak" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Web References\DataLayer\DataLayer.wsdl" />
+    <None Include="Web References\DataLayer\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+    <None Include="Web References\DataLayer\ResultStatus.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://compasswcf.ncu.edu/CompassWCF/DataLayer.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DataLayer\</RelPath>
+      <UpdateFromURL>http://compasswcf.ncu.edu/CompassWCF/DataLayer.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>research_help_DataLayer_DataLayer</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" Condition="" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49646</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,43 @@
+﻿@model LibraryMVC4.Models.structure
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return Back to Dw Admin Area", "admin", "dw")</div>
+
+<h2>Edit Dw Page</h2>
+<br />
+@using (Html.BeginForm("UpdateDw", "Dw", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <form>
+        @Html.HiddenFor(c => c.PrimaryKey)
+
+        @("Page Title"): @Html.TextBoxFor(m => m.Title) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>
+
+        <br />
+        <br />
+
+        <h3>Page Text</h3>
+
+        <div class="editor-field">
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.Text)</span>
+            @Html.EditorFor(c => c.Text)
+
+        </div>
+        <br />
+        <br />
+
+        <input type="submit" value="Update" />
+
+    </form>
+}
+<div align="right">
+    @using (Html.BeginForm("DeleteDw", "Dw", FormMethod.Post))
+    {
+        @Html.HiddenFor(t => t.PrimaryKey)
+        
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+</div>

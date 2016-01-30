@@ -12,8 +12,7 @@ namespace LibraryMVC4.Repository
         IEnumerable<T> GetChairName(string id);
         IEnumerable<T> GetDissSearch(string a, string b);
 
-        T GetAbstract(int id);
-        
+        T GetAbstract(int id);       
 
     }
 }

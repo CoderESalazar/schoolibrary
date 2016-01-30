@@ -18,58 +18,65 @@
 <p>
     Library workshops require access to an Internet enabled computer for the entire
     length of the session. Workshops are typically between 30 and 60 minutes, and include
-    time for questions and answers.</p>
+    time for questions and answers.
+</p>
+<p>
+    <b>
+        <span style="color: red; font-weight: 700;">NEW!</span> Check out our new and improved <a href="http://ncu.libcal.com/calendar/workshops" target="_blank">registration page for library workshops!</a>
+        you can register for a workshop using the page you are currently on or you can register using our new page,
+        but please only register once using one system.
+    </b>
+</p>
 <br />
-
 @if (Model.Count() != 0)
 {
 
-    
-<table class="table table-striped table-hover">
-    <tr>
-        <th>
-            Event Date
-        </th>
-        <th>
-            Event Details
-        </th>
-        <th>
-            Register
-        </th>
-    </tr>
-    @foreach (var item in Model)
-    {
 
+    <table class="table table-striped table-hover">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.eventDate)
-            </td>
-            <td>
-                @Html.Raw(item.eventDetails)
-            </td>
-            <td>
-                @*@using (Html.BeginForm("", "", new {  id = item.lcEventId }, FormMethod.Post))
-                
-                {
-                        
-                    <input type="submit" id=@item.lcEventId name="button" value="Register" />
-                
-                }*@
-                
-                @Html.ActionLink("Register", "RegisterMe", "Schedule", new { id = item.lcEventId }, null)
-            </td>
+            <th>
+                Event Date
+            </th>
+            <th>
+                Event Details
+            </th>
+            <th>
+                Register
+            </th>
         </tr>
-        
-        
-    }
-</table>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventDate)
+                </td>
+                <td>
+                    @Html.Raw(item.eventDetails)
+                </td>
+                <td>
+                    @*@using (Html.BeginForm("", "", new {  id = item.lcEventId }, FormMethod.Post))
+
+                        {
+
+                            <input type="submit" id=@item.lcEventId name="button" value="Register" />
+
+                        }*@
+
+                    @Html.ActionLink("Register", "RegisterMe", "Schedule", new { id = item.lcEventId }, null)
+                </td>
+            </tr>
+
+
+        }
+    </table>
 
 }
 
 else
 {
 
-<div style="color:red; font-size: 1em; font-weight: 700;">Sorry, no workshops are being offered at this time. Please try later.</div> 
+    <div style="color:red; font-size: 1em; font-weight: 700;">Sorry, no workshops are being offered at this time. Please try later.</div>
 
 }
 <br />
@@ -79,16 +86,18 @@ else
     <asp:hyperlink id="HyperLink1" navigateurl="cancel_workshop.aspx" runat="server">here</asp:hyperlink>
     to cancel your registration. If you are unable to attend a live session, visit the
     <asp:hyperlink id="HyperLink2" navigateurl="http://library.ncu.edu/wl_template.aspx?parent_id=271"
-        target="_blank" runat="server">Workshop Videos page</asp:hyperlink>
-    to view recordings and to download the workshop outlines.</p>
+                   target="_blank" runat="server">Workshop Videos page</asp:hyperlink>
+    to view recordings and to download the workshop outlines.
+</p>
 <table align="center">
     <tr>
         <td>
             <img src="http://library.ncu.edu/public_images/elrc/2013/web/what_you_think.jpg"
-                alt="what_you_think" align="left" /><br />
+                 alt="what_you_think" align="left" /><br />
         </td>
     </tr>
 </table>
 <p>
     If you have already attended a Library Workshop, please take the @Html.ActionLink("Library Workshop Feedback Survey", "LeaveWorkshopFdbk", "schedule", new { target = "_blank" }) and let
-    us know if the session helped you. We appreciate your comments and suggestions.</p>
+    us know if the session helped you. We appreciate your comments and suggestions.
+</p>

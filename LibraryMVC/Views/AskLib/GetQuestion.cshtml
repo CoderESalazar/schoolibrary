@@ -20,7 +20,7 @@
 
 @using (Html.BeginForm("UserInfoPost", "AskLib", new { Model.CatId }.ToString(), FormMethod.Post))
 {
-
+    @Html.AntiForgeryToken()
     <form class="form-horizontal">
         <fieldset>
 
@@ -64,9 +64,6 @@
 
         </fieldset>
     </form>
-
-
-
 }
 
 

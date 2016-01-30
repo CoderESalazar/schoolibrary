@@ -10,7 +10,6 @@
 
 @foreach (var g in Model.GroupBy(item => item.GuideTitle))
 {
-
     @*This is the title of our specialization guide*@
     <h2 style="text-align:center;">@Html.DisplayFor(modelItem => g.Key)</h2>
 
@@ -20,40 +19,37 @@
 
         @foreach (var m in g.GroupBy(item => item.SpecHeaders))
         {
-
             counter++;
             <a href="#@m.Key">@m.Key</a>
 
             if (counter < Convert.ToInt32(ViewData["getCounts"]))
             {
                 @( " | ")
-
             }
-
         }
 
     </div>
 
     foreach (var t in Model.GroupBy(item => item.SpecHeaders))
     {
-
-
         <div id="@t.Key" style="font-size: 1.25em; font-weight: 700;">@t.Key</div>
 
         foreach (var c in t.OrderBy(display_order => display_order.SpecResourceTitle))
         {
-
-            <a href="@c.urlSpecResource" target="_blank">@c.SpecResourceTitle</a> @( " - ") @Html.Raw(c.descSpecResource)  <br /><br />
-
-
+            if (String.IsNullOrEmpty(c.descSpecResource))
+            {
+                <a href="@c.urlSpecResource" target="_blank">@c.SpecResourceTitle</a>                
+                <br/>
+                <br/>
+            }
+            else
+            {
+                <a href="@c.urlSpecResource" target="_blank">@c.SpecResourceTitle</a> @( " - ") @Html.Raw(c.descSpecResource)<br/><br/>
+            }
         }
 
-
-        <br />
-
-
+        <br />    
     }
-
 }
 
 

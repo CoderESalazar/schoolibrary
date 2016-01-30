@@ -1,0 +1,32 @@
+﻿@model LibraryMVC4.Models.guides
+
+@{
+    ViewBag.Title = "GetHeaderBody";
+}
+
+@if (ViewBag.headerId == 0)
+{
+
+    if (Model.GuideBody != null)
+    {
+        <div class="editor-field">
+            @Html.EditorFor(item => item.GuideBody)
+        </div>
+    }
+}
+else if (ViewBag.headerId != 0)
+{
+    if (Model.TitleHeader == "Home")
+    {
+        <div class="editor-field">
+            @Html.EditorFor(item => item.GuideBody)
+        </div>
+    }
+    else
+    {
+        <div class="editor-field">
+            @Html.EditorFor(item => item.HeaderBody)
+        </div>
+    }
+}
+

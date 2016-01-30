@@ -1,0 +1,4 @@
+﻿@model LibraryMVC4.Models.dbindex
+
+@Html.DropDownListFor(myDrop => Model.dbKeyId, Model.GetDbDrop, "--Select DB--", new { @id = "dbId"})
+

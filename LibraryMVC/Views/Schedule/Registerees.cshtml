@@ -1,0 +1,76 @@
+﻿@model IEnumerable<LibraryMVC4.Models.schedule>
+
+@{
+    ViewBag.Title = "Registerees";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var scheduleGrid = new WebGrid(Model, canPage: false, canSort: false);
+}
+
+<h2>List of Registerees</h2>
+
+@Html.ActionLink("Go back to Library Admin", "GetAdminSchedule", "schedule")
+
+<hr />
+
+<div id="content">  
+    <button style="float:right;" id="refresh">Refresh Grid</button>@(" ")
+    @scheduleGrid.GetHtml(
+        htmlAttributes: new { id = scheduleGrid },
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        lastText: "Last >>",
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        rowStyle: "webgrid-row-style",
+        columns: scheduleGrid.Columns(
+                scheduleGrid.Column(columnName: "lcEventId", header: "ID", 
+                format: @<text><label id="lcEventId">@item.lcEventId</label></text>),
+                scheduleGrid.Column(columnName: "PatronName", header: "Name"),
+                scheduleGrid.Column(columnName: "PatronEmail", header: "Email"),
+                scheduleGrid.Column(columnName: "DateTime", header: "Date"),
+                scheduleGrid.Column(header: "Action",
+                    format:
+                    @<text>
+                       <button class="delete">Delete</button>
+                    </text>))
+                 )
+    <div id="bottom"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('.delete').on('click', function () {
+            var flag = confirm('Are you sure you want to delete?');
+
+            if (flag) {
+
+                var tr = $(this).parents('tr:first');
+                var lcEventId = tr.find("#lcEventId").html();
+                //tr.find('.edit-mode, .display-mode').toggle();
+                var LibraryDeleteItem =
+                    {
+                        "lcEventId": lcEventId
+                    };
+                $.ajax({
+                    url: '/schedule/DeleteRegisteree/',
+                    data: JSON.stringify(LibraryDeleteItem),
+                    type: 'Delete',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            }
+        });
+        $('#refresh').on('click', function () {
+
+            window.location.reload();
+
+        });
+    })
+
+</script>

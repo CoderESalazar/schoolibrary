@@ -1,0 +1,25 @@
+﻿@model IEnumerable<LibraryMVC4.Models.fa>
+
+@{
+    ViewBag.Title = "FaAdmin";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+@Html.ActionLink("Back to Library Admin Area", "index", "admin")
+<br/>
+<h2>FA Pages - Schools</h2>
+
+<div><strong>Note:</strong> Use Library Pages to add/edit/delete new Schools to this page</div>
+<br/>
+@foreach(var item in Model)
+{
+ 
+   @Html.ActionLink(item.school, "faedit", new { id = @item.HighId})
+    
+    <br />
+}
+
+<br/> 
+<br/> 
+    
+@*@Html.Action("DbDropDown", "DbIndex")*@
+

@@ -1,0 +1,39 @@
+﻿@model LibraryMVC4.Models.guides
+
+@{
+    ViewBag.Title = "GetHeader";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+@Html.ActionLink("Return to Specialization", "specguide", new { id = Model.DeptDiscpId })
+
+<h2>Editing Header</h2>
+
+@using (Html.BeginForm("UpdateHeader", "guide", FormMethod.Post))
+{
+    <fieldset>
+
+        @Html.HiddenFor(t => t.HeaderId)
+        @Html.HiddenFor(t => t.DeptDiscpId)
+        Title: @Html.TextBoxFor(t => t.TitleHeader, new { @style = "width: 400px;" })
+        <br />
+        <br />
+        Display Order (number only): @Html.TextBoxFor(t => t.DisplayOrder, new { @style = "width: 50px;" })
+        <br />
+        <br />
+        <input type="submit" value="Update" />
+
+    </fieldset>
+}
+<div align="right">
+    @using (Html.BeginForm("DeleteHeader", "guide", FormMethod.Post))
+    {
+        @Html.HiddenFor(t => t.HeaderId)
+        @Html.HiddenFor(t => t.DeptDiscpId)
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+</div>
+
+
+
+
+

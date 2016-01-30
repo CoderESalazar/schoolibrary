@@ -12,45 +12,10 @@
 @Html.ActionLink("Go back to Library Admin", "index", "admin")
 
 <hr />
+
+@Html.ActionLink("Add an Event", "AddEvent")
+
 <a href="#bottom" style="float: right; font-weight: bold;">Go to Bottom</a>
-<style type="text/css">
-    /*Here we will add css for style webgrid*/
-    .webgrid-table {
-        font-family: Verdana, Helvetica, sans-serif;
-        font-size: 1.2em;
-        width: 100%;
-        display: table;
-        border-collapse: separate;
-        border: solid 1px #98BF21;
-        background-color: white;
-    }
-
-    .webgrid-table td, th {
-        border: 1px solid #98BF21;
-        padding: 3px 7px 2px;
-    }
-
-    .webgrid-header {
-        background-color: #A7C942;
-        color: #FFFFFF;
-        padding-bottom: 4px;
-        padding-top: 5px;
-        text-align: left;
-    }
-
-    .webgrid-footer {
-    }
-
-    .webgrid-row-style {
-        padding: 3px 7px 2px;
-    }
-
-    .webgrid-alternating-row {
-        background-color: #EAF2D3;
-        padding: 3px 7px 2px;
-    }
-</style>
-
 
 <div id="content">
 
@@ -66,12 +31,12 @@
         rowStyle: "webgrid-row-style",
         columns: scheduleGrid.Columns(
                 scheduleGrid.Column(columnName: "lcEventId", header: "", 
-                                    format: @<text>@Html.ActionLink("Select", "","schedule", new { eventId = item.lcEventId }, null)</text>),
+                                    format: @<text>@Html.ActionLink("Select", "GetEvent", "schedule", new { id = item.lcEventId }, null)</text>),
                 scheduleGrid.Column(columnName: "eventDate", header: "Event Date"),
                 scheduleGrid.Column(columnName: "TotalAttendees", header: "Total Attendees"),
                 scheduleGrid.Column(columnName: "LibLastName", header: "Librarian"),
                 scheduleGrid.Column(columnName: "Registerees", header: "Registerees", 
-                                    format: @<text>@Html.ActionLink((string)item.Registerees, "", "schedule", new { eventId = item.lcEventId }, null)</text>),
+                                    format: @<text>@Html.ActionLink((string)item.Registerees, "Registerees", "schedule", new { id = item.lcEventId }, null)</text>),
                 scheduleGrid.Column(columnName: "eventDetails", header: "Event Details",
                                     format: @<text>@Html.Raw(item.eventDetails)</text>))
                 )

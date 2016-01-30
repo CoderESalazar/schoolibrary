@@ -1,0 +1,71 @@
+﻿@model LibraryMVC4.Models.dbindex
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return to Database Index Table", "Index", "DbIndex")</div>
+
+<h2>Edit Database</h2>
+
+<br/> 
+
+@using (Html.BeginForm("PostDb", "DbIndex", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        @Html.HiddenFor(myKey => myKey.dbKeyId)
+
+        @("Database Title"): @Html.TextBoxFor(dbTitle => dbTitle.dbTitle, new { style = "width: 300px;" }) <span style="color: red;">@Html.ValidationMessageFor(dbTitle => dbTitle.dbTitle)</span>
+        <br /> 
+        <br/> 
+        @("Database URL"): @Html.TextBoxFor(c => c.dbUrl, new { style = "width: 450px;" }) <span style="color: red;">@Html.ValidationMessageFor(c => c.dbUrl)</span>
+        <br /> 
+        <br/> 
+        @("Full Text"): @Html.TextBoxFor(c => c.dbFullText) 
+        <br /> 
+        <br/>
+        @("Coverage"): @Html.TextBoxFor(c => c.dbCoverage)
+        <br /> 
+        <br/>
+        @("Scholarly"): @Html.TextBoxFor(c => c.dbScholarly) 
+        <br/> 
+        <br/> 
+        @("Subscription"): @Html.TextBoxFor(c => c.dbType) @("Y = Yes, N = No")
+
+        <br />
+        <br/> 
+
+        <h3>Database Description</h3>
+
+        <div class="editor-field">
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.dbDesc)</span>
+            @Html.EditorFor(c => c.dbDesc)
+        </div>
+
+        <br/> 
+
+        @if (Model.dbDisplay == true)
+        {
+            @("Display ") @Html.CheckBoxFor(m => m.dbDisplay, new { @checked = Model.dbDisplay })
+        }
+        else
+        {
+            @("Display ") @Html.CheckBoxFor(m => m.dbDisplay)
+        }
+        <br />
+        <br />
+        <input type="submit" value="Update" />
+
+    </fieldset>
+}
+
+
+<div align="right">
+    @using (Html.BeginForm("DeleteDb", "DbIndex", FormMethod.Post))
+    {
+        @Html.HiddenFor(t => t.dbKeyId)
+
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+</div>

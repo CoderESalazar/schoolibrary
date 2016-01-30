@@ -12,7 +12,6 @@ namespace LibraryMVC4.Repository
 {
     public class StructureRepository : IStructure<structure>
     {
-
         public IEnumerable<structure> GetLibraryPages()
         {
 
@@ -31,7 +30,6 @@ namespace LibraryMVC4.Repository
                                      }).ToList();
 
                 return getLibraryPgs;
-
             }
         }
 
@@ -128,6 +126,37 @@ namespace LibraryMVC4.Repository
             return result;
         }
 
+        public object AddAlert(structure entity)
+        {
+            LibEntities _libEntities = new LibEntities();
+            bool result = false;
+
+            try
+            {
+                var alert_add = new alert_box
+                {
+                    alert_title = entity.Title,
+                    alert_mess = entity.Text,
+                    alert_bit = true,
+                    date_time = DateTime.Now
+                };
+                _libEntities.alert_box.AddObject(alert_add);
+                _libEntities.SaveChanges();
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _libEntities.Connection.Close();
+            }
+            return result;
+
+        }
+
         public object AddLibPage(structure entity)
         {
             LibEntities _ncuElrc = new LibEntities();
@@ -164,8 +193,8 @@ namespace LibraryMVC4.Repository
         public object StartChat()
         {
             LibEntities _ncuElrc = new LibEntities();
-            bool result = false;            
-           
+            bool result = false;
+
             try
             {
                 var chat = new chat
@@ -211,7 +240,75 @@ namespace LibraryMVC4.Repository
             _ncuElrc.Connection.Close();
 
             return getChatList;
-            
+
+        }
+        public IEnumerable<structure> GetRecentAlerts()
+        {
+            var _ncuElrc = new LibEntities();
+
+            var getRecentAlerts = (from alerts in _ncuElrc.alert_box
+                                   orderby alerts.date_time descending
+                                   select new structure
+                                   {
+                                       Title = alerts.alert_title,
+                                       DateTime = alerts.date_time,
+                                       Display = alerts.alert_bit,
+                                       PrimaryKey = alerts.key_id
+                                   }).Take(10);
+
+            _ncuElrc.Connection.Close();
+
+            return getRecentAlerts;
+
+        }
+        public object EditAlert(int id)
+        {
+            LibEntities _libEntities = new LibEntities();
+
+            var editAlert = (from alert in _libEntities.alert_box
+                             where alert.key_id == id
+                             select new structure
+                             {
+                                 PrimaryKey = alert.key_id,
+                                 Title = alert.alert_title,
+                                 Text = alert.alert_mess,
+                                 CheckBox = alert.alert_bit
+                             }).FirstOrDefault();
+
+            return editAlert;
+
+
+        }
+
+        public object EditPostAlert(structure entity)
+        {
+            LibEntities _libEntities = new LibEntities();
+
+            int keyId = entity.PrimaryKey;
+
+            alert_box edit = _libEntities.alert_box.FirstOrDefault(t => t.key_id == keyId);
+
+            try
+            {
+                if (edit != null)
+                {
+                    edit.alert_title = entity.Title;
+                    edit.alert_bit = entity.CheckBox;
+                    edit.alert_mess = entity.Text;
+
+                    _libEntities.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _libEntities.Connection.Close();
+            }
+            return false;
         }
     }
 }

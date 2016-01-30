@@ -1,0 +1,10 @@
+﻿@model LibraryMVC4.Models.guides
+
+@{
+    ViewBag.Title = "AddSpecPage";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+@Html.ActionLink("Return to Specialization Admin Area", "SpecAdminArea")
+<h2>Add Specialization</h2>
+
+@Html.Action("GetSpecList", "Guide") 

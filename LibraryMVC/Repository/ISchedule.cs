@@ -7,6 +7,9 @@ namespace LibraryMVC4.Repository
 {
     public interface ISchedule<T> where T : class
     {
-        IEnumerable<T> GetAdminWorkshops();  
+        IEnumerable<T> GetAdminWorkshops();
+        T GetEvents(int id);
+        object DeleteEvent(int id);
+
     }
 }

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<LibraryMVC4.Models.structure>
+
+@{
+    ViewBag.Title = "GetAlerts";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var alertGrid = new WebGrid(Model, canPage: false, canSort: false);
+}
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<h2>Alerts</h2>
+
+
+@Html.ActionLink("Add New Alert", "AddAlert")
+
+<div id="content">
+
+    @alertGrid.GetHtml(
+       htmlAttributes: new { id = alertGrid },
+       mode: WebGridPagerModes.All,
+       firstText: "<< First",
+       lastText: "Last >>",
+       tableStyle: "webgrid-table",
+       headerStyle: "webgrid-header",
+       footerStyle: "webgrid-footer",
+       alternatingRowStyle: "webgrid-alternating-row",
+       rowStyle: "webgrid-row-style",
+       columns: alertGrid.Columns(
+       alertGrid.Column(columnName: "PrimaryKey", header: " ",
+                    format: @<text>@Html.ActionLink("Select", "EditAlert", new { id = item.PrimaryKey }, null) </text>),
+                                                       alertGrid.Column(columnName: "Title", header: "Alert Title"),
+                                                       alertGrid.Column(columnName: "DateTime", header: "Date/Time"),
+                                                       alertGrid.Column(columnName: "Display", header: "Display")
+                                                     ))
+</div>

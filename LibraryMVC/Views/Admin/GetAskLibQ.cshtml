@@ -8,7 +8,7 @@
 
 <h2>Library Question</h2>
 
-<hr/> 
+<hr />
 @if (Model.QuestStatus.Contains("Not"))
 {
     <a href="/admin/GetAskLibqs">Return to admin</a>
@@ -18,37 +18,37 @@ else
     <a href="/admin/LibraryWkSpace">Return to admin</a>
 }
 
-<br/> 
+<br />
 @ViewBag.LibUserId
 
 <h3>Patron Info</h3>
 User Name: @Html.DisplayFor(m => Model.PatronName)
-<br/>  
-<br /> 
+<br />
+<br />
 User Id: @Html.DisplayFor(m => Model.PatronId)
-<br/> 
-<br /> 
-Address: @Html.DisplayFor(m => Model.PatronPhysicalAddress) 
-<br/> 
-<br /> 
+<br />
+<br />
+Address: @Html.DisplayFor(m => Model.PatronPhysicalAddress)
+<br />
+<br />
 Phone: @Html.DisplayFor(m => Model.PatronPhone)
-<br/> 
-<br /> 
+<br />
+<br />
 Email: @Html.DisplayFor(m => Model.PatronEmail)
 
 <h3>Question Info</h3>
 
 Date/Time Question Posted: @Html.DisplayFor(m => Model.DateTime)
-<br/> 
-<br /> 
+<br />
+<br />
 Category: @Html.DisplayFor(m => Model.Category)
-<br/> 
-<br /> 
+<br />
+<br />
 Course Number (if provided): @Html.DisplayFor(m => Model.CourseNum)
-<br/> 
-<br /> 
+<br />
+<br />
 Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
-<br/> 
+<br />
 @* Form section can begin here.*@
 
 @using (Html.BeginForm("SubmittedToKbPost", "Admin", new { Model.QuestId }, FormMethod.Post))
@@ -63,15 +63,16 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
                 checkbox.*@
 
             @*@if (Model.QuestStatus.Contains("Not"))*@
-            @if(Model.QuestStatus.Contains("Not"))
-            {                
+            @if (Model.QuestStatus.Contains("Not"))
+            {
                 @("Not submitted to KB")
-                             
-            }else 
+
+            }
+            else
             {
                 @("Leave in KB") @Html.Action("GetCheckBox", "admin")
-            } 
-                
+            }
+
             <h3>Editing Areas</h3>
             @*<span style="color: red;">@Html.ValidationMessageFor(m => m.CatId)</span>*@
             Select Category: @Html.Action("GetCatList", "admin")
@@ -82,7 +83,7 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
             <br />
             @*<span style="color: red;">@Html.ValidationMessageFor(m => m.LibResponseEdit)</span>*@
             <div class="editor-field">
-              
+
                 @Html.EditorFor(model => model.LibResponseEdit)
             </div>
             <br />
@@ -91,7 +92,7 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
             @*<span style="color: red;">@Html.ValidationMessageFor(m => m.LibrarianResponse)</span>*@
 
             <div class="editor-field">
-              
+
                 @Html.EditorFor(model => model.LibrarianResponse)
             </div>
 

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<LibraryMVC4.Models.fa>
+
+
+@if (ViewBag.Content != null)
+{
+    @ViewBag.Content
+}
+else
+{
+
+    foreach (var item in Model)
+    {
+        <div>
+            <a href="@item.dbUrl" target="_blank">
+                <strong>@item.dbTitle</strong>
+            </a>
+            @(" - ")
+            @Html.Raw(item.dbDescript)
+        </div>
+        <br />
+
+    }
+}

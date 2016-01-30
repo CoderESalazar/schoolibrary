@@ -1,0 +1,76 @@
+﻿@model LibraryMVC4.Models.guides
+
+@{
+    ViewBag.Title = "AddResourcePage";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Return to Specialization", "specguide", new { id = Model.DeptDiscpId })
+
+<h2>Add Resource to @Model.TitleHeader</h2>
+
+<div>
+    Either add resource using the drop down menu or manually enter resource in the "Other Resource" text box.
+    Note: if you manually enter a resource you will need to provide a Resource Title and URL. No URL 
+    is necessary when you a select resource from the drop down. 
+</div>
+<br />
+@using (Html.BeginForm("PostResourcePage", "guide"))
+{    
+    @("Add a Resource ")@Html.Action("DbDropDown", "DbIndex")
+
+    @Html.Hidden("HeaderId", (int)ViewBag.headerId)
+    @Html.HiddenFor(t => t.DeptDiscpId)
+
+    <br/> 
+    <br/>
+    <input type="submit" id="submit" value="Add Resource" />
+}
+@using (Html.BeginForm("PostResourcePage", "guide"))
+{
+    @Html.Hidden("HeaderId", (int)ViewBag.headerId)
+    @Html.HiddenFor(t => t.DeptDiscpId)
+
+    
+    <br />
+    <br />
+    <hr/>
+
+    @("Other Resource: ")@Html.TextBoxFor(t => t.ResourceTitle, new { id = "resourceId", @style = "width: 500px;" }) @("Limit to 300 characters")  <span style="color: red;">@Html.ValidationMessageFor(t => t.ResourceTitle)</span>
+    <br />
+    <br/>
+    
+    @("URL of Resource: ")@Html.TextBoxFor(t => t.ResourceUrl, new { id = "url", @style = "width: 500px;" }) <span style="color: red;">@Html.ValidationMessageFor(t => t.ResourceUrl)</span>
+    <br/>
+    <br />
+    <h4>Resource Description</h4>
+
+    @("Limit to 500 characters - Optional")
+    <div class="editor-field">
+       @Html.EditorFor(c => c.ResourceDesc)
+    </div>
+    <input type="submit" id="submit" value="Add Other Resource" />
+}
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function () {
+            tinyMCE.triggerSave('#ResourceDesc');
+
+        });
+    });
+
+    //jQuery(document).ready(function ($) {
+    //    $('#submit').click(function () {
+    //        var dbId = $('#dbId').val();
+    //        var resourceId = $('#resourceId').val();
+  
+    //        if (resourceId != '' && dbId != '') {
+    //            alert("Please add only one resource at a time.");
+    //            event.preventDefault();
+    //        } else if (resourceId == '' && dbId == '') {
+    //            alert("Please add a resource.");
+    //            event.preventDefault();    
+    //        }
+    //    })
+    //});
+</script>

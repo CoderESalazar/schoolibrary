@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace LibraryMVC4.Models
 {
-    public class guides
+    public class guides : dbindex
     {
-        //library guide
-        
+        //library guide        
         public string TitleHeader { get; set; }
         public int? HeaderId { get; set; }
         public int? GuideId { get; set; }
         public int? DisplayOrder { get; set; }
+
+        [UIHint("tinymce_jquery_full"), AllowHtml]
         public string GuideBody { get; set; }
+
         public string CGuideTitle { get; set; }
+
+        [UIHint("tinymce_jquery_full"), AllowHtml]
         public string HeaderBody { get; set; }
         public IEnumerable<guides> GuideTabList { get; set; }
         public IEnumerable<guides> GuidBody { get; set; }
@@ -32,14 +37,39 @@ namespace LibraryMVC4.Models
         public string urlSpecResource { get; set; }
         public string descSpecResource { get; set; }
 
-
         //course guide index
-
         public int GuidesId { get; set; }
         public string CourseCode { get; set; }
         public IEnumerable<SelectListItem> GuideList { get; set; }
+        public string CourseName { get; set; }
+        public int? Enrollees { get; set; }
+        public bool? Display { get; set; }
+        public string LastName { get; set; }
+    
+        //spec guide admin
+        public string DeptSpecId { get; set; }
+        public string School { get; set; }
+        public int DeptGuideMainId { get; set; }
+        public int? DeptDiscpId { get; set; }
 
+        [Required(ErrorMessage = "*Title Required")]
+        public string ResourceTitle { get; set; }
+        [Required(ErrorMessage = "*Url Required")]
+        public string ResourceUrl { get; set; }
+        [UIHint("tinymce_jquery_full"), AllowHtml]
+        public string ResourceDesc { get; set; }
+        
+        public string SectionName { get; set; }
+        public string HeaderName { get; set; }
 
+        public IEnumerable<SelectListItem> HeaderList { get; set; }
+
+        public int GuideResourceId { get; set; }
+
+        //course guide tabs
+        public int TabId { get; set; }
+        public string TabName { get; set; }
+        public IEnumerable<SelectListItem> TabList { get; set; }
 
     }
 }

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<LibraryMVC4.Models.fa>
+
+@{
+    ViewBag.Title = "FaEdit";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to FA Admin", "FaAdmin", "Fa")
+
+<h2>Editing FA Page - 
+@foreach(var title in ViewBag.GetTitle as List<LibraryMVC4.Models.fa>)
+{
+    @title.Title
+    
+}    
+</h2>
+
+@using (Html.BeginForm("AddDb", "fa", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @("Add a Database to list below: ")@Html.Action("DbDropDown", "DbIndex")
+
+    @Html.Hidden("HighId", (int)ViewBag.DbId)
+
+    <input type="submit" value="Add Db" />
+}
+
+@foreach (var t in Model.GroupBy(item => item.Title))
+{
+    <h3>@Html.DisplayFor(modelItem => t.Key)</h3>
+
+    foreach (var c in t.OrderBy(db_items => db_items.dbTitle))
+    {
+        using (Html.BeginForm("FaDbDelete", "Fa", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Hidden("dbNum", (int)c.dbNum)
+            @Html.Hidden("HighId", (int)c.HighId)
+            <div><button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>@(" ") @c.dbTitle</div>
+        }
+    }
+}
+
+<br />

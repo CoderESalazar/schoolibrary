@@ -8,70 +8,52 @@
 <a href="/">Library Home</a> @(" > ") <a href="/guide/index">Library Guides</a> @(" ")
 
 
-@if (ViewData["GuideBody"] != null)
+@* The way this code works is that no matter if there is not a headerId
+    we are still printing out the title. However, you can see in the second
+    foreach loop that I am checking to see if I need to print the tabs.
+*@
+
+@foreach (var c in Model.GroupBy(item => item.CGuideTitle))
 {
+    <h2>@Html.DisplayFor(title => c.Key)</h2>
 
-    foreach (var g in ViewData.Model.GroupBy(item => item.CGuideTitle))
+    foreach (var g in c.Where(item => item.HeaderId != 0))
     {
-        <h2>@Html.DisplayFor(modelItem => g.Key)</h2>
+        @Html.ActionLink(g.TitleHeader, "getcguide", new { controller = "guide", guidesId = g.GuideId.ToString(), headerId = g.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
 
-        foreach (var t in g)
-        {
-            @Html.ActionLink(t.TitleHeader, "getcguide", new { controller = "guide", guidesId = t.GuideId.ToString(), headerId = t.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
-
-            @* @Html.ActionLink(t.TitleHeader, "getcguide", "guide1", new { guidesId = t.GuideId.ToString(), headerId = t.HeaderId.ToString() }, FormMethod.Post) *@
-
-            <span>@( "  ")</span> <span>@( "  ")</span>
-        }
-
-        <br />
-        <br />
-
-        foreach (var item in ViewData["GuideBody"] as List<LibraryMVC4.Models.guides>)
-        {
-
-            if (item.TitleHeader == "Home")
-            {
-
-                @Html.Raw(item.GuideBody)
-            }
-            else
-            {
-                @Html.Raw(item.HeaderBody)
-
-            }
-
-        }
+        <span>@( "  ")</span> <span>@( "  ")</span>
     }
+
 }
 
-@if (ViewData["guideNoTabs"] != null)
+<br />
+<br />
+
+@* Hear I am just simply checking to see if a header is passed. if not
+    just print the body. In this case, we will receive the default message *@
+
+@if (ViewBag.headerId == null)
 {
-    foreach (var item in ViewData["guideNoTabs"] as List<LibraryMVC4.Models.guides>)
+    foreach (var z in Model.GroupBy(item => item.GuideBody))
     {
+        @Html.Raw(z.Key);
+    }
 
-        <h2>@item.GuideTitle</h2>
-
-        foreach (var g in ViewData.Model.GroupBy(q => item.CGuideTitle))
+}
+else
+{
+    //Here as you can see I am clicking on the tabs to then receive the correct content dyanmically.
+    foreach (var t in Model.Where(t => t.HeaderId == ViewBag.headerId))
+    {
+        if (t.HeaderBody == null)
         {
-            //this is the title
-
-            foreach (var t in g)
-            {
-                //these are the tabs
-
-                @Html.ActionLink(t.TitleHeader, "getcguide", new { controller = "guide", guidesId = t.GuideId.ToString(), headerId = t.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
-
-                <span>@( "  ")</span> <span>@( "  ")</span>
-
-            }
+            @Html.Raw(t.GuideBody)
         }
+        else
+        {
+            @Html.Raw(t.HeaderBody)
 
-        <br />
-        <br />
-
-        @Html.Raw(item.GuideBody)
-
+        }
     }
 }
 

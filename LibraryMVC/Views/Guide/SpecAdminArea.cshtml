@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+
+@{
+    ViewBag.Title = "SpecAdminArea";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Return to Admin", "index", "admin")
+
+<h2>Specializations Admin Area</h2>
+
+@foreach (var c in Model.GroupBy(item => item.School))
+{
+    <h4>@Html.DisplayFor(modelItem => c.Key)</h4>
+
+
+
+    foreach (var newSpec in c.GroupBy(subItem => subItem.DeptDiscpId))
+    {
+        <div>@Html.ActionLink("Add new specialization", "AddSpecPage", "Guide", new { id = newSpec.Key }, null)</div><br />
+    }
+
+
+    foreach (var t in c.OrderBy(guideTitle => guideTitle.GuideTitle))
+    {
+        <div>
+            @Html.ActionLink(t.GuideTitle, "specguide", "guide", new { id = t.DeptGuideMainId }, null)
+
+            @( " - ")
+                        
+            @if (t.DisplayId)
+            {
+                @Html.ActionLink("Displaying", "DisplaySpec", "guide", new { boolId = t.DisplayId, id = t.DeptGuideMainId }, null)
+            }
+            else 
+            {
+                @Html.ActionLink("Not Displaying", "DisplaySpec", "guide", new { boolId = t.DisplayId, id = t.DeptGuideMainId }, null)
+            }
+        </div>
+    }
+}

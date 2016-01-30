@@ -7,10 +7,11 @@ using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
 using System.Collections;
+using LibraryMVC4.Controllers.Attributes;
 
 namespace LibraryMVC4.Controllers
 {
-    [Authorize()]
+    [LibraryAdmin]
     public class SearchController : Controller
     {        
         private IAdmin<admin> _adminRepository;
@@ -80,6 +81,13 @@ namespace LibraryMVC4.Controllers
         {
             var getQId = _searchRepository.GetByQId(id);
 
+            if (getQId == null)
+            {
+
+                return Json(1, JsonRequestBehavior.AllowGet);
+
+            }
+
             return Json(getQId, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
@@ -88,21 +96,6 @@ namespace LibraryMVC4.Controllers
             var getCourseSearch = _searchRepository.GetCourse(id);
 
             return Json(getCourseSearch, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult FindFaqs(string searchText, int maxResults)
-        {
-            using (var _libEntity = new LibEntities())
-            {
-                var result = (from s in _libEntity.quest_lib
-                              where s.lib_q_edit.ToLower().Contains(searchText.ToLower())
-                              && s.q_status == "Submitted to KB"
-                              && s.cat_id != false
-                              select s).Distinct().Take(maxResults).ToList();
-                
-                return Json(result);
-            }
-
-        }
+        }        
     }
 }

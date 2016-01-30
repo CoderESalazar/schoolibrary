@@ -7,19 +7,12 @@
 }
 @try
 {
-
     if (Model.AlertBit == true)
     {
-
         <div class="alert alert-info" style="font-size: 1.1em;" role="alert">@Model.AlertTitle : @Html.Raw(Model.AlertMess)</div>
-
-
-
     }
 }
 catch
 {
-
     @(" ")
-
 }

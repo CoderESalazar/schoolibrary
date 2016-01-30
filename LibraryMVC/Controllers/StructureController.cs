@@ -23,7 +23,6 @@ namespace LibraryMVC4.Controllers
             _structureRepository = new StructureRepository();
 
         }
-
         public StructureController(IStructure<structure> repository)
         {
             _structureRepository = repository;
@@ -33,6 +32,13 @@ namespace LibraryMVC4.Controllers
             var getLibraryPages = _structureRepository.GetLibraryPages();
 
             return View(getLibraryPages);
+        }
+
+        public ActionResult GetAlerts()
+        {
+            var getAlerts = _structureRepository.GetRecentAlerts();
+            return View(getAlerts);
+
         }
         [HttpPost]
         public JsonResult UpdateLibraryAdmin(structure model)
@@ -73,9 +79,7 @@ namespace LibraryMVC4.Controllers
         }
         public ActionResult AddPage()
         {
-
             return View();
-
         }
         [HttpPost]
         public ActionResult AddLibPage(structure _objItems)
@@ -94,7 +98,7 @@ namespace LibraryMVC4.Controllers
                 var chatId = _ncuElrc.chat.FirstOrDefault(c => c.lib_chat == true);
 
                 if (chatId != null)
-                {                                
+                {
                     ViewBag.LibId = chatId.lib_id;
                 }
             }
@@ -123,13 +127,53 @@ namespace LibraryMVC4.Controllers
         }
         [HttpPost]
         public ActionResult ChatEnd(int id)
-        {           
+        {
             var chatEnd = _structureRepository.StopChat(id);
 
             return Redirect("/structure/chat");
 
         }
+        public ActionResult AddAlert()
+        {
+            return View();
 
+        }
+        public ActionResult EditAlert(int id)
+        {
+            var editAlert = _structureRepository.EditAlert(id);
 
+            return View(editAlert);
+        }
+
+        [HttpPost]
+        public ActionResult PostAlert(structure _addAlertObjs)
+        {
+            var addAlert = _structureRepository.AddAlert(_addAlertObjs);
+
+            if ((bool)addAlert == true)
+            {
+                string msg = "Alert Added";
+
+                return Redirect("/structure/GetAlerts/" + msg);
+            }
+
+            return Redirect("/structure/GetAlerts/" + "Error");
+
+        }
+
+        [HttpPost]
+        public ActionResult PostEditAlert(structure _editAlertObjs)
+        {
+            var postEditAlert = _structureRepository.EditPostAlert(_editAlertObjs);
+
+            if((bool)postEditAlert == true)
+            {
+                string msg = "Alert Edited";            
+                return Redirect("/structure/GetAlerts/" + msg);
+            }
+
+            return Redirect("/structure/GetAlerts/" + "Error");
+
+        }
     }
 }

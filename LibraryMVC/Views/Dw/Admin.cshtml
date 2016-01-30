@@ -1,0 +1,43 @@
+﻿@model IEnumerable<LibraryMVC4.Models.structure>
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var dwGrid = new WebGrid(Model, canPage: false);
+}
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<div id="top"></div>
+<h2>DW Admin Pages</h2>
+
+@*May want to add these lines of code to the admin template if I am going to use repeatedly*@
+
+
+
+@Html.ActionLink("Add Dw Page", "AddDw")
+
+<a href="#bottom" style="float: right; font-weight: bold;">Go to Bottom</a>
+
+<div id="content">
+
+    @dwGrid.GetHtml(
+       htmlAttributes: new {  id = dwGrid},
+       mode: WebGridPagerModes.All,
+       firstText: "<< First",
+       lastText: "Last >>",
+       tableStyle: "webgrid-table",
+       headerStyle: "webgrid-header",
+       footerStyle: "webgrid-footer",
+       alternatingRowStyle: "webgrid-alternating-row",
+       rowStyle: "webgrid-row-style",
+       columns: dwGrid.Columns(
+       dwGrid.Column(columnName: "PrimaryKey", header: " ",
+                    format: @<text>@Html.ActionLink("Select", "Edit", new { id = item.PrimaryKey }, null) </text>),
+       dwGrid.Column(columnName: "PrimaryKey", header: "Primary Key"), 
+       dwGrid.Column(columnName: "Title", header: "Page Title")) 
+     )
+
+</div>
+<div id="bottom"></div>
+<a href="#top" style="float: right; font-weight: bold;">Go to Top</a>

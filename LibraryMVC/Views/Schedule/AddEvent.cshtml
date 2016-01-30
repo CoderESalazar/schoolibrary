@@ -1,0 +1,49 @@
+﻿@model LibraryMVC4.Models.schedule
+
+@{
+    ViewBag.Title = "AddEvent";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+<div>@Html.ActionLink("Return Back to Schedule Admin Area", "GetAdminSchedule", "schedule")</div>
+<h2>Add Workshop Event</h2>
+
+@using (Html.BeginForm("AddAnEvent", "schedule", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        @("Workshop Title: ") @Html.TextBoxFor(m => m.workShopTitle, new { style = "width: 250px;" }) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.workShopTitle)</span>  <br /><br />
+
+        @("Date/Time: ") @Html.TextBoxFor(m => m.eventDate) @("ex. (mm/dd/yyyy AZ time, e.g., 12/1/2017 9:00 am)") @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.eventDate)</span> @*<br /><br />*@
+
+        @*@("Number of Attendees"): @Html.TextBoxFor(m => m.TotalAttendees, new { style = "width: 75px;" })*@
+
+        <br />
+        <br />
+
+        <h3>Event Details</h3>
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.eventDetails)</span>
+        <div class="editor-field">
+
+            @Html.EditorFor(model => model.eventDetails)
+
+        </div>
+        <br />
+        <br />
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                $('#submit').click(function () {
+                    tinyMCE.triggerSave('#eventDetails');
+
+                });
+            });
+            $(document).ready(function () {
+                $("#eventDate").removeAttr("data-val-date");
+            });
+
+        </script>
+
+        <input type="submit" id="submit" value="Add Event" />
+
+    </fieldset>
+  
+}

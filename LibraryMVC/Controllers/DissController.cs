@@ -109,19 +109,15 @@ namespace LibraryMVC4.Controllers
                 String GetDropDownValue = model.DropDrownMenuVar;
                 String GetSearchText = model.SearchVariables;
 
-
                 var GetSearch = _dissRepository.GetDissSearch(GetDropDownValue, GetSearchText);
 
                 //return Content("This is the content " + GetSearch);
                 return View(GetSearch);
-
             }
 
             else
             {
-
                 return Redirect("/diss/index");
-
             }
 
         }

@@ -271,7 +271,7 @@ namespace LibraryMVC4.Repository
             Enum.TryParse(a, out dissDrop);
 
             String searchVar = b;
-            var degprogid = new int[] { 8, 17, 20, 22, 23, 31, 34 };
+            var degprogid = new int[] { 8, 17, 20, 22, 23, 31, 32, 34 };
             var degProgStat = new string[] { "Graduate", "Pending Grad" };
 
             //convert this to a switch rather than using the if/else statement. Also I am going to  
@@ -390,6 +390,5 @@ namespace LibraryMVC4.Repository
                 return null;
             }
         }
-
-    }
+   }
 }

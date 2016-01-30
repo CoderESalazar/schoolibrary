@@ -35,7 +35,8 @@ namespace LibraryMVC4.Repository
                                          PatronName = qt.u_first_name + " " + qt.u_last_name,
                                          CourseNum = qt.course_num,
                                          LibLastName = lap.lib_name,
-                                         CatName = ql.new_cat
+                                         CatName = ql.new_cat,
+                                         EmailSent = ql.email_sent
 
                                      }).ToList();
 
@@ -190,30 +191,39 @@ namespace LibraryMVC4.Repository
         }
 
         public admin GetByQId(int id)
-        {
+        {           
+
             using (var _libEntity = new LibEntities())
             {
-                var getQId = (from ql in _libEntity.quest_lib
-                              join qt in _libEntity.quest_tb
-                              on ql.q_id equals qt.q_id
-                              join lap in _libEntity.lib_admin_people on ql.lib_userid equals lap.lib_string_id
-                              where ql.q_id == id || qt.q_id == id
-                              orderby ql.lib_date_time descending
-                              select new admin
-                              {
-                                  PatronId = qt.user_id,
-                                  QuestId = qt.q_id,
-                                  DateTime = ql.lib_date_time,
-                                  QuestStatus = ql.q_status,
-                                  QuestType = qt.q_type,
-                                  PatronName = qt.u_first_name + " " + qt.u_last_name,
-                                  CourseNum = qt.course_num,
-                                  LibLastName = lap.lib_name,
-                                  CatName = ql.new_cat
 
-                              }).FirstOrDefault();
+                try {
 
-                return getQId;
+                    var getLibQId = (from g in _libEntity.GetLibQId(id)
+                                     select new admin
+                                     {
+                                         PatronId = g.user_id,
+                                         QuestId = g.q_id,
+                                         DateTime = g.lib_date_time,
+                                         QuestStatus = g.q_status,
+                                         QuestType = g.q_type,
+                                         PatronName = g.PatronName,
+                                         CourseNum = g.course_num,
+                                         LibLastName = g.last_name,
+                                         CatName = g.new_cat,
+                                         EmailSent = g.email_sent
+
+                                     }).FirstOrDefault();
+
+
+                    return getLibQId;
+
+                    }
+
+                catch(ArgumentNullException ex)
+                {
+                    throw ex;
+                }
+
             }
         }
         public IEnumerable<admin> GetCourse(string id)

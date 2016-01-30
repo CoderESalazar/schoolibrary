@@ -1,0 +1,54 @@
+﻿@model LibraryMVC4.Models.schedule
+
+@{
+    ViewBag.Title = "GetEvent";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return Back to Schedule Admin Area", "GetAdminSchedule", "schedule")</div>
+
+
+<h2>Event ID# @Model.lcEventId</h2>
+
+@*add validation and then you will want to extend and shorten some of the textboxes on the form. Let me leave this type of work for Kira. She should be able to help out with this type of work.*@
+
+
+@using (Html.BeginForm("UpdateGetEvent", "schedule", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <form>
+
+        @Html.HiddenFor(c => c.lcEventId)
+
+        @("Workshop Title"): @Html.TextBoxFor(m => m.workShopTitle, new { style = "width: 250px;" }) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.workShopTitle)</span>  <br /><br />
+
+        @("Date/Time"): @Html.TextBoxFor(m => m.eventDate) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.eventDate)</span> <br /><br />
+
+        @("Number of Attendees"): @Html.TextBoxFor(m => m.TotalAttendees, new { style = "width: 75px;" })
+
+        <br />
+        <br />
+
+        <h3>Event Details</h3>
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.eventDetails)</span>
+        <div class="editor-field">
+
+            @Html.EditorFor(model => model.eventDetails)
+
+        </div>
+        <br />
+        <br />
+
+        <input type="submit" value="Update" />
+
+    </form>
+
+
+}
+<div align="right">
+    @using (Html.BeginForm("DeleteEvent", "schedule", new { id = Model.lcEventId }, FormMethod.Post))
+    {      
+            <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>      
+    }
+</div>
+
+

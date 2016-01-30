@@ -23,19 +23,19 @@ namespace LibraryMVC4.Controllers
         private IHome<home> _homeRepository;
         private IUser<user> _userRepository;
         private IAdmin<admin> _adminRepository;
-         
+               
         public HomeController() 
         {
             _homeRepository = new HomeRepository();
             _userRepository = new UserRepository();
             _adminRepository = new AdminRepository();
-
+           
         }
         public HomeController(IHome<home> repository, IUser<user> userRepository, IAdmin<admin> adminRepository)
         {
             _userRepository = userRepository;
             _homeRepository = repository;
-            _adminRepository = adminRepository;
+            _adminRepository = adminRepository;            
         }
 
         public ActionResult Index()
@@ -147,7 +147,7 @@ namespace LibraryMVC4.Controllers
         {
             var alertMess = _homeRepository.GetAlert();
 
-            return View(alertMess);
+            return View(alertMess);        
                         
         }
         [HttpPost]
@@ -207,8 +207,7 @@ namespace LibraryMVC4.Controllers
         public ActionResult LeaveFeedbackPost(home _objFeedback)
         {
             var myPost = _homeRepository.AddUserPost(_objFeedback);
-            var thisPost = _homeRepository.AddUserPost(_objFeedback);
-            
+                        
             return View();
                 
         }
@@ -298,6 +297,21 @@ namespace LibraryMVC4.Controllers
         public ActionResult RoadrunnerSearch()
         {
             return PartialView("_searchBox");
+        }
+        [HttpPost]
+        public JsonResult FindFaqs(string searchText, int maxResults)
+        {
+            using (var _libEntity = new LibEntities())
+            {
+                var result = (from s in _libEntity.quest_lib
+                              where s.lib_q_edit.ToLower().Contains(searchText.ToLower())
+                              && s.q_status == "Submitted to KB"
+                              && s.cat_id != false
+                              select s).Distinct().Take(maxResults).ToList();
+
+                return Json(result);
+            }
+
         }
 
     }

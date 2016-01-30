@@ -1,0 +1,37 @@
+﻿@model IEnumerable<LibraryMVC4.Models.dbindex>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var grid = new WebGrid(Model, canPage: false, defaultSort: "dbTitle" );
+
+}
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<h2>Database Master Index</h2>
+
+<p>This is the master database index and it ties directly to the Subject Guides as well as the Find an Article pages. Update this grid to manage references to databases on those pages</p>
+
+<div id="content">
+    @Html.ActionLink("Add", "AddDb", "DbIndex")
+
+    <br />
+
+    @grid.GetHtml(
+                htmlAttributes: new { id = grid },
+                tableStyle: "webgrid-table",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                alternatingRowStyle: "webgrid-alternating-row",
+                rowStyle: "webgrid-row-style",
+                columns: grid.Columns(
+                grid.Column(columnName: "dbKeyId", header: " ",
+                        format: @<text>@Html.ActionLink("Select", "Edit", new { id = item.dbKeyId }, null)</text>),
+                grid.Column(columnName: "dbTitle", header: "Database"),
+                grid.Column(columnName: "dbCoverage", header: "Coverage", canSort: false),
+                grid.Column(columnName: "dbFullText", header: "Full-Text", canSort: false),
+                grid.Column(columnName: "dbScholarly", header: "Scholarly", canSort: false),
+                grid.Column(columnName: "dbType", header: "Subscription or Freebie", canSort: false))
+                )
+</div>

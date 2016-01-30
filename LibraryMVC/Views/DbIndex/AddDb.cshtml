@@ -1,0 +1,57 @@
+﻿@model LibraryMVC4.Models.dbindex
+
+@{
+    ViewBag.Title = "AddDb";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return Back to Database Index Table", "Index", "DbIndex")</div>
+
+<h2>Add Database</h2>
+
+<br />
+
+@using (Html.BeginForm("AddDb", "DbIndex", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        @("Database Title"): @Html.TextBoxFor(dbTitle => dbTitle.dbTitle, new { style = "width: 300px;" }) <span style="color: red;">@Html.ValidationMessageFor(dbTitle => dbTitle.dbTitle)</span>
+        <br />
+        <br />
+        @("Database URL"): @Html.TextBoxFor(c => c.dbUrl, new { style = "width: 450px;" }) <span style="color: red;">@Html.ValidationMessageFor(c => c.dbUrl)</span>
+        <br />
+        <br />
+        @("Full Text"): @Html.TextBoxFor(c => c.dbFullText) @("Y = Yes, N = No")
+        <br />
+        <br />
+        @("Coverage"): @Html.TextBoxFor(c => c.dbCoverage) @("ex. 1960 - present")
+        <br />
+        <br />
+        @("Scholarly"): @Html.TextBoxFor(c => c.dbScholarly) @("Y = Yes, N = No")
+        <br/>
+        <br/>
+        @("Subscription"): @Html.TextBoxFor(c => c.dbType) @("Y = Yes, N = No")
+        <br />
+        <br />
+        <h3>Database Description</h3>
+
+        <div class="editor-field">
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.dbDesc)</span>
+            @Html.EditorFor(c => c.dbDesc)
+        </div>
+
+        <br />
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                $('#submit').click(function () {
+                    tinyMCE.triggerSave('#dbDesc');
+
+                });
+            });
+        </script>
+        <input type="submit" id="submit" value="Add Db" />
+    </fieldset>
+    <br/> 
+
+
+}

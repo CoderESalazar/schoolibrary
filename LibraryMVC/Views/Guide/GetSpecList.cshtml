@@ -1,0 +1,9 @@
+﻿@model LibraryMVC4.Models.guides
+
+@using (Html.BeginForm("AddSpec", "Guide"))
+{
+     @Html.Hidden("DeptDiscpId", (int)ViewBag.Id)
+    
+     @Html.DropDownListFor(t => Model.SectionName, new SelectList(Model.SpecList, "Value", "Text"), "--Select--") @(" ") <input type="submit" value="Add Spec" />
+
+}

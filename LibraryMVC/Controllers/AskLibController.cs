@@ -100,7 +100,8 @@ namespace LibraryMVC4.Controllers
 
         }
         [HttpPost]
-        public ActionResult UserInfoPost(asklib _objResponse)
+        [ValidateAntiForgeryToken]
+        public ActionResult UserInfoPost([Bind (Include = "PatronId, PatronFirstName, PatronLastName, DegProg, PatronEmail, QuestDetail, CatId, CourseNum, AssignNum")] asklib _objResponse)
         {
             var thisPost = _askRepository.AddAskLib(_objResponse);
             return View();
@@ -156,7 +157,7 @@ namespace LibraryMVC4.Controllers
                 return fileRes;
             }
 
-        }
+        }      
 
     }
 

@@ -12,6 +12,9 @@ namespace LibraryMVC4.Repository
 {
     public class AskLibRepository : IAskLib<asklib>
     {
+        //public LibEntities _libEntity { get; }
+
+        LibEntities _libEntity = new LibEntities();
         
         public IEnumerable<asklib> GetAllUserQs()
         {
@@ -122,6 +125,6 @@ namespace LibraryMVC4.Repository
             }
 
         }
-
+        
     }
 }

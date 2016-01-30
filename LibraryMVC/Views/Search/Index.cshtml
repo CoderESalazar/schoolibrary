@@ -8,11 +8,11 @@
 <a href="/admin">Return to Library Admin Area</a>
 
 <h2>Library Workspace Search</h2>
-<br/>
+<br />
 
  Search by UserId: @Html.TextBox("userId")
 
- Search by QuestId @Html.TextBox("questId")     
+ Search by QuestId @Html.TextBox("questId")
 
 <br /><br />
 
@@ -29,8 +29,8 @@
 
 <button id="dropDownBool">Submit</button>
 
-<br/> 
-<br /> 
+<br />
+<br />
 @("Search by Course: ")
 @Html.TextBox("courseSearch")
 
@@ -49,128 +49,11 @@
             var sFirstKeyWord = $('#firstKeyWord').val();
             var sSecondKeyWord = $('#secondKeyWord').val();
             var sBoolean = $('#boolean').val();
-           
+
             $.get('@Url.Action("BooleanSearch", "Search")', { firstKeyWord: sFirstKeyWord, secondKeyWord: sSecondKeyWord, dropdown: sBoolean }, function (data) {
 
                 if (data != "") {
-                var header = 'Searching by Keywords: ' + sFirstKeyWord + "+" + sSecondKeyWord;
-                var items = '<table class="table table-striped table-hover"><tr>' +
-                            '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
-                            '<th>LibLastName</th><th>QStatus</th><th>Date/Time</th></tr>'
-                $.each(data, function (i, fields) {
-
-                    items += "<tr><td>" + getQIdStatus(fields.QuestStatus, fields.QuestId) + "</td><td>" +
-                    fields.PatronName + "</td><td>" + replaceNulls(fields.CourseNum) + "</td><td>" + fields.CatName + "</td><td>" + replaceNulls(fields.QuestType) +
-                    "</td><td>" + fields.LibLastName + "</td><td>" + fields.QuestStatus + "</td><td>" + formatJSONDate(fields.DateTime) + "</td></tr>";
-
-                });
-
-                items += "</table>";
-
-                $('#header').html(header);
-                $('#myTable').html(items);
-
-                }
-                else {
-
-                    alert(" Nothing Found! ");
-                }
-
-            })
-
-        });
-
-    });
-    jQuery(document).ready(function ($) {
-
-        $("#userId").keypress(function (event) {
-
-            if (event.which == 13) {
-
-                var sUserId = $('#userId').val();
-                
-                $.get('@Url.Action("UserSearch", "Search")', { UserId: sUserId }, function (data) {
-
-                    if (data != "") {
-                        var header = 'Searching by UserId: ' + sUserId;
-                        var items = '<table class="table table-striped table-hover"><tr>' +
-                                    '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
-                                    '<th>LibLastName</th><th>QStatus</th><th>Date/Time</th></tr>'
-
-                        $.each(data, function (i, fields) {
-
-                            items += "<tr><td>" + getQIdStatus(fields.QuestStatus, fields.QuestId) + "</td><td>" +
-                            fields.PatronName + "</td><td>" + replaceNulls(fields.CourseNum) + "</td><td>" + fields.CatName + "</td><td>" + replaceNulls(fields.QuestType) +
-                            "</td><td>" + fields.LibLastName + "</td><td>" + fields.QuestStatus + "</td><td>" + formatJSONDate(fields.DateTime) + "</td></tr>";
-
-                        });
-                        items += "</table>";
-
-                        $('#header').html(header);
-                        $('#myTable').html(items);
-
-                    } else {
-
-                        alert(" Nothing Found! ");
-                    }
-                })       
-            }
-        });
-
-        $('#Submit').click(function () {
-
-            $("#userId").keypress();
-
-        });
-
-    });
-    jQuery(document).ready(function ($) {
-
-        $("#questId").keypress(function (event) {
-
-            if (event.which == 13) {
-                var sQuestId = $('#questId').val();
-             
-                $.get('@Url.Action("QidSearch", "Search")', { id : sQuestId }, function (data) {
-
-                    if (data != "") {
-                        var header = 'Searching by QuestId: ' + sQuestId;
-                        var items = '<table class="table table-striped table-hover"><tr>' +
-                                    '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
-                                    '<th>LibLastName</th><th>QStatus</th><th>Date/Time</th></tr>' +
-                                    '<tr><td>' + getQIdStatus(data.QuestStatus, data.QuestId) + '</td><td>' +
-                                     data.PatronName + '</td><td>' + replaceNulls(data.CourseNum) + '</td><td>' + data.CatName + '</td><td>' + replaceNulls(data.QuestType) +
-                                    '</td><td>' + data.LibLastName + '</td><td>' + data.QuestStatus + '</td><td>' + formatJSONDate(data.DateTime) + '</td></tr></table>'                            
-                        
-                        $('#header').html(header);
-                        $('#myTable').html(items);
-
-                    } else {
-
-                        alert(" Nothing Found! ");
-                    }
-                })
-            }
-        });
-
-        $('#Submit').click(function () {
-
-            $("#questId").keypress();
-
-        });
-
-    });
-    jQuery(document).ready(function ($) {
-        $('#courseSearch').keypress(function (event) {
-
-            if (event.which == 13) {
-            var course = $('#courseSearch').val();
-
-             $.get('@Url.Action("GetCourseSearch", "Search")', { id: course }, function (data) {
-
-                 if (data != "") {
-
-                    var header = 'Searching for Course: ' + course;
+                    var header = 'Searching by Keywords: ' + sFirstKeyWord + "+" + sSecondKeyWord;
                     var items = '<table class="table table-striped table-hover"><tr>' +
                                 '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
                                 '<th>LibLastName</th><th>QStatus</th><th>Date/Time</th></tr>'
@@ -194,16 +77,151 @@
                 }
 
             })
-           }
+
+        });
+
+    });
+    jQuery(document).ready(function ($) {
+
+        $("#userId").keypress(function (event) {
+
+            if (event.which == 13) {
+
+                var sUserId = $('#userId').val();
+
+                $.get('@Url.Action("UserSearch", "Search")', { UserId: sUserId }, function (data) {
+
+                    if (data != "") {
+                        var header = 'Searching by UserId: ' + sUserId;
+                        var items = '<table class="table table-striped table-hover"><tr>' +
+                                    '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
+                                    '<th>LibLastName</th><th>QStatus</th><th>Email Sent</th><th>Date/Time</th></tr>'
+
+                        $.each(data, function (i, fields) {
+
+                            items += "<tr><td>" + getQIdStatus(fields.QuestStatus, fields.QuestId) + "</td><td>" +
+                            fields.PatronName + "</td><td>" + replaceNulls(fields.CourseNum) + "</td><td>" + fields.CatName + "</td><td>" + replaceNulls(fields.QuestType) +
+                            "</td><td>" + fields.LibLastName + "</td><td>" + fields.QuestStatus + "</td><td>" + formatJSONDate(fields.EmailSent) + '</td><td>' +
+                            formatJSONDate(fields.DateTime) + "</td></tr>";
+
+                        });
+                        items += "</table>";
+
+                        $('#header').html(header);
+                        $('#myTable').html(items);
+
+                    } else {
+
+                        alert(" Nothing Found! ");
+                    }
+                })
+            }
+        });
+
+        $('#Submit').click(function () {
+
+            $("#userId").keypress();
+
+        });
+
+    });
+    jQuery(document).ready(function ($) {
+
+        $("#questId").keypress(function (event) {
+
+            if (event.which == 13) {
+                //var sQuestId = $.isNumeric($('#questId').val());
+                var sQuestId = $('#questId').val();
+
+                if (!$.isNumeric(sQuestId))
+                {
+                    alert(" Please use numbers only ");
+                }
+
+                $.get('@Url.Action("QidSearch", "Search")', { id: sQuestId }, function (data) {
+
+                    if (data != 1) {
+                        var header = 'Searching by QuestId: ' + sQuestId;
+                        var items = '<table class="table table-striped table-hover"><tr>' +
+                                    '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
+                                    '<th>LibLastName</th><th>QStatus</th><th>Email Sent</th><th>Date Received</th></tr>' +
+                                    '<tr><td>' + getQIdStatus(data.QuestStatus, data.QuestId) + '</td><td>' +
+                                     data.PatronName + '</td><td>' + replaceNulls(data.CourseNum) + '</td><td>' + data.CatName + '</td><td>' + replaceNulls(data.QuestType) +
+                                    '</td><td>' + data.LibLastName + '</td><td>' + data.QuestStatus + '</td><td>' + formatJSONDate(data.EmailSent) + '</td><td>' +
+                                    formatJSONDate(data.DateTime) + '</td></tr></table>'
+
+                        $('#header').html(header);
+                        $('#myTable').html(items);
+
+                    }
+
+                    else {
+
+                        alert(" Nothing Found! ");
+                    }
+                })
+
+            }
+       
+        });
+
+        $('#Submit').click(function () {
+
+            $("#questId").keypress();
+
+        });
+
+    });
+    jQuery(document).ready(function ($) {
+        $('#courseSearch').keypress(function (event) {
+
+            if (event.which == 13) {
+                var course = $('#courseSearch').val();
+
+                $.get('@Url.Action("GetCourseSearch", "Search")', { id: course }, function (data) {
+
+                    if (data != "") {
+
+                        var header = 'Searching for Course: ' + course;
+                        var items = '<table class="table table-striped table-hover"><tr>' +
+                                    '<th>QId</th><th>Patron Name</th><th>CourseNum</th><th>Cat</th><th>QType</th>' +
+                                    '<th>LibLastName</th><th>QStatus</th><th>Date/Time</th></tr>'
+                        $.each(data, function (i, fields) {
+
+                            items += "<tr><td>" + getQIdStatus(fields.QuestStatus, fields.QuestId) + "</td><td>" +
+                            fields.PatronName + "</td><td>" + replaceNulls(fields.CourseNum) + "</td><td>" + fields.CatName + "</td><td>" + replaceNulls(fields.QuestType) +
+                            "</td><td>" + fields.LibLastName + "</td><td>" + fields.QuestStatus + "</td><td>" + formatJSONDate(fields.DateTime) + "</td></tr>";
+
+                        });
+
+                        items += "</table>";
+
+                        $('#header').html(header);
+                        $('#myTable').html(items);
+
+                    }
+                    else {
+
+                        alert(" Nothing Found! ");
+                    }
+
+                })
+            }
         });
 
     });
 
 
     function formatJSONDate(jsonDate) {
-        var date = new Date(parseInt(jsonDate.replace("/Date(", "").replace(")/", ""), 10)).toDateString();
-        return date;
 
+        if (jsonDate != null) {
+            var date = new Date(parseInt(jsonDate.replace("/Date(", "").replace(")/", ""), 10)).toDateString();
+            return date;
+        } else {
+            var date = replaceNulls(jsonDate)
+            return date;
+
+        }
     }
     function getQIdStatus(jsonQstatusId, jsonQuestId) {
 
@@ -216,22 +234,17 @@
             return "<a target=_blank href=/admin/GetAskLibQ/" + jsonQuestId + ">" + jsonQuestId + "</a>"
         }
     }
-    //see if you can pull the nulls from this function. 
+    //see if you can pull the nulls from this function.
     function replaceNulls(jsonReplace) {
         if (!jsonReplace) {
             return "n/a";
-        }else
-        {
+        } else {
             return jsonReplace;
 
         }
     }
 
-    
+
 
 
 </script>
-
-
-
-

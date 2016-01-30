@@ -1,0 +1,52 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+
+@{
+    ViewBag.Title = "Course Guide Admin Area";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var courseGuideGrid = new WebGrid(Model, canPage: true, rowsPerPage: 50, canSort: false);
+}
+
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<h2>Course Guide Admin Area</h2>
+
+<div id="content">
+    @courseGuideGrid.GetHtml(
+        htmlAttributes: new { id = courseGuideGrid },
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        lastText: "Last >>",
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        rowStyle: "webgrid-row-style",
+        columns: courseGuideGrid.Columns(          
+                courseGuideGrid.Column(columnName: "GuideId", header: "",
+                                    format: item => item.GuideId != null ? @Html.ActionLink("Edit", "EditGuide", "CourseGuide", new { id = item.GuideId }, null) : @Html.Raw("")),
+                courseGuideGrid.Column(columnName: "CourseCode", header: "Course Code"),
+                courseGuideGrid.Column(columnName: "CourseName", header: "Course Name"),
+                courseGuideGrid.Column(columnName: "Enrollees", header: "Enrollees"),
+                courseGuideGrid.Column(columnName: "School", header: "School"),
+                courseGuideGrid.Column(columnName: "Display", header: "Viewable"),
+                courseGuideGrid.Column(columnName: "LastName", header: "LastName"),
+                courseGuideGrid.Column(columnName: "GuideId", header: "",
+                                            format: item => item.GuideId != null ? @Html.ActionLink("Guide", "GetCGuide", "Guide", new { GuideId = item.GuideId }, null) : @Html.Raw("")))
+                     )
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#guide').on('click', function () {
+
+            var url = "/guide/getcguide?guidesId=" + $(this).val();
+            window.location.replace(url);
+
+        });
+
+    });
+
+</script>

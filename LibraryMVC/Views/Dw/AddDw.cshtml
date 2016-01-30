@@ -1,0 +1,42 @@
+﻿@model LibraryMVC4.Models.structure
+
+@{
+    ViewBag.Title = "AddDw";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return to DW Admin Area", "admin", "dw")</div>
+
+<h2>AddDw</h2>
+<br/> 
+@using (Html.BeginForm("AddDwPage", "Dw", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+
+        @("Dw Title: ") @Html.TextBoxFor(t => t.Title, new { style = "width: 250px;" }) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>  <br /><br />
+
+        <h3>Dw Text - Compose Below</h3>
+
+        <span style="color:red;">@Html.ValidationMessageFor(t => t.Text)</span>
+
+        <div class="editor-field">
+
+            @Html.EditorFor(model => model.Text)
+
+        </div>
+        <br />
+        <br />
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                $('#submit').click(function () {
+                    tinyMCE.triggerSave('#Text');
+
+                });
+            });
+        </script>
+
+        <input type="submit" id="submit" value="Add Dw Page" />
+
+    </fieldset>
+}

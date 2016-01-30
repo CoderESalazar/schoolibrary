@@ -3,29 +3,19 @@
 @* We are going to check the value of the libStaff *@
 
 @try
-{     
-
-
-        if (Model.LibAdminGroup != null)
-        {
-            
-            <a class="libFooter" target="_blank" href="/admin/index">Library Admin</a>
-
-            @*@Html.ActionLink("Library Admin", "Index", "Admin", new { @class = "libFooter" })*@
-
-
-        }
-
+{
+    if (Model.LibAdminGroup != null)
+    {
+        <a class="libFooter" target="_blank" href="/admin/index">Library Admin</a>
+        @*@Html.ActionLink("Library Admin", "Index", "Admin", new { @class = "libFooter" })*@
+    }
 }
-
 catch
 {
-
     @(" ")
+}
 
-}      
 
-    
 
 
 

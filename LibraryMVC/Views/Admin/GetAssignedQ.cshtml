@@ -54,7 +54,6 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
 @using (Html.BeginForm("LibAreaPost", "Admin", new { Model.QuestId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-    @*<form id="thisTest">*@
         <fieldset>
             <h3>Questions Status</h3>
 
@@ -85,45 +84,14 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
             <input type="file" id="uploadfile" name="FileUpload" />  <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.FileUpload)</span>       
    
             <br/> 
-            <script type="text/javascript">        
-            
-                jQuery(document).ready(function($) {
 
-                    $('#submit').bind("click", function () {
+         
+            <input type="submit" id="submit" value="Submit" data-confirm="Are you sure you want to submit this question to the KnowledgeBase?" />
+                            
+       </fieldset>
 
-                        var len = $("#uploadfile").val().length;
-
-                        if (len > 50)
-                        {
-                            alert('File name exceeds 50 characters! Please rename file and reselect.');
-                            //alert($('#uploadfile').val().length);
-                            return false;
-                        }
-
-                    });
-                });
-
-
-                jQuery(document).ready(function ($) {
-                    $('#submit').click(function () {
-                        tinyMCE.triggerSave('#LibrarianResponse');
-
-                    });
-                });
-        
-            </script>
-            
-            <input type="submit" id="submit" value="Submit" />
-
-      
-
-        </fieldset>
-    @*</form>*@
 
 }
-@*<div align="right">
-    <input type="submit" id="delete" value="Delete?" name="@Model.QuestId" />
-</div>*@
 
 <div align="right">
     @using (Html.BeginForm("Delete", "admin", new { id = Model.QuestId }, FormMethod.Post  ))
@@ -133,3 +101,36 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
               
     }
 </div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        $('#submit').click(function () {
+
+            var len = $("#uploadfile").val().length;
+            var kbSelect = $("#CatQId").val();
+
+            if (len > 50) {
+         
+                alert('File name exceeds 50 characters! Please rename file and reselect.');
+                return false;
+            }
+          
+            if (kbSelect == 'Submitted to KB') {
+                return confirm($(this).data('confirm'));
+
+            } 
+            
+        });
+    });
+
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function () {
+            tinyMCE.triggerSave('#LibrarianResponse');
+
+        });
+    });
+
+</script>
+

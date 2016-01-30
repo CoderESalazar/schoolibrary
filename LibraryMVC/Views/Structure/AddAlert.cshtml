@@ -1,0 +1,46 @@
+﻿@model LibraryMVC4.Models.structure
+
+@{
+    ViewBag.Title = "AddAlert";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return Back to Alerts Table", "GetAlerts", "structure")</div>
+
+<h2>Add an Alert</h2>
+
+<br/> 
+
+@using (Html.BeginForm("PostAlert", "structure", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        @("Alert Title: ") @Html.TextBoxFor(t => t.Title) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>  <br /><br />
+
+        <h3>Alert Text - Compose Below</h3>
+
+        <span style="color:red;">@Html.ValidationMessageFor(t => t.Text)</span>
+
+        <div class="editor-field">
+
+            @Html.EditorFor(model => model.Text)
+
+        </div>
+        <br />
+        <br />
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                $('#submit').click(function () {
+                    tinyMCE.triggerSave('#Text');
+
+                });
+            });
+        </script>
+
+        <input type="submit" id="submit" value="Add Alert" />
+
+    </fieldset>   
+    
+}
+
+

@@ -150,6 +150,13 @@ namespace LibraryMVC4.Controllers
         public ActionResult LibAreaPost(admin _objUpdate)
         {
             var libAreaPost = _adminRepository.Edit(_objUpdate);
+
+            var Category = _objUpdate.CatQId;
+            
+            if (Category == "Submitted to KB")
+            {
+                return Redirect("/admin/LibraryWkSpace");
+            }
            
             return Redirect("/admin/GetAskLibqs");  
         }
@@ -325,7 +332,10 @@ namespace LibraryMVC4.Controllers
 
             if (Convert.ToBoolean(deleteQId) == false)
             {
-                return Content("Sorry, unsuccessful delete!");
+
+                ModelState.AddModelError(string.Empty, "Unable to delete record.");
+                //return Content("Sorry, unsuccessful delete!");
+
             }
 
             return Redirect("/admin/GetAskLibqs");

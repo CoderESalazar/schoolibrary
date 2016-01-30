@@ -9,25 +9,38 @@ namespace LibraryMVC4.Models
 {
     public class structure : admin
     {
-        public int HighId { get; set; }
-        [Required(ErrorMessage = "Please enter a title.")]
-        public string Title { get; set; }
+        public int HighId { get; set; }        
+
+        public int PrimaryKey { get; set; }
         
+        [Required(ErrorMessage = "*A Title is Required")]
+        public string Title { get; set; }
+                
         public int? ParentId { get; set; }
         [Required(ErrorMessage = "Please select a PageType.")]
         public string PageType { get; set; }
         public string LinkData { get; set; }
         public int? DisplayOrder { get; set; }
+
+        //Alert bit field
+        public bool Display { get; set; }
+               
+        //PageTitle used for breadcrumb
         public string PageTitle { get; set; }
+
+        [Required(ErrorMessage = "*Text Required")]
+        [UIHint("tinymce_jquery_full"), AllowHtml]
         public string Text { get; set; }
+
+        //Chat
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-
         public bool ChatActive { get; set; }        
         public int? iParentId { get; set; }
 
         public List<structure> Children { get; set; }
-                
+        
+        //dropdown used for Library Page Area       
         public IEnumerable<structure> GetPageTypeDd
         {
             get

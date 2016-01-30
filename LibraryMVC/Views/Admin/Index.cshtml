@@ -12,7 +12,7 @@
 <body>
     <div>
         @ViewBag.LibUserId
-
+        
         <h1>Librarian Workspace</h1>
         @Html.ActionLink("Back to Library", "index", "home")
         <br/>
@@ -25,7 +25,7 @@
             <li>@Html.ActionLink("Categories", "Categories", "admin")</li>
 
         </ul>
-
+    
         @Html.ActionLink("Leave Feedback Area", "GetFeedback", "admin")
 
         <br />
@@ -41,7 +41,7 @@
         <br />
         <br />
 
-        @Html.ActionLink("DW Area", "", "")
+        @Html.ActionLink("DW Area", "Admin", "Dw")
 
         <br />
         <br />
@@ -51,22 +51,22 @@
         <br />
         <br />
         
-        @Html.ActionLink("Find an Article", "", "")
+        @Html.ActionLink("Find an Article", "FaAdmin", "Fa")
 
         <br />
         <br />
 
-        @Html.ActionLink("DB Index Area", "", "")
+        @Html.ActionLink("DB Index Area", "Index", "DbIndex")
 
         <br />
         <br />
 
-        @Html.ActionLink("Specialization Guides Area", "", "")
+        @Html.ActionLink("Specialization Guides Area", "SpecAdminArea", "guide")
 
         <br />
         <br />
 
-        @Html.ActionLink("Course Guides Area", "", "")
+        @Html.ActionLink("Course Guides Area", "admin", "courseguide")
 
         <br />
         <br />       
@@ -86,7 +86,7 @@
         <br />
         <br />
 
-        @Html.ActionLink("Library Alert Message", "", "")
+        @Html.ActionLink("Library Alert Message", "GetAlerts", "structure")
 
         <br />
 

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+
+@{
+    ViewBag.Title = "GetMyGuide";
+
+    Layout = "~/Views/Shared/_bootStrap2.cshtml";
+}
+<a href="/">Library Home</a> @(" > ") <a href="/guide/index">Library Guides</a> @(" ")
+
+@* The way this code works is that no matter if there is not a headerId
+we are still printing out the title. However, you can see in the second
+foreach loop that I am checking to see if I need to print the tabs. 
+ *@
+
+@foreach (var c in Model.GroupBy(item => item.CGuideTitle))
+{
+    <h2>@Html.DisplayFor(title => c.Key)</h2>
+
+    foreach (var g in c.Where(item => item.HeaderId !=0))
+    {
+        @Html.ActionLink(g.TitleHeader, "getmyguide", new { controller = "guide", guidesId = g.GuideId.ToString(), headerId = g.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
+
+        <span>@( "  ")</span> <span>@( "  ")</span>
+    }
+
+}
+
+<br />
+<br /> 
+
+@* Hear I am just simply checking to see if a header is passed. if not 
+just print the body. In this case, we will receive the default message *@
+
+@if (ViewBag.headerId == null)
+{
+    foreach (var z in Model.GroupBy(item => item.GuideBody))
+    {        
+        @Html.Raw(z.Key);
+    }
+  
+}
+else
+{
+    //Here as you can see I am clicking on the tabs to then receive the correct content dyanmically. 
+    foreach (var t in Model.Where(t => t.HeaderId == ViewBag.headerId))
+    {
+        if (t.HeaderBody == null)
+        {
+            @Html.Raw(t.GuideBody)
+        }
+        else
+        {            
+            @Html.Raw(t.HeaderBody)
+
+        }
+    }
+}
+
+
+
+
+

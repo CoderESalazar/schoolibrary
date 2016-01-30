@@ -1,0 +1,71 @@
+﻿@model LibraryMVC4.Models.guides
+
+@{
+    ViewBag.Title = "HeaderPage";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Return to Spec Guide", "specguide", new { id = (int)ViewBag.id })
+
+<h2>Add Header to @Model.TitleHeader</h2>
+
+@*Drop down below*@
+
+<h4>Add Header From Dropdown</h4>
+
+@using (Html.BeginForm("postheaderpage", "guide"))
+{
+    @Html.Hidden("DeptGuideId", (int)ViewBag.Id)
+    
+    @("Select Header: ") @Html.Action("HeaderDropDown", "guide")
+    <br />
+    <br/>    
+   
+    @("Display Order: ") @Html.TextBoxFor(t => t.DisplayOrder, new { @style = "width: 50px;"})
+    <br />
+    <br/>
+    <input type="submit" id="submit" value="Add Header" />   
+
+}
+<hr />
+<h4>Add Other Header</h4>
+
+@using (Html.BeginForm("postheaderpage", "guide"))
+{
+    @Html.Hidden("DeptGuideId", (int)ViewBag.Id)
+    @("Other Header: ") @Html.TextBoxFor(t => t.SectionName, new { id = "headerName", @style = "width: 350px;" })
+    <br />
+    <br />
+    @("Display Order: ") @Html.TextBoxFor(t => t.DisplayOrder, new { @style = "width: 50px;" })
+    <br />
+    <br />
+    <input type="submit" id="other" value="Add Header" />
+}
+
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function () {
+            var headerDropDown = $('#headerDropDown').val();            
+
+            if (headerDropDown == '')
+            {
+                alert("Please add a header.");
+                event.preventDefault();            
+            }
+        })
+        $('#other').click(function () {
+            var headerName = $('#headerName').val();
+
+            if (headerName == '') {
+                alert("Please add a header.");
+                event.preventDefault();
+            }
+        })
+
+    });
+
+
+</script>
+

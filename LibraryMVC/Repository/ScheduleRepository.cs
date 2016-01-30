@@ -6,13 +6,14 @@ using LibraryMVC4.Models;
 using LibraryMVC4.Entity;
 using System.Data.Objects.SqlClient;
 using LibraryMVC4.Security;
+using Ncu.Logging.Logger;
 
 namespace LibraryMVC4.Repository
 {
     public class ScheduleRepository: IRepository<schedule>, ISchedule<schedule>
     {
         //private LibEntities _libEntity = new LibEntities();
-
+        
 
         public IEnumerable<schedule> GetAll()
         {
@@ -49,7 +50,7 @@ namespace LibraryMVC4.Repository
             }
         }
 
-        public schedule GetById(int? id)
+       public schedule GetById(int? id)
         {
             throw new NotImplementedException();
         }
@@ -115,18 +116,90 @@ namespace LibraryMVC4.Repository
 
         }
         public object Edit(schedule entity)
-        {
-            throw new NotImplementedException();
+        {            
+            using (var _ncuElrc = new LibEntities())
+            {
+                bool result = false;
+                lib_calendar lc = _ncuElrc.lib_calendar.FirstOrDefault(t => t.event_id == entity.lcEventId);
+
+                try
+                {
+                    lc.lib_home = entity.workShopTitle;
+                    lc.event_date = entity.eventDate;
+                    lc.total_attendees = entity.TotalAttendees;
+                    lc.event_details = entity.eventDetails;
+
+                    _ncuElrc.SaveChanges();
+                    result = true;
+                }
+                catch (Exception e)
+                {
+                    ExceptionLogger.Log(ExceptionLogger.SeverityLevels.fatal, e, "Next action is to re-throw this exception object");
+                    result = false;
+                }
+                finally
+                {
+                    _ncuElrc.Connection.Close();
+                }
+                return result;
+            }
+
         }
 
         public object Add(schedule entity)
         {
-            throw new NotImplementedException();
+
+            LibEntities _ncuElrc = new LibEntities();
+            bool result = false;
+
+            try
+            {
+                var addEvent = new lib_calendar
+                {
+                    lib_home = entity.workShopTitle,
+                    event_date = entity.eventDate,
+                    event_details = entity.eventDetails,
+                    lib_instructor_id = LibSecurity.UserId,
+                    date_time = DateTime.Now,         
+
+                 };
+                _ncuElrc.lib_calendar.AddObject(addEvent);
+                _ncuElrc.SaveChanges();
+
+                result = true;
+            }
+            catch(Exception e)
+            {
+                ExceptionLogger.Log(ExceptionLogger.SeverityLevels.fatal, e, "Next action is to re-throw this exception object");
+            }
+            finally
+            {
+                _ncuElrc.Connection.Close();
+            }
+
+            return result;
+
         }
 
         public object Delete(schedule entity)
         {
-            throw new NotImplementedException();
+            using (var _ncuElrc = new LibEntities())
+            {
+
+                var deleteRegistrant = _ncuElrc.lib_registerees.FirstOrDefault(t => t.key_id == entity.lcEventId);
+
+                if (deleteRegistrant == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    _ncuElrc.DeleteObject(deleteRegistrant);
+                    _ncuElrc.SaveChanges();
+
+                    return true;
+                }
+            }
         }
 
 
@@ -137,29 +210,108 @@ namespace LibraryMVC4.Repository
 
         public IEnumerable<schedule> List(int id)
         {
-            throw new NotImplementedException();
+            var _ncuElrc = new LibEntities();
+            
+                var getRegisterees = (from r in _ncuElrc.lib_registerees
+                                      where r.event_id == id
+                                      select new schedule
+                                      {
+                                          PatronName = r.first_name + " " + r.last_name,
+                                          PatronEmail = r.email_address,
+                                          DateTime = r.date_time,
+                                          lcEventId = r.key_id
+
+                                      }).ToList();
+
+            _ncuElrc.Connection.Close();
+            _ncuElrc.Dispose();
+            
+            return getRegisterees;     
+
         }
 
         public IEnumerable<schedule> GetAdminWorkshops()
         {
             LibEntities _ncuElrc = new LibEntities();
 
-            var getAdminSched = (from get in _ncuElrc.GetSchedule()
-                                 select new schedule
-                                 {
-                                    lcEventId = get.event_id,
-                                    eventDate = get.event_date,
-                                    TotalAttendees = get.total_attendees,
-                                    LibLastName = get.last_name,
-                                    Registerees = get.Registerees.ToString(),
-                                    eventDetails = get.event_details
+            try
+            {
+                var getAdminSched = (from get in _ncuElrc.GetSchedule()
+                                     select new schedule
+                                     {
+                                         lcEventId = get.event_id,
+                                         eventDate = get.event_date,
+                                         TotalAttendees = get.total_attendees,
+                                         LibLastName = get.last_name,
+                                         Registerees = get.Registerees.ToString(),
+                                         eventDetails = get.event_details
 
-                                 }).ToList();
+                                     }).ToList();
+
+                return getAdminSched;
+            }
+
+            catch (Exception e)
+            {
+
+                ExceptionLogger.Log(ExceptionLogger.SeverityLevels.fatal, e, "Next action is to re-throw this exception object");
+
+            }
+            
+            finally {
+                
+                _ncuElrc.Connection.Close();
+                _ncuElrc.Dispose();
+        
+            }
+
+            return null;
+
+        }
+       
+
+
+        public schedule GetEvents(int id)
+        {
+            LibEntities _ncuElrc = new LibEntities();
+
+            var getEvents = (from lc in _ncuElrc.lib_calendar
+                             where lc.event_id == id
+                             select new schedule
+                             {
+                                 lcEventId = lc.event_id,
+                                 eventDate = lc.event_date,
+                                 workShopTitle = lc.lib_home,
+                                 TotalAttendees = lc.total_attendees,
+                                 eventDetails = lc.event_details
+
+                             }).FirstOrDefault();
 
             _ncuElrc.Connection.Close();
+            _ncuElrc.Dispose();
 
-            return getAdminSched;
+            return getEvents;
+        }
 
-        }            
+        public object DeleteEvent(int id)
+        {
+            using (var _ncuElrc = new LibEntities())
+            {
+                var deleteEvent = _ncuElrc.lib_calendar.FirstOrDefault(t => t.event_id == id);
+
+                if (deleteEvent == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    _ncuElrc.DeleteObject(deleteEvent);
+                    _ncuElrc.SaveChanges();
+
+                    return true;
+                }
+            }
+        
+        }
     }
 }

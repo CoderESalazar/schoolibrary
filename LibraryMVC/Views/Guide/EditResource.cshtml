@@ -1,0 +1,54 @@
+﻿@model LibraryMVC4.Models.guides
+
+@{
+    ViewBag.Title = "EditResource";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Return Specialization Page", "specguide", new { id = Model.DeptDiscpId })
+
+<h2>Edit Resource</h2>
+
+@using (Html.BeginForm("UpdateResource", "guide", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        @Html.HiddenFor(n => n.DeptDiscpId)
+        @Html.HiddenFor(n => n.GuideResourceId)
+                    
+        @("Resource Title: ") @Html.TextBoxFor(n => n.ResourceTitle, new { @style = "width: 500px;" })
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.ResourceTitle)</span>
+        
+        <br />
+        <br />
+
+        @("Resource URL: ")@Html.TextBoxFor(n => n.ResourceUrl, new { @style = "width: 500px;" })
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.ResourceUrl)</span>
+        <br />
+        <br />
+        <h4>Resource Description</h4>
+        <div class="editor-field">
+            @Html.EditorFor(n => n.ResourceDesc)
+        </div>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $('#submit').click(function () {
+                    tinyMCE.triggerSave('#ResourceDesc');
+
+                });
+            });
+        </script>
+
+        <input type="submit" id="submit" value="Update" />
+
+    </fieldset>
+}
+<div align="right">
+    @using (Html.BeginForm("DeleteResource", "guide", FormMethod.Post))
+    {
+        @Html.HiddenFor(t => t.DeptDiscpId)
+        @Html.HiddenFor(t => t.GuideResourceId)        
+        
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+</div>

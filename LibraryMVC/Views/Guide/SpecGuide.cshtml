@@ -1,0 +1,57 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+
+@{
+    ViewBag.Title = "SpecGuide";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Return to Specialization Admin Area", "SpecAdminArea")
+
+@foreach (var title in Model.GroupBy(item => item.GuideTitle))
+{
+    <h3>Specialization Guide - @Html.DisplayFor(titleItem => title.Key)</h3>
+}
+
+@Html.ActionLink("Add Header", "headerpage", new { id = ViewBag.Id })
+
+@foreach (var header in Model.GroupBy(item => item.SpecHeaders))
+{
+    if (header.Key != null)
+    {
+        <h4>@Html.DisplayFor(modelItem => header.Key)</h4>
+
+        foreach (var myHeader in header.GroupBy(item => item.HeaderId))
+        {
+            @Html.ActionLink("Edit Header", "GetHeader", new { id = myHeader.Key })<br />
+        }
+    }
+    foreach (var headerId in header.GroupBy(item => item.HeaderId))
+    {
+        if (headerId.Key != 0)
+        {
+            @Html.ActionLink("Add Resource", "AddResourcePage", new { id = headerId.Key })
+        }
+    }
+    foreach (var resource in header.OrderBy(specResource => specResource.SpecResourceTitle))
+    {
+        if (resource.SpecResourceTitle != null && resource.GuideResourceId.ToString() != null)
+        {
+            if (resource.GuideId == 0)
+            {
+                <div style="text-indent: 5px;">@Html.ActionLink(resource.SpecResourceTitle, "EditResource", new { id = resource.GuideResourceId })</div>
+            }
+            else
+            {
+                using (Html.BeginForm("DeleteResource", "Guide", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {   
+                    @Html.Hidden("DeptDiscpId", resource.DeptDiscpId)                
+                    @Html.Hidden("GuideResourceId", resource.GuideResourceId) 
+                    <br/><button id="test" onclick="return confirm('Do you want to delete?')">Delete?</button><span style="text-indent: 5px;">@resource.SpecResourceTitle</span><br/>    
+                }
+            }
+        }
+    }
+}
+<br />
+<br />
+

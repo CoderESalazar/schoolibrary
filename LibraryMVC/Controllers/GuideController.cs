@@ -7,6 +7,7 @@ using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
 using System.Collections;
+using LibraryMVC4.Controllers.Attributes;
 
 namespace LibraryMVC4.Controllers
 {
@@ -15,7 +16,7 @@ namespace LibraryMVC4.Controllers
 
         private IGuides<guides> _guideRepository;
 
-        public GuideController() 
+        public GuideController()
         {
             _guideRepository = new GuideRepository();
         }
@@ -46,7 +47,7 @@ namespace LibraryMVC4.Controllers
                 Value = m.DeptGuideId.ToString()
 
             });
-            
+
             return PartialView("guidesdropdown", model);
 
         }
@@ -64,51 +65,236 @@ namespace LibraryMVC4.Controllers
 
             return View("_specguides", model);
         }
-        
+
         public ActionResult GetGuide(guides model)
         {
             int id = model.DeptGuideId;
 
-           ViewData["getCounts"] = _guideRepository.GetCount(id);
-        
-           return View(_guideRepository.GetSpecPage(id));
+            ViewData["getCounts"] = _guideRepository.GetCount(id);
+
+            return View(_guideRepository.GetSpecPage(id));
 
         }
         //page retrieved after selecting guide. 
         [Authorize]
-         public ActionResult GetCGuide(guides model)
+        public ActionResult GetCGuide(guides model, int GuideId = 0)
         {
-            string guideId = model.GuidesId.ToString();
+            string myId = model.GuidesId.ToString();
+            var guideId = int.Parse(myId);
 
-            var gId = int.Parse(guideId);
+            if (GuideId != 0)
+            {
 
-            string headerId = model.HeaderId.ToString();           
-            //if the guide has headers/tabs then this code below is run. 
-               if (headerId != "")
-               {                 
-                   //note this method is called here as well as in the "else" statement. 
-                   ViewData.Model = _guideRepository.GetGuideTabs(gId);
+                var thisMyGuide = _guideRepository.GetGuideTabs(GuideId);
 
-                   var hId = int.Parse(headerId);
+                return View(thisMyGuide);
 
-                   ViewData["GuideBody"] = _guideRepository.GetGuidesWithBody(hId);
-                }
-                /*there is no headerid when you first select from the drop down menu so this always called first prior to the code above. We can remove this code once every
-                every guide is using tabs*/
-                else
+            } else
+            {
+
+                if (model.HeaderId != null)
                 {
-                   //by default this always get pulled, no matter what. 
-                    
-                    ViewData["guideNoTabs"] = _guideRepository.GetGuidesWOutBody(gId);
-                    ViewData.Model = _guideRepository.GetGuideTabs(gId);                   
-   
-                }
-           return View();           
+                    ViewBag.headerId = model.HeaderId;
+                }    
+            
+            var getMyGuide = _guideRepository.GetGuideTabs(guideId);
+            return View(getMyGuide);
+
+            }                   
 
         }
- 
+
+        //Library Admin area begins below.
+
+        [LibraryAdmin]
+        public ActionResult SpecAdminArea()
+        {
+            var specAdminArea = _guideRepository.GetSpecGuides();
+
+            return View(specAdminArea);
+        }
+        [LibraryAdmin]
+        public ActionResult SpecGuide(int? id)
+        {
+            ViewBag.Id = id;
+
+            var specGuide = _guideRepository.GetSpecPage(id);
+
+            return View(specGuide);
+            //return Content(id);
+        }
+        [LibraryAdmin]
+        public ActionResult AddSpecPage(int? id)
+        {
+            GetSpecList(id);
+
+            return View();
+        }
+        [LibraryAdmin]
+        public ActionResult GetSpecList(int? id)
+        {
+            int specId = Convert.ToInt32(id);
+
+            var getSpecList = _guideRepository.GetSpecListDropDown(specId);
+            ViewBag.Id = id;
+
+            guides _dropDown = new guides();
+
+            _dropDown.SpecList = getSpecList.Select(m => new SelectListItem()
+            {
+                Text = m.SectionName,
+                Value = m.SectionName
+
+            });
+            return PartialView(_dropDown);
+        }
+        [HttpPost]
+        public ActionResult AddSpec(guides _objDropDown)
+        {
+            var addSpec = _guideRepository.AddSpec(_objDropDown);
+
+            if ((bool)addSpec == true)
+            {
+                return Redirect("/guide/SpecAdminArea" + "#Added");
+            }
+            return Redirect("/guide/SpecAdminArea" + "#ErrorOccurred");
+        }
+        [LibraryAdmin]
+        public ActionResult HeaderPage(int id)
+        {
+            ViewBag.Id = id;
+            var getSpecTitle = _guideRepository.HeaderPage(id);
+
+            return View(getSpecTitle);
+        }
+        [LibraryAdmin]
+        public ActionResult HeaderDropDown()
+        {
+            var getHeaderDropDown = _guideRepository.GetHeaderDropDown();
+
+            guides _dropDown = new guides();
+
+            _dropDown.HeaderList = getHeaderDropDown.Select(m => new SelectListItem()
+            {
+                Text = m.SectionName,
+                Value = m.SectionName
+            });
+
+            return PartialView(_dropDown);
+        }
+        [HttpPost]
+        public ActionResult PostHeaderPage(guides _objItems)
+        {
+            var postHeader = _guideRepository.AddHeader(_objItems);
+            int id = _objItems.DeptGuideId;
+
+
+            if ((bool)postHeader == true)
+            {
+                return Redirect("/guide/specguide/" + id + "#HeaderAdded");
+            }
+
+            return Redirect("/guide/specguide/" + id + "#HeaderFailure");
+        }
+        [LibraryAdmin]
+        public ActionResult AddResourcePage(int id)
+        {
+            //bring in existing partial view dbmasterindex dropdown. will likely need to use inheritance to make this work. 
+            ViewBag.headerId = id;
+
+            var resourcePage = _guideRepository.ResourcePage(id);
+
+            return View(resourcePage);
+        }
+        [HttpPost]
+        public ActionResult PostResourcePage(guides _objItems)
+        {
+            int? specId = _objItems.DeptDiscpId;
+
+            var postResourcePage = _guideRepository.AddResource(_objItems);
+
+            if ((bool)postResourcePage == true)
+            {
+                return Redirect("/guide/specguide/" + specId + "#ResourceAdded");
+            }
+            else
+            {
+                return Redirect("/guide/specguide/" + specId + "#Resourcefailed");
+            }
+        }
+        [LibraryAdmin]
+        public ActionResult EditResource(int id)
+        {
+            var editResourcePage = _guideRepository.EditResourcePage(id);
+            
+            return View(editResourcePage);
+        }
+        [HttpPost]
+        public ActionResult UpdateResource(guides _objItems)
+        {
+            var updateResource = _guideRepository.EditResource(_objItems);
+
+            return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + "#UpdateSuccessful");
+        }
+        [HttpPost]
+        public ActionResult UpdateHeader(guides _obItems)
+        {
+            var updateHeader = _guideRepository.UpdateHeader(_obItems);
+
+            if ((bool)updateHeader == true)
+            {
+                return Redirect("/guide/specguide/" + _obItems.DeptDiscpId + "#HeaderUpdated");
+            }
+            else
+            {
+                return Redirect("/guide/specguide/" + _obItems.DeptDiscpId + "#Failure");
+            }
+
+        }
+        [HttpPost]
+        public ActionResult DeleteResource([Bind(Include = "GuideResourceId,DeptDiscpId")] guides _objItems)
+        {
+            var deleteResource = _guideRepository.DeleteResource(_objItems.GuideResourceId);
+            
+            return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + "#ResourceDeleted");
+        }
+
+        [LibraryAdmin]
+        public ActionResult GetHeader(int id)
+        {
+            var getHeader = _guideRepository.GetHeader(id);
+
+            return View(getHeader);
+        }
+        [HttpPost]
+        public ActionResult DeleteHeader(guides _objItems)
+        {
+            int? id = _objItems.HeaderId;
+            
+            var deleteHeader = _guideRepository.DeleteHeader((int)id);
+
+            if ((bool)deleteHeader == false)
+            {
+                string error = "#RemoveRemainingResourcesFromHeader";
+
+                return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + error);
+            }
+            string success = "#HeaderSuccessfullyRemoved";
+            
+            return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + success);
+
+        }
+        public ActionResult DisplaySpec(bool boolId, int id)
+        {
+            var updateDisplay = _guideRepository.UpdateDisplay(boolId, id);
+
+            if ((bool)updateDisplay)
+            {
+                return Redirect("/guide/SpecAdminArea" + "#Updated");
+            }
+            return Redirect("/guide/SpecAdminArea" + "#failed");
+        }
+
     }
-
-
 }
 

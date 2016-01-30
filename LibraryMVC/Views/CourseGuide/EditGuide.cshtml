@@ -1,0 +1,205 @@
+﻿@model IEnumerable<LibraryMVC4.Models.guides>
+
+@{
+    ViewBag.Title = "EditGuide";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Return to Course Admin Table", "admin", "courseguide")
+
+<h2>Edit Course Guide</h2>
+
+    <input type="hidden" value="@ViewBag.headerId" id="HeaderId" />
+    
+    @foreach (var guideId in Model.GroupBy(id => id.GuideId))
+    {
+        @Html.HiddenFor(item => guideId.Key)
+
+    }   
+
+    @foreach (var c in Model.GroupBy(item => item.CGuideTitle))
+    {
+        <h2>@Html.DisplayFor(title => c.Key)</h2>
+
+        <br />
+
+        @("Course Guide Title: ") @Html.TextBoxFor(title => c.Key, new { style = "width: 500px;" })
+        <br />
+        <br />
+
+        foreach (var t in Model.GroupBy(item => item.CourseCode))
+        {
+            @( " Course Code: ") @Html.TextBoxFor(coursecode => t.Key)
+        }
+        
+        <br />
+        <br />
+
+        //not certain if we can do a nested using statement
+        @("Add to Tab List: ") @Html.TextBox("newTab") @(" ") <button id="Add">Add</button>
+
+        <br />
+        <br />
+
+        @("Tab List: ") @Html.Action("TabList", "CourseGuide") @(" ") <button id="AddTab">Add Tab</button>
+
+
+        <br />
+        <br />
+        //we have an interesting drop down menu that could be handled asychronously using JQuery
+
+        foreach (var g in c.Where(item => item.HeaderId != 0))
+        {
+            
+            if (g.HeaderId == ViewBag.headerId)
+            {
+                
+                @Html.ActionLink(g.TitleHeader, "editguide", new { controller = "courseguide", guidesId = g.GuideId, headerId = g.HeaderId }, new { style = "background-color: red;" })
+
+            }
+
+            else { 
+
+            @Html.ActionLink(g.TitleHeader, "editguide", new { controller = "courseguide", guidesId = g.GuideId, headerId = g.HeaderId }, new { @class = "btn btn-primary btn-sm" })
+
+            <span>@( "  ")</span> <span>@( "  ")</span>
+    
+            }
+        }
+
+    <br /><br />
+    @Html.Action("GetHeaderBody", "CourseGuide")
+
+    <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function () {
+            tinyMCE.triggerSave('#HeaderBody');
+
+        });
+    });
+    </script>
+
+
+    <br />
+
+    <input type="submit" id="update" value="Update" />
+
+}
+
+<div align="right">
+ 
+        <input type="hidden" value="@ViewBag.headerId" id="HeaderId" />
+
+        <input type="hidden" value="@ViewBag.guideId" id="GuideId" /> 
+
+        <button type="submit" id="delete" onclick="return confirm('Do you want to Delete?')">Delete</button>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#Add').click(function () {
+
+            var tabName = $('#newTab').val();
+            //Doing validation here.
+            if (tabName != '') {
+
+                $.post('@Url.Action("AddTab", "CourseGuide")', { id: tabName })
+                  .done(function (data) {
+
+                      //alert("Completed. Please Refresh Page.");
+                      location.reload();
+
+                  });
+            }
+            else {
+                alert("Please enter tab name.");
+            }
+
+        });
+
+    });
+    jQuery(document).ready(function ($) {
+        $('#AddTab').click(function () {
+
+            var tabId = $('#TabId').val();
+            var guideId = $('#guideId_Key').val();           
+
+            $.post('@Url.Action("AddNewTab", "CourseGuide")', { guideId: guideId, tabId: tabId })
+
+                .done(function (data) {
+
+                    location.reload();
+                });
+
+        });
+
+    });
+    jQuery(document).ready(function ($) {
+
+        $('#delete').click(function () {
+
+            var guideId = $('#GuideId').val();
+            var headerId = $('#HeaderId').val();
+
+            $.post('@Url.Action("DeleteTab", "CourseGuide")', { guideId: guideId, headerId: headerId })
+
+                .done(function (data) {
+                    alert("Tab Deleted");
+                    
+            });
+        });
+
+    });
+
+
+    jQuery(document).ready(function ($) {
+        $('#update').click(function () {
+
+            //var guideId = $('#guideId_Key').val();
+            //var headerId = $('#HeaderId').val();
+            //var cguideId =  $('#c_Key').val();
+            //var courseCode = $('#t_Key').val();
+            //var tabList = $('#TabId').val();
+            //var headerBody = $('#HeaderBody').val();
+            //var guideBody = $('#GuideBody').val();
+
+            $.ajax({
+                url: '@Url.Action("UpdateCourseGuide", "CourseGuide")',
+                type: 'POST',
+                dataType: 'json',               
+                data: {
+                    GuideId: $('#guideId_Key').val(),
+                    HeaderId: $('#HeaderId').val(),
+                    CGuideTitle: $('#c_Key').val(),
+                    CourseCode: $('#t_Key').val(),
+                    TabList: $('#TabId').val(),
+                    HeaderBody: $('#HeaderBody').val(),
+                    GuideBody: $('#GuideBody').val()
+                }               
+
+            })
+            .done(function (data)
+            {
+                //location.reload("Success!");
+                alert("Tab was updated!");
+            })
+            .fail(function (jqXHR, response) { alert("Request failed: " + response.textStatus); });
+            //.always(function () { alert("Complete"); });
+       
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

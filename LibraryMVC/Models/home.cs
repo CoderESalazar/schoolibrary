@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,7 +14,11 @@ namespace LibraryMVC4.Models
 
         //Director's letter
         public int EntryId { get; set; }
+        [Required(ErrorMessage = "*Title Required")]
         public string LetterTitle { get; set; }
+
+        [Required(ErrorMessage = "*Text Required")]
+        [UIHint("tinymce_jquery_full"), AllowHtml]
         public string LetterContent { get; set; }
 
         //Resource of the Month

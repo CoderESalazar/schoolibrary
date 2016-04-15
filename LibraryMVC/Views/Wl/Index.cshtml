@@ -1,66 +1,77 @@
 ﻿@model IEnumerable<LibraryMVC4.Models.wl>
 @{
-
     Layout = "~/Views/Shared/_bootStrap2.cshtml";
     ViewBag.Title = "Index";
-
 }
-
 
 @Html.Partial("_breadCrumb", ViewData["getBread"])
 @{ int counter = 0; }
-@foreach (var g in Model.GroupBy(item => item.Title))
+
+@*-------------tabs--------------*@
+@*<div style="text-align: center;">
+
+    </div>*@
+
+@foreach (var title in Model.GroupBy(t => t.PageTitle))
 {
-    <br />
-    @* Page title *@
-    <h2 style="text-align: center;">@Html.DisplayFor(modelItem => g.Key)</h2>
-
-    @*-------------tabs--------------*@
+    <h2 style="text-align: center;">@title.Key</h2>
     <div style="text-align: center;">
-        @foreach (var m in g.GroupBy(item => item.Category))
+        @foreach (var category in title.GroupBy(item => item.Category))
         {
-
             counter++;
-            <a href="#@m.Key">@m.Key</a>
+
+            <a href="#@category.Key">@category.Key</a>
 
             if (counter < Convert.ToInt32(ViewData["getCounts"]))
             {
                 @( "  |  ")
-
             }
-
         }
     </div>
 
-
-    <br />
-
-    foreach (var t in Model.GroupBy(item => item.Category))
+    foreach (var header in Model.OrderBy(c => c.Order).GroupBy(n => n.Category))
     {
-        <br />
-        <div id="@t.Key" style="font-size: 1.25em; font-weight: 700;">@t.Key</div>
-        @*@Html.DisplayFor(modelItem => t.Key)*@
-
-        foreach (var c in t.OrderBy(display_items => display_items.Links))
+        if (header.First().CatId != 0)
         {
-            <a href="@c.GetUrl" target="_blank">@c.Links</a> @( " - ")
-            @*@c.GetUrl*@
-            @*@Html.ActionLink(c.Links, c.GetUrl, "", new { target = "_blank" })*@
-            if (c.LinkDesc != "")
+            <h3 id="@header.Key">@header.Key</h3>
+        }
+        else
+        {
+            @("")
+        }
+
+        if (header.Key != null)
+        {
+            foreach (var links in header.OrderBy(q => q.Title))
             {
-                @( " - ")  @Html.Raw(c.LinkDesc)
-            }
-            else
-            {
-                @(" ")
+                if (links.LinkId != 0)
+                {
+                    <div>
+                        <a target="_blank" href=@links.GetUrl><strong> @links.Title</strong></a>
+
+                        @if (links.LinkDesc != "")
+                        {
+                            @( " - ")  @Html.Raw(links.LinkDesc)
+                        }
+                        else
+                        {
+                            @(" ")
+                        }
+                    </div>
+                    <br />
+                }
+                else
+                {
+                    @("")
+
+                }
 
             }
-            <br />
-            <br />
 
         }
 
+        @*<br />*@
     }
+    <br />
 
 }
-

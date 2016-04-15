@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using LibraryMVC4.Entity;
+﻿using System.Web.Mvc;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
-using System.Collections;
-using LibraryMVC4.Security;
 using LibraryMVC4.Controllers.Attributes;
 
 namespace LibraryMVC4.Controllers
@@ -39,9 +32,9 @@ namespace LibraryMVC4.Controllers
         [Authorize()]
         public ActionResult Index()
         {
-            var getSchedule = _scheduleRepository.GetAll();
+            //var getSchedule = _scheduleRepository.GetAll();
 
-            return View(getSchedule);
+            return Redirect("http://ncu.libcal.com/calendar/workshops");
         }
 
         //controller for LeaveWorkshopfeedback

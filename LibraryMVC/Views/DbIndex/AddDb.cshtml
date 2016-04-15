@@ -34,9 +34,9 @@
         <br />
         <h3>Database Description</h3>
 
-        <div class="editor-field">
+        <div>
             <span style="color: red;">@Html.ValidationMessageFor(m => m.dbDesc)</span>
-            @Html.EditorFor(c => c.dbDesc)
+            @Html.TextAreaFor(c => c.dbDesc)
         </div>
 
         <br />

@@ -1,0 +1,32 @@
+﻿@model LibraryMVC4.Models.wl
+
+@{
+    ViewBag.Title = "EditTitle";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to WL Page", "getwlpage", new { id = Model.PrimaryKey }, null)
+
+<h2>Edit WL Title</h2>
+
+@using (Html.BeginForm("EditTitle", "wl", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        @Html.HiddenFor(item => item.PrimaryKey)
+        @Html.Hidden("HighId", (int)ViewBag.HighId)
+
+        <span style="color: red;">@Html.ValidationMessageFor(item => item.Title)</span>
+        Resource Title: @Html.TextBoxFor(item => item.Title, new { @style = "width: 500px;" })
+
+        <input type="submit" id="submit" value="Update" />
+
+    </fieldset>
+}
+<div align="right">
+    @using (Html.BeginForm("deleteWlPage", "wl", FormMethod.Post))
+    {
+        @Html.HiddenFor(item => item.PrimaryKey)
+        @Html.Hidden("HighId", (int)ViewBag.HighId)
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+</div>

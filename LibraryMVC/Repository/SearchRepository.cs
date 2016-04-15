@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
-using LibraryMVC4.Security;
 using Ncu.Logging.Logger;
-using System.Web.Mvc;
 using LibraryMVC4.Utilities;
-using System.Text.RegularExpressions;
 
 
 namespace LibraryMVC4.Repository
@@ -257,5 +253,38 @@ namespace LibraryMVC4.Repository
             }
         }
 
+        public IEnumerable<admin> GetLastName(string lastName)
+        {
+
+            using (var _libEntity = new LibEntities())
+            {
+                try
+                {
+                    var getLastName = (from lm in _libEntity.GetLastName(lastName)
+                                       select new admin
+                                       {
+                                           PatronId = lm.user_id,
+                                           QuestId = lm.q_id,
+                                           DateTime = lm.lib_date_time,
+                                           QuestStatus = lm.q_status,
+                                           QuestType = lm.q_type,
+                                           PatronName = lm.PatronName,
+                                           CourseNum = lm.course_num,
+                                           LibLastName = lm.last_name,
+                                           CatName = lm.new_cat,
+                                           EmailSent = lm.email_sent
+
+                                       }).ToList();
+
+                    return getLastName;
+                }
+                catch (Exception exception)
+                {
+                    ExceptionLogger.Log(ExceptionLogger.SeverityLevels.fatal, exception, "Next action is to re-throw this exception object");                    
+                }                
+
+            }
+            return null;
+        }
     }
 }

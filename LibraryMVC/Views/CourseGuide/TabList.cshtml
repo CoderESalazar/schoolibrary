@@ -1,5 +1,5 @@
 ﻿@model LibraryMVC4.Models.guides
 
 
-@Html.DropDownListFor(t => t.TabId, Model.TabList, "--Select Tab--")
+@Html.DropDownListFor(t => t.TabId, Model.TabList.OrderBy(item => item.Text), "--Select Tab--")
     

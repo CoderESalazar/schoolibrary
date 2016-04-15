@@ -2,50 +2,54 @@
 
 @{
     ViewBag.Title = "GetWlPage";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
 }
 
-<h2>GetWlPage</h2>
+@Html.ActionLink("Back to WL Admin", "admin", "wl")
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            TitleName
-        </th>
-        <th>
-            HighId
-        </th>
-        <th>
-            Category
-        </th>
-        <th>
-            Links
-        </th>
-        <th></th>
-    </tr>
+<br />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TitleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HighId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Links)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+@foreach (var title in Model.GroupBy(t => t.PageTitle))
+{
+    <h2>Edit - @Html.ActionLink(title.Key, "EditTitle", new { id = title.First().PrimaryKey }, null) </h2>    
+
+    @Html.ActionLink("Add Header", "addcategory", "wl", new { id = title.First().PrimaryKey }, null)
+
+    foreach (var header in Model.GroupBy(n => n.Category))
+    {    
+
+        if(header.First().CatId != 0)
+        { 
+            <h4>@Html.ActionLink(header.Key, "EditHeader", new { id = header.First().CatId, pId = header.First().PrimaryKey })</h4>
+        }
+        else
+        {
+            @("")
+        }
+
+        if (header.Key != null)
+        {
+
+            @Html.ActionLink("Add Resource", "addlink", "wl", new { catId = header.First().CatId, pId = header.First().PrimaryKey }, null)
+
+            foreach (var links in header.OrderBy(q => q.Title))
+            {
+                if (links.LinkId != 0)
+                {
+                    <div>@Html.ActionLink(links.Title, "EditResource", new { id = links.LinkId, pId = header.First().PrimaryKey }, null)</div>
+                }
+                else
+                {
+                    @("")
+
+                }
+
+            }
+
+        }
+
+        <br />
+    }
+    <br />
+
 }
-
-</table>

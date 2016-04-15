@@ -1,0 +1,35 @@
+﻿@model LibraryMVC4.Models.res
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return to Resource Month Table", "Index", "ResOfMonth")</div>
+
+<h2>Add Resource of the Month</h2>
+
+@using (Html.BeginForm("Add", "ResOfMonth", FormMethod.Post, new { enctype = "multi/form-data" }))
+{
+    <fieldset>
+        Resource Title: @Html.TextBoxFor(t => t.ResourceTitle, new { style = "width: 400px;" })
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.ResourceTitle)</span>
+
+        <h3>Resource Text:</h3>
+        <div>
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.ResourceText)</span>
+            @Html.TextAreaFor(c => c.ResourceText)
+        </div>
+
+        <input type="submit" id="submit" name="Add" value="Add" />
+    </fieldset>
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function () {
+            tinyMCE.triggerSave('#ResourceText');
+
+        });
+    });
+</script>

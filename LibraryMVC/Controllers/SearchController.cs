@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
-using System.Collections;
 using LibraryMVC4.Controllers.Attributes;
 
 namespace LibraryMVC4.Controllers
@@ -34,9 +29,7 @@ namespace LibraryMVC4.Controllers
         [HttpGet]
         public JsonResult UserSearch(string UserId) 
         {
-            //I believe we are going to start with searching by userid. The question here is whether I want an auto populate list or not. 
-            //if we type in the userid then when we click a specific list item then the table is generated below. which will have the q-id. 
-            //let's go ahead and write the query, either way we are going to use Json to return the results. Yes. we'll worry about the front-end later.
+            //Searching by User 
             if (UserId != null)
             {
                 var id = UserId.Trim();
@@ -50,6 +43,20 @@ namespace LibraryMVC4.Controllers
             }
                         
         }
+        [HttpGet]
+        public JsonResult GetLastName(string lastName)
+        {
+            if (lastName.Trim() != null)
+            { 
+                var getLastName = _searchRepository.GetLastName(lastName);
+                return Json(getLastName, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("error", JsonRequestBehavior.AllowGet);
+            }
+         }
+
         [HttpGet]
         public JsonResult BooleanSearch(string firstKeyWord, string secondKeyWord, string dropdown)
         {
@@ -76,6 +83,7 @@ namespace LibraryMVC4.Controllers
                 MaxJsonLength = Int32.MaxValue
             };
         }
+
         [HttpGet]
         public JsonResult QidSearch(int id)
         {
@@ -83,19 +91,17 @@ namespace LibraryMVC4.Controllers
 
             if (getQId == null)
             {
-
                 return Json(1, JsonRequestBehavior.AllowGet);
-
             }
-
             return Json(getQId, JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public JsonResult GetCourseSearch(string id)
         {
             var getCourseSearch = _searchRepository.GetCourse(id);
 
             return Json(getCourseSearch, JsonRequestBehavior.AllowGet);
-        }        
+        }   
     }
 }

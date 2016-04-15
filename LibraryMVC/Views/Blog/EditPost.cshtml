@@ -1,0 +1,45 @@
+﻿@model LibraryMVC4.Models.blog
+
+@{
+    ViewBag.Title = "EditPost";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<h2>EditPost</h2>
+
+@using (Html.BeginForm("Edit", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <hr />
+    @Html.HiddenFor(model => model.BlogId)
+
+    <h3>Post Title</h3>
+    @Html.EditorFor(model => model.BlogHeader, new { htmlAttributes = new { @class = "form-control" } })
+    <span style="color: red;">@Html.ValidationMessageFor(model => model.BlogHeader)</span>
+
+    <h3>Edit Text</h3>
+
+    <span style="color: red;">@Html.ValidationMessageFor(model => model.BlogText)</span>
+    @Html.TextAreaFor(model => model.BlogText, new { htmlAttributes = new { @class = "form-control" } })
+
+
+    <input type="submit" value="Save" class="btn btn-default" />
+    }
+
+    <div align="right">
+        @using (Html.BeginForm("Delete", "blog", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.BlogId)
+
+            <button type="submit" class="btn btn-default" onclick="return confirm('Do you want to Delete?')">Delete</button>
+        }
+    </div>
+
+
+    <script type="text/javascript">
+        $('form input[type=submit]').click(function () {
+            tinyMCE.triggerSave();
+        });
+
+    </script>

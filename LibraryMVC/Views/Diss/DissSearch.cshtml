@@ -2,8 +2,8 @@
 
 
 @using (Html.BeginForm("GoSearch", "Diss", FormMethod.Post))
-{   
-    
+{
+ 
      @*@Html.Action("GetDropDrownMenu", "Diss")*@
     <div style="text-align: center;">
         @Html.DropDownListFor(m => m.DropDrownMenuVar, Model.DissList) @(" ")

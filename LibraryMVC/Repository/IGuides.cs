@@ -20,7 +20,7 @@ namespace LibraryMVC4.Repository
         T ResourcePage(int id);
         T EditResourcePage(int id);
         T GetHeader(int id);
-        T GetGuideBody(int guideId, int headerId);
+        T GetGuideBody(int guideId, int headerId);        
                     
         int GetCount(int id);
 
@@ -35,5 +35,6 @@ namespace LibraryMVC4.Repository
         object DeleteHeader(int id);
         object DeleteTab(int guideId, int headerId);
         object UpdateDisplay(bool boolId, int id);
+        object AddCourseGuide(string course);
     }
 }

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<LibraryMVC4.Models.res>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var getResourceGrid = new WebGrid(Model, canPage: true, rowsPerPage: 30, canSort: false);
+}
+
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<h2>Resource of the Month - Admin</h2>
+
+<hr/> 
+
+@Html.ActionLink("Add a Resource", "Add")
+
+<div id="content">
+    @getResourceGrid.GetHtml(
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        lastText: "Last >>",
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        rowStyle: "webgrid-row-style",
+        columns: getResourceGrid.Columns(
+                getResourceGrid.Column(columnName: "EntryId", header: "",
+                                        format: @<text>@Html.ActionLink("Select", "Edit", new { id = item.EntryId }, null)</text>),
+                getResourceGrid.Column(columnName: "ResourceTitle", header: "Resource Title"),
+                getResourceGrid.Column(columnName: "Date", header: "Date"),
+                getResourceGrid.Column(columnName: "Display", header: "Display"))
+                )                             
+</div>
+
+

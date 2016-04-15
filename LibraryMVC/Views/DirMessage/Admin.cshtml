@@ -1,0 +1,37 @@
+﻿@model IEnumerable<LibraryMVC4.Models.home>
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var getDirMessageGrid = new WebGrid(Model, canPage: true, rowsPerPage: 30, canSort: false);
+}
+
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<h2>Director Message Admin Area</h2>
+
+<hr />
+
+@Html.ActionLink("Add Message", "Add")
+
+<div id="content">
+    @getDirMessageGrid.GetHtml(
+        mode: WebGridPagerModes.All,
+        firstText: "<< First",
+        lastText: "Last >>",
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        rowStyle: "webgrid-row-style",
+        columns: getDirMessageGrid.Columns(
+                getDirMessageGrid.Column(columnName: "EntryId", header: "",
+                                        format: @<text>@Html.ActionLink("Select", "Edit", new { id = item.EntryId }, null)</text>),
+                getDirMessageGrid.Column(columnName: "LetterTitle", header: "Letter Title"),
+                getDirMessageGrid.Column(columnName: "DateTime", header: "Date"),
+                getDirMessageGrid.Column(columnName: "Display", header: "Display"))
+                )
+   
+
+</div>

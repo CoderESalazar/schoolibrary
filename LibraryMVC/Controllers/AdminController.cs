@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
-using System.Collections;
-using System.Net.Mail;
-using System.Configuration;
-using System.Web.Security;
 using LibraryMVC4.Security;
-using System.Data.Objects;
-using System.IO;
 using PagedList;
 using LibraryMVC4.Controllers.Attributes;
+using System.Threading.Tasks;
 
 namespace LibraryMVC4.Controllers
 {
@@ -40,8 +32,8 @@ namespace LibraryMVC4.Controllers
             _adminRepository = repository;
         }
         public ActionResult Index()
-        {           
-            return View();         
+        {
+            return View();
 
         }
         public ActionResult LibraryWkSpace(int? page, string sortOrder)
@@ -152,20 +144,20 @@ namespace LibraryMVC4.Controllers
             var libAreaPost = _adminRepository.Edit(_objUpdate);
 
             var Category = _objUpdate.CatQId;
-            
+
             if (Category == "Submitted to KB")
             {
                 return Redirect("/admin/LibraryWkSpace");
             }
-           
-            return Redirect("/admin/GetAskLibqs");  
+
+            return Redirect("/admin/GetAskLibqs");
         }
         [HttpPost]
         public ActionResult SubmittedToKbPost(admin _objUpdate)
         {
             var libAreaPost = _adminRepository.Edit(_objUpdate);
 
-            return Redirect("/admin/LibraryWkSpace");
+            return Redirect("/admin/GetAskLibqs");
 
         }
         public ActionResult SubmittedQs()
@@ -196,7 +188,7 @@ namespace LibraryMVC4.Controllers
             return PartialView(getLibAssignQs.ToPagedList(pageNumber, pageSize));
 
         }
-        public ActionResult GetLibQsNo(int? page, string sortOrder)
+        public async Task<ActionResult> GetLibQsNo(int? page, string sortOrder)
         {
             //this queue is for Questions Not Submitted to the Library KnowledgeBase.  
             //used to keep sort order while paging, see view paging for currentsort
@@ -208,7 +200,7 @@ namespace LibraryMVC4.Controllers
             ViewBag.CatSortParam = sortOrder == "cat_desc" ? "cat_asc" : "cat_desc";
             ViewBag.QTypeParam = sortOrder == "qtype_desc" ? "qtype_asc" : "qtype_desc";
 
-            var getGetQsNo = _adminRepository.GetSubmittedQsNo();
+            var getGetQsNo = await Task.Run(() => _adminRepository.GetSubmittedQsNo());
 
             switch (sortOrder)
             {
@@ -243,7 +235,7 @@ namespace LibraryMVC4.Controllers
                     break;
 
             }
-            
+
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
@@ -282,9 +274,9 @@ namespace LibraryMVC4.Controllers
             ModelState.Clear();
             return PartialView(getcategories);
         }
+
         public ActionResult QType(admin qType)
         {
-
             List<SelectListItem> list = new List<SelectListItem>()
             {
                 new SelectListItem(){ Value="Phone", Text= "Phone" },
@@ -314,6 +306,7 @@ namespace LibraryMVC4.Controllers
             ModelState.Clear();
             return PartialView(dList);
         }
+
         [HttpPost]
         public ActionResult ReAssignLib(admin _objId)
         {
@@ -340,17 +333,19 @@ namespace LibraryMVC4.Controllers
 
             return Redirect("/admin/GetAskLibqs");
         }
-        public ActionResult Categories()
+
+        public ViewResult Categories()
         {
             var getCatList = _adminRepository.List();
 
-            return View(getCatList);
+            return View("Categories", getCatList);
 
         }
-        public ActionResult CategoriesEdit(int id)
+
+        public ViewResult CategoriesEdit(int id)
         {
             var getCatInfo = _adminRepository.CategoryEdit(id);
-            return View(getCatInfo);
+            return View("CategoriesEdit", getCatInfo);
         }
 
         [HttpPost]
@@ -366,13 +361,12 @@ namespace LibraryMVC4.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostCategory(admin _object)
-        {
-            var postCat = _adminRepository.Add(_object);
-
-            return Redirect("/admin/Categories");
-
+        public ActionResult PostCategory([Bind(Include = "CatName")] admin _object)
+        {      
+                var postCat = _adminRepository.Add(_object);
+                return Redirect("/admin/Categories/#success");        
         }
+
         public ActionResult PhoneChatEmail()
         {
             ViewBag.LibUserId = LibSecurity.UserId;
@@ -395,10 +389,11 @@ namespace LibraryMVC4.Controllers
             else
             {
                 return Content("Please be sure that PatronId is a number! Try again.");
-            }            
+            }
             return Redirect("/admin/GetAskLibqs");
 
         }
+
         [HttpGet]
         public JsonResult GetPatronDetails(string SearchString)
         {
@@ -430,16 +425,13 @@ namespace LibraryMVC4.Controllers
                 //ModelState.Clear();
                 return Redirect("/admin/GetAskLibqs");
             }
-        
+
         }
+
         public ActionResult GetFeedback()
         {
-
             var getFeedback = _adminRepository.GetFeedBack();
-
             return View(getFeedback);
-
-
         }
     }
 }

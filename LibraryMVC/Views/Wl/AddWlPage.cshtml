@@ -1,0 +1,23 @@
+﻿@model LibraryMVC4.Models.wl
+
+@{
+    ViewBag.Title = "AddWlPage";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to WL Admin", "admin", "wl")
+
+<h2>Add Wl Page</h2>
+
+@using (Html.BeginForm("AddWlPage", "Wl", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <span style="color: red;">@Html.ValidationMessageFor(item => item.Title)</span>
+    @Html.TextBoxFor(t => t.Title, new { @style = "width: 500px;" })
+
+    <input type="submit" id="submit" value="Add" />
+}
+
+
+
+
+

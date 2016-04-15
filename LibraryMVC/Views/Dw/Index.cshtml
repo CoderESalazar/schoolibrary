@@ -7,20 +7,11 @@
 
 }
 
-
-
 @Html.Partial("_breadCrumb", ViewData["getBread"])
 
 
 @foreach (var item in Model)
 {
-
-
     <h2 align="center">@item.Title</h2>
-
-
-
     @Html.Raw(item.Text)
-
-
 }

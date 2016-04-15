@@ -1,0 +1,56 @@
+﻿@model LibraryMVC4.Models.home
+
+@{
+    ViewBag.Title = "EditLetter";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+<div>@Html.ActionLink("Return to Director's Message Table", "Admin", "DirMessage")</div>
+<h2>Edit Director's Message</h2>
+
+
+@using (Html.BeginForm("EditPost", "DirMessage", FormMethod.Post, new { enctype = "mulipart/form-data" }))
+{
+    <fieldset>
+        @Html.HiddenFor(t => t.EntryId)
+
+        <h3>Message Title</h3>
+        @Html.EditorFor(t => t.LetterTitle, new { htmlAttributes = new { @class = "form-control" } })
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.LetterTitle)</span>
+        <br />
+        <br />
+
+        <h3>Resource Text:</h3>
+
+        <div>
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.LetterContent)</span>
+            @Html.TextAreaFor(c => c.LetterContent)
+        </div>
+
+        @("Display")
+
+        @if (Model.Display == true)
+        {
+            @Html.CheckBoxFor(t => t.Display, new { @checked = Model.Display })
+        }
+        else
+        {
+            @Html.CheckBoxFor(t => t.Display)
+        }
+
+        <br />
+        <br />
+
+        <input type="submit" name="Update" value="Update" />
+
+    </fieldset>
+}
+
+<div align="right">
+    @using (Html.BeginForm("Delete", "DirMessage", FormMethod.Post))
+    {
+        @Html.HiddenFor(t => t.EntryId)
+
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+
+</div>

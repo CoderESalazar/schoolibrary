@@ -12,7 +12,7 @@
 @foreach (var c in Model.GroupBy(item => item.Name))
 {
     
-    <h2>Chairperson: @c.Key</h2>
+    <h2>Chairperson: @c.First().cFirstName @(" ") @c.First().cMidName @(" ") @c.First().cLastName</h2>
     
 @*
     <h2>Chairperson: @item.cFirstName @(" ") @item.cMidName @(" ") @item.cLastName</h2>*@

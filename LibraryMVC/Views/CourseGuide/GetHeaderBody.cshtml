@@ -4,7 +4,15 @@
     ViewBag.Title = "GetHeaderBody";
 }
 
-@if (ViewBag.headerId == 0)
+@if (ViewBag.headerId != 0)
+{ 
+    <div>
+        @Html.TextAreaFor(item => item.HeaderBody)
+    </div>
+}
+
+
+@*@if (ViewBag.headerId == 0)
 {
 
     if (Model.GuideBody != null)
@@ -28,5 +36,5 @@ else if (ViewBag.headerId != 0)
             @Html.EditorFor(item => item.HeaderBody)
         </div>
     }
-}
+}*@
 

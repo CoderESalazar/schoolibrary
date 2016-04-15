@@ -3,8 +3,7 @@
 
 @if (Request.RawUrl == "/guide/index")
 {
-    Layout = "~/Views/Shared/_bootStrap2.cshtml";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_bootStrap2.cshtml";    
 }
 
 <h2>Library Guides</h2>
@@ -24,7 +23,7 @@
     @Html.DropDownListFor(t => Model.DeptGuideId, Model.SpecList, "--Select guide--", new { @id = "deptguideid", @class = "form-control" })
 
 }
-<script>
+<script type="text/javascript">
     $("#guidesId").change(function () {
 
         var url = "/guide/getcguide?guidesId=" + $(this).val();

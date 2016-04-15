@@ -17,43 +17,48 @@
 {
     <h2>@Html.DisplayFor(title => c.Key)</h2>
 
-    foreach (var g in c.Where(item => item.HeaderId != 0))
+    foreach (var k in c.GroupBy(item => item.GuideBody))
     {
-        @Html.ActionLink(g.TitleHeader, "getcguide", new { controller = "guide", guidesId = g.GuideId.ToString(), headerId = g.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
-
-        <span>@( "  ")</span> <span>@( "  ")</span>
+        @Html.Raw(k.Key)
     }
 
-}
+    <br />
+    <br />
 
-<br />
-<br />
-
-@* Hear I am just simply checking to see if a header is passed. if not
-    just print the body. In this case, we will receive the default message *@
-
-@if (ViewBag.headerId == null)
-{
-    foreach (var z in Model.GroupBy(item => item.GuideBody))
+    foreach (var g in c.Where(item => item.TitleHeader != "Home"))
     {
-        @Html.Raw(z.Key);
-    }
 
-}
-else
-{
-    //Here as you can see I am clicking on the tabs to then receive the correct content dyanmically.
-    foreach (var t in Model.Where(t => t.HeaderId == ViewBag.headerId))
-    {
-        if (t.HeaderBody == null)
+        if (g.HeaderId == ViewBag.headerId)
         {
-            @Html.Raw(t.GuideBody)
+            @Html.ActionLink(g.TitleHeader, "getcguide", new { controller = "guide", guidesId = g.GuideId.ToString(), headerId = g.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm active" })
+            
+            <span>@("  ")</span><span>@("  ") </span>
+
+        }
+        else if (g.HeaderId.HasValue)
+        {
+            @Html.ActionLink(g.TitleHeader, "getcguide", new { controller = "guide", guidesId = g.GuideId.ToString(), headerId = g.HeaderId.ToString() }, new { id = "libguide", @class = "btn btn-primary btn-sm" })
+
+          <span>@("  ")</span><span>@("  ") </span>
         }
         else
         {
-            @Html.Raw(t.HeaderBody)
+           <span>@("  ") </span> <span>@("  ") </span>
 
         }
     }
 }
+    <br />
+    <br />
+
+    @* Hear I am just simply checking to see if a header is passed. if not
+        just print the body. In this case, we will receive the default message *@
+
+
+    @foreach (var t in Model.Where(t => t.HeaderId == ViewBag.headerId))
+    {
+        @Html.Raw(t.HeaderBody)
+
+    }
+
 

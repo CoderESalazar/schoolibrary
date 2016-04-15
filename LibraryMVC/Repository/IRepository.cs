@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibraryMVC4.Models;
-
+using System.Web.Mvc;
 
 namespace LibraryMVC4.Repository
 {
@@ -19,7 +19,6 @@ namespace LibraryMVC4.Repository
         
         object Edit(T entity);
         object Add(T entity);
-        object Delete(T entity);
-    
+        object Delete(T entity);        
     }
 }

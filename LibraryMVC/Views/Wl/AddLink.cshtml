@@ -1,0 +1,45 @@
+﻿@model LibraryMVC4.Models.wl
+
+@{
+    ViewBag.Title = "AddLink";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to WL Page", "getwlpage", new { id = (int)ViewBag.HighId})
+
+<h2>Add Resource</h2>
+
+@using (Html.BeginForm("addresource", "wl", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <span style="color: red;">@Html.ValidationMessageFor(item => item.Title)</span>
+        Resource Title: @Html.TextBoxFor(item => item.Title, new { @style = "width: 500px;" })
+
+        <br />
+        <br />
+        <span style="color: red;">@Html.ValidationMessageFor(item => item.GetUrl)</span>
+        Resource URL: @Html.TextBoxFor(item => item.GetUrl, new { @style = "width: 500px;" })
+
+        <br />
+        <br />
+        URL Description:
+
+        <div>
+            @Html.TextAreaFor(item => item.ResourceText)
+        </div>
+        <br />
+
+        Display Order: @Html.TextBoxFor(item => item.DisplayOrder, new { @style = "width: 50px;" })
+
+        <br />
+        <br />
+
+        @Html.Hidden("CatId", (int)ViewBag.CatId)
+        @Html.Hidden("HighId", (int)ViewBag.HighId)
+
+
+        <input type="submit" id="submit" value="Add" />
+
+    </fieldset>
+
+}

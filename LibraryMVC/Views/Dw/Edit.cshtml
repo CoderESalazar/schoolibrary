@@ -11,33 +11,35 @@
 <br />
 @using (Html.BeginForm("UpdateDw", "Dw", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <form>
+    <fieldset>
         @Html.HiddenFor(c => c.PrimaryKey)
 
-        @("Page Title"): @Html.TextBoxFor(m => m.Title) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>
+        <h3>Page Title</h3>
+
+        @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } }) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>
 
         <br />
         <br />
 
         <h3>Page Text</h3>
 
-        <div class="editor-field">
+        <div>
             <span style="color: red;">@Html.ValidationMessageFor(m => m.Text)</span>
-            @Html.EditorFor(c => c.Text)
+            @Html.TextAreaFor(c => c.Text)
 
         </div>
         <br />
         <br />
 
         <input type="submit" value="Update" />
+    </fieldset>
 
-    </form>
 }
 <div align="right">
     @using (Html.BeginForm("DeleteDw", "Dw", FormMethod.Post))
     {
         @Html.HiddenFor(t => t.PrimaryKey)
-        
+
         <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
     }
 </div>

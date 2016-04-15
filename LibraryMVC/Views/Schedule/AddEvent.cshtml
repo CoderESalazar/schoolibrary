@@ -21,9 +21,9 @@
 
         <h3>Event Details</h3>
         <span style="color: red;">@Html.ValidationMessageFor(m => m.eventDetails)</span>
-        <div class="editor-field">
+        <div>
 
-            @Html.EditorFor(model => model.eventDetails)
+            @Html.TextAreaFor(model => model.eventDetails)
 
         </div>
         <br />

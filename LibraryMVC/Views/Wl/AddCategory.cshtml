@@ -1,0 +1,31 @@
+﻿@model LibraryMVC4.Models.wl
+
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+@Html.ActionLink("Back to WL Page", "getwlpage", new { id = (int)ViewBag.HighId })
+
+<h2>Add Header</h2>
+
+@using (Html.BeginForm("addheader", "wl", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <span style="color: red;">@Html.ValidationMessageFor(item => item.Category)</span>
+        HeaderTitle: @Html.TextBoxFor(item => item.Category, new { @style = "width: 500px;" })
+
+        <br />
+        <br />
+        Display Order: @Html.TextBoxFor(item => item.Order, new { @style = "width: 50px;" })
+
+        <br />
+        <br />
+        @Html.Hidden("PrimaryKey", (int)ViewBag.PrimaryKey)
+        @Html.Hidden("HighId", (int)ViewBag.HighId)
+
+        <input type="submit" id="submit" value="Add" />
+
+    </fieldset>
+
+}
+

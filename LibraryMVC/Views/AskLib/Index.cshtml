@@ -9,25 +9,22 @@
 
 <a href="/">Library Home</a>
 <h2>My eRef Area</h2>
- @foreach (var g in Model.GroupBy(item => item.PatronFirstName))
+@foreach (var g in Model.GroupBy(item => item.PatronFirstName))
 
 {
-    
-    <p>Hi @Html.DisplayFor(modelItem => g.Key). Welcome to your My e-Reference area. Click Viewed to view our response to your question. Thank 
-    you for contacting the Library.</p>
+    <p>
+        Hi @Html.DisplayFor(modelItem => g.Key). Welcome to your My e-Reference area. Click Viewed to view our response to your question. Thank
+        you for contacting the Library.
+    </p>
 
-    
 }
-
-
 <table class="table table-striped table-hover">
-@*<table id="test_table" class="display">*@
-   <tr>
+    <tr>
         <th>
             Date and Time Question Received
         </th>
-          <th>
-           &nbsp;
+        <th>
+            Read Status
         </th>
         <th>
             Question Detail
@@ -36,24 +33,24 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td align="center">
-            @Html.DisplayFor(modelItem => item.DateTime.Value)
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime.Value)
             </td>
             <td>
-            @if (item.ViewedMess != true)
-            {
-            
-            @Html.ActionLink("View Answer", "GetAnswer", new { id = item.QuestId.ToString() }, null) 
-                
-            }
-            else
-            {
+                @if (item.ViewedMess != true)
+                {
 
-            @Html.ActionLink("Viewed", "GetAnswer", new { id = item.QuestId.ToString() }, null) 
+                    @Html.ActionLink("View Answer", "GetAnswer", new { id = item.QuestId.ToString() }, null)
 
-            } 
-                
-                </td>
+                }
+                else
+                {
+
+                    @Html.ActionLink("Viewed", "GetAnswer", new { id = item.QuestId.ToString() }, null)
+
+                }
+
+            </td>
             <td>
                 @Html.Raw(item.QuestDetail.Substring(0, Math.Min(item.QuestDetail.Length, 100)))
             </td>
@@ -61,10 +58,10 @@
     }
 </table>
 
-<br /> 
+<br />
 
-@("Page") @(" ") @(Model.PageCount < Model.PageNumber? 0 : Model.PageNumber) @(" ")  @("of") @(" ") @Model.PageCount 
+@("Page") @(" ") @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @(" ")  @("of") @(" ") @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("index", new { page, currentFilter = ViewBag.CurrentFilter })) 
+@Html.PagedListPager(Model, page => Url.Action("index", new { page, currentFilter = ViewBag.CurrentFilter }))
 
 

@@ -25,13 +25,14 @@ namespace LibraryMVC4.Repository
                                     where ecg.guide_id == id
                                     select new guides
                                     {
-                                        HeaderId = ech.header_id == null ? 0 : ech.header_id,
+                                        HeaderId = ech.header_id == 0 ? 0 : ech.header_id,
                                         TitleHeader = ech.header_title == null ? null : ech.header_title,
-                                        GuideId = ech.guide_id,
+                                        GuideId = ecg.guide_id,
                                         GuideBody = ecg.guide_body,
                                         DisplayOrder = ech.display_order == null ? 0 : ech.display_order,
-                                        CGuideTitle = ecg.guide_title,
+                                        CGuideTitle = ecg.course_code + " - " + ecg.guide_title,
                                         HeaderBody = ech.header_body,
+                                        DisplayId = ecg.display_id,
                                         CourseCode = ecg.course_code
 
                                     }).ToList();                     
@@ -105,32 +106,33 @@ namespace LibraryMVC4.Repository
         {
              //need to rewrite this query as a left join because there are null in the outer tables. 
             using (var _libEntity = new LibEntities())
-            {               
-                    var specPage = (from clv in _libEntity.concspec_list_v
-                                    join ghi in _libEntity.guide_headers_info on clv.department_guide_main_id equals ghi.department_discipline_id
-                                    into joined1
-                                    from ghi in joined1.DefaultIfEmpty()
-                                    join gr in _libEntity.guide_resources on ghi.guide_header_info_id equals gr.guide_header_info_id
-                                    into joined2
-                                    from gr in joined2.DefaultIfEmpty()
-                                    join db in _libEntity.db_index on gr.key_id equals db.key_id
-                                    into joined3
-                                    from db in joined3.DefaultIfEmpty()
-                                    where clv.department_guide_main_id == id
-                                    orderby ghi.display_order, ghi.head_title
-                                    select new guides
-                                    {
-                                        GuideTitle = clv.guide_title,
-                                        SpecHeaders = ghi.head_title == null ? null : ghi.head_title,
-                                        SpecResourceTitle = gr.key_id == 0 ? gr.resource_title : db.db_title,
-                                        urlSpecResource = gr.key_id == 0 ? gr.url_resource : db.url_id,
-                                        HeaderId = ghi.guide_header_info_id == null ? 0 : ghi.guide_header_info_id,
-                                        descSpecResource = gr.key_id == 0 ? gr.desc_resource : db.desc_resource,
-                                        GuideResourceId = gr.guide_resource_id == null ? 0 : gr.guide_resource_id,
-                                        GuideId = gr.key_id,
-                                        DeptDiscpId = gr.department_discipline_id
+            {       
+                var specPage = (from clv in _libEntity.concspec_list_v
+                                join ghi in _libEntity.guide_headers_info on clv.department_guide_main_id equals ghi.department_discipline_id
+                                into joined1
+                                from ghi in joined1.DefaultIfEmpty()
+                                join gr in _libEntity.guide_resources on ghi.guide_header_info_id equals gr.guide_header_info_id
+                                into joined2
+                                from gr in joined2.DefaultIfEmpty()
+                                join db in _libEntity.db_index on gr.key_id equals db.key_id
+                                into joined3
+                                from db in joined3.DefaultIfEmpty()
+                                where clv.department_guide_main_id == id
+                                orderby ghi.display_order, ghi.head_title
+                                select new guides
+                                {
+                                    GuideTitle = clv.guide_title,
+                                    SpecHeaders = ghi.head_title == null ? null : ghi.head_title,
+                                    SpecResourceTitle = gr.key_id == null ? gr.resource_title : db.db_title,
+                                    urlSpecResource = gr.key_id == null ? gr.url_resource : db.url_id,
+                                    HeaderId = ghi.guide_header_info_id == 0 ? 0 : ghi.guide_header_info_id,
+                                    descSpecResource = gr.key_id == null ? gr.desc_resource : db.desc_resource,
+                                    //GuideResourceId = gr.guide_resource_id == null ? 0 : gr.guide_resource_id,
+                                    GuideResourceId = gr.guide_resource_id != 0 ? gr.guide_resource_id : 0,
+                                    GuideId = gr.key_id,
+                                    DeptDiscpId = gr.department_discipline_id
 
-                                    }).ToList();
+                                }).ToList();
 
                     return specPage;
 
@@ -246,11 +248,47 @@ namespace LibraryMVC4.Repository
              finally
              {
                  _libEntity.Connection.Close();
+                 _libEntity.Dispose();
              }
 
              return result;
          }
-         public object AddTab(string id)
+        public object AddCourseGuide(string course)
+        {
+            bool result = false;
+            var _libEntity = new LibEntities();
+
+            try
+            {
+                var getCourseName = _libEntity.GetCourseName(course).FirstOrDefault();
+
+                var addNewGuide = new elrc_cr_guides
+                {
+                    course_code = course,
+                    guide_title = getCourseName.ToString(),
+                    update_datetime = DateTime.Now,
+                    update_by = LibSecurity.UserId
+                };
+
+                _libEntity.elrc_cr_guides.AddObject(addNewGuide);
+                _libEntity.SaveChanges();
+                result = true;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                _libEntity.Connection.Close();
+                _libEntity.Dispose();
+            }
+
+            return result;
+        }
+
+        public object AddTab(string id)
          {
              bool result = false;
              using (var _libEntity = new LibEntities())
@@ -352,6 +390,7 @@ namespace LibraryMVC4.Repository
                  finally
                  {
                      _libEntity.Connection.Close();
+                    _libEntity.Dispose();
                  }
              }
              return result;
@@ -624,7 +663,7 @@ namespace LibraryMVC4.Repository
                                                     where ecg.guide_id == guideId && ech.header_id == headerId
                                                     select new guides
                                                     {
-                                                        HeaderId = ech.header_id == null ? 0 : ech.header_id,
+                                                        HeaderId = ech.header_id == 0 ? 0 : ech.header_id,
                                                         TitleHeader = ech.header_title == null ? null : ech.header_title,
                                                         GuideId = ech.guide_id,
                                                         GuideBody = ecg.guide_body,
@@ -695,6 +734,6 @@ namespace LibraryMVC4.Repository
                 return getTabs;
              }
 
-         }
+         }       
     }
 }

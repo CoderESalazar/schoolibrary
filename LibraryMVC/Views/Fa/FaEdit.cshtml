@@ -31,10 +31,11 @@
     foreach (var c in t.OrderBy(db_items => db_items.dbTitle))
     {
         using (Html.BeginForm("FaDbDelete", "Fa", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+        {            
             @Html.Hidden("dbNum", (int)c.dbNum)
-            @Html.Hidden("HighId", (int)c.HighId)
-            <div><button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>@(" ") @c.dbTitle</div>
+            @Html.Hidden("dbProgId", (int)ViewBag.DbId)  
+               
+            <input type="image" style="vertical-align: middle;" src="~/Images/delete_icon.png" alt="Submit" onclick="return confirm('Do you want to delete?')"><span style="text-indent: 5px;">@c.dbTitle</span><br />
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using PagedList;
+
 
 namespace LibraryMVC4.Models
 {
@@ -39,13 +39,16 @@ namespace LibraryMVC4.Models
 
         //course guide index
         public int GuidesId { get; set; }
+
+        //[Display(Name="CourseGuide")]
         public string CourseCode { get; set; }
         public IEnumerable<SelectListItem> GuideList { get; set; }
         public string CourseName { get; set; }
         public int? Enrollees { get; set; }
         public bool? Display { get; set; }
         public string LastName { get; set; }
-    
+        public DateTime? CourseEndDate { get; set; }
+
         //spec guide admin
         public string DeptSpecId { get; set; }
         public string School { get; set; }
@@ -71,5 +74,9 @@ namespace LibraryMVC4.Models
         public string TabName { get; set; }
         public IEnumerable<SelectListItem> TabList { get; set; }
 
+        //webgrid Search example
+        public int? Page { get; set; }
+        public IPagedList<guides> SearchResults { get; set; }
+        public string SearchButton { get; set; }
     }
 }

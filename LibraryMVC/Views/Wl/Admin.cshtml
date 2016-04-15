@@ -1,0 +1,28 @@
+﻿@model IEnumerable<LibraryMVC4.Models.wl>
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to Library", "index", "admin")
+
+<br />
+
+<h2>WL Admin Pages</h2>
+
+@Html.ActionLink("Add a WL Page", "AddWlPage")
+
+<br />
+<br />
+
+@foreach (var wl in Model)
+{
+
+   @wl.PrimaryKey  @(" - ")  @Html.ActionLink(wl.PageTitle, "getwlpage", new { id = wl.PrimaryKey })
+
+    <br />
+
+}
+
+

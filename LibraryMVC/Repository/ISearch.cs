@@ -10,6 +10,7 @@ namespace LibraryMVC4.Repository
         IEnumerable<T> GetUListNames(string id);
         IEnumerable<T> SearchByKeyWords(string a, string b, string c);
         IEnumerable<T> GetCourse(string id);
+        IEnumerable<T> GetLastName(string lastName);
         T GetByQId(int id);  
         
     }

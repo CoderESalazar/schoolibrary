@@ -57,10 +57,28 @@ else if (@ViewBag.UrlPath == "library.ncu.edu")
     @Html.TextAreaFor(m => m.LibrarianResponse, new { @class = "form-control", @rows = 5 })
     
     <br />
+    <br />
+    @*<input type="file" id="uploadfile" name="FileUpload" />  <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.FileUpload)</span>
+    <br />*@ 
+
     <input type="submit" id="submit" value="Submit" />
 
 }
 <script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function()
+        {
+            var patronId = $('#PatronId').val();
+           
+            if(!(patronId+"").match(/^\d+$/))
+            {
+                alert("PatronId must be an integer!")
+                return false;
+            }           
+        })
+       
+    });   
 
     jQuery(document).ready(function () {
 
@@ -107,8 +125,6 @@ else if (@ViewBag.UrlPath == "library.ncu.edu")
         });
     });
 
-
-
     jQuery(document).ready(function ($) {
 
         $('#getInfo').click(function () {
@@ -128,7 +144,6 @@ else if (@ViewBag.UrlPath == "library.ncu.edu")
 
         });
 
-    });
-
+    });   
 
 </script>

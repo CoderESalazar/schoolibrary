@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
-using System.Collections;
 using LibraryMVC4.Controllers.Attributes;
 using System.Threading.Tasks;
 using System.Data;
 
 namespace LibraryMVC4.Controllers
 {
-     [LibraryAdmin]
+    [LibraryAdmin]
     public class CourseGuideController : Controller
     {
         private readonly IGuides<guides> _guideRepository;
@@ -29,15 +24,15 @@ namespace LibraryMVC4.Controllers
         {
             _courseGuideRepository = repository;
             _guideRepository = repo;
-        }
+        }       
 
-        public async Task<ActionResult> Admin()
+        public async Task<ActionResult> Admin(string filter = null)
         {
-            var getAdmin = await Task.Run(() => _courseGuideRepository.GetAll());
+            var getAdmin = await Task.Run(() => _courseGuideRepository.List(filter));
 
             return View(getAdmin);
         }
-        
+
         public ActionResult EditGuide(int id, int headerId = 0)
         {
             GetHeaderBody(id, headerId);
@@ -47,7 +42,7 @@ namespace LibraryMVC4.Controllers
             if (headerId != 0)
             {
                 ViewBag.headerId = headerId;
-            }
+            }            
 
             ViewBag.guideId = id;
 
@@ -63,7 +58,7 @@ namespace LibraryMVC4.Controllers
             return PartialView("GetHeaderBody", getHeaderBody);
             
         }
-        
+                
        public ActionResult TabList()
         {
             
@@ -82,6 +77,15 @@ namespace LibraryMVC4.Controllers
             return PartialView("TabList", MyTabList);
         }
 
+        //Trying to make this process without using a post attribute. See if this works. 
+        public ActionResult AddCourseGuide(string id, int uId)
+        {
+            var addCourseGuide = _guideRepository.AddCourseGuide(id);      
+            
+            return Redirect("/courseguide/admin?page=" + uId);
+
+        }
+     
         [HttpPost]
         public JsonResult AddTab(string id)
         {
@@ -100,7 +104,7 @@ namespace LibraryMVC4.Controllers
         }
 
         [HttpPost]
-        public JsonResult UpdateCourseGuide([Bind(Include = "GuideId,HeaderId,CGuideTitle,CourseCode,TabList,HeaderBody,GuideBody")] guides data)
+        public JsonResult UpdateCourseGuide([Bind(Include = "GuideId,HeaderId,HeaderBody,DisplayId,GuideBody")] guides data)
         {            
             var updateCourseGuide = _courseGuideRepository.Edit(data);
 
@@ -111,7 +115,6 @@ namespace LibraryMVC4.Controllers
         [HttpPost]
         public JsonResult DeleteTab(int guideId, int headerId = 0)
         {
-
             var deleteTab = _guideRepository.DeleteTab(guideId, headerId);
 
             return Json(deleteTab);

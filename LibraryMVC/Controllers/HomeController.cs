@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using LibraryMVC4.Entity;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
-using System.Collections;
-using System.Net.Mail;
 using System.Configuration;
 using System.Web.Security;
 using LibraryMVC4.Security;
-using System.Data.Objects;
+using System.Threading.Tasks;
 
 namespace LibraryMVC4.Controllers
 {
     public class HomeController : Controller
     { 
-        //private ncuEntities ncuConn = new ncuEntities();
-        //private LibEntities _libEntity = new LibEntities();
         private IHome<home> _homeRepository;
         private IUser<user> _userRepository;
         private IAdmin<admin> _adminRepository;
@@ -28,9 +22,9 @@ namespace LibraryMVC4.Controllers
         {
             _homeRepository = new HomeRepository();
             _userRepository = new UserRepository();
-            _adminRepository = new AdminRepository();
-           
+            _adminRepository = new AdminRepository();           
         }
+
         public HomeController(IHome<home> repository, IUser<user> userRepository, IAdmin<admin> adminRepository)
         {
             _userRepository = userRepository;
@@ -65,33 +59,32 @@ namespace LibraryMVC4.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult BList()
+        public async Task<ActionResult> BList()
         {
-            var getPosts = _homeRepository.GetBlogPosts();
+            var getPosts = await Task.Run(() => _homeRepository.GetBlogPosts());
 
             return View(getPosts);            
          }
         [ChildActionOnly]
-        public ActionResult DirMessage()
+        public async Task<ActionResult> DirMessage()
         {
-            var getDirMessage = _homeRepository.GetDirMessage();
+            var getDirMessage = await Task.Run(() => _homeRepository.GetDirMessage());
 
             return View(getDirMessage);
         
         }
         [ChildActionOnly]
-        public ActionResult Chat() 
+        public async Task<ActionResult> Chat() 
         {
-            //var getChat = _libEntity.chat.FirstOrDefault(c => c.lib_chat == true); 
-            var getChat = _homeRepository.GetChat();
-                                      
+           
+            var getChat = await Task.Run(() => _homeRepository.GetChat());                                      
             return View(getChat);    
             
         }
        [ChildActionOnly]
-        public ActionResult ResMonth()
+        public async Task<ActionResult> ResMonth()
         {
-            var resMonth = _homeRepository.ResourceOfMonth();
+            var resMonth = await Task.Run(() => _homeRepository.ResourceOfMonth());
             return View(resMonth); 
 
         }
@@ -143,44 +136,14 @@ namespace LibraryMVC4.Controllers
            return View(model);            
         }
 
-        public ActionResult GetAlert()
+        public async Task<ActionResult> GetAlert()
         {
-            var alertMess = _homeRepository.GetAlert();
+            var alertMess = await Task.Run(() => _homeRepository.GetAlert());
 
             return View(alertMess);        
                         
         }
-        [HttpPost]
-        public ViewResult SendEmail(mail _objModelMail)
-        {
 
-            var t = _userRepository.GetUserInfo();
-
-            try
-            {
-                MailMessage mail = new MailMessage();
-
-                SmtpClient smtpServer = new SmtpClient("smtp.ncu.edu");
-
-                mail.From = new MailAddress("library@ncu.edu");
-                mail.To.Add("library@ncu.edu");
-                mail.Subject = "Research Consultation";
-                mail.Body = "Name: " + t.PatronFirstName + " " + t.PatronLastName + "\r\r Email Address: " + t.PatronEmail + "\r\r ID#: " + LibSecurity.UserId +
-                            "\r\r Course: " + _objModelMail.Course + "\r\r Activity: " + _objModelMail.Activity +
-                            "\r\r Research Topic: " + _objModelMail.Question + "\r\r Status of Research Project: " + _objModelMail.projectStatus +
-                            "\r\r Resources & Search Terms Used: " + _objModelMail.StepsTaken + "\r\r Difficulties Encountered: " + _objModelMail.Difficulties +
-                            "\r\r Additional Resources or Questions: " + _objModelMail.RequestedAssistance + "\r\r Referral Source: " + _objModelMail.referral +
-                            "\r\r Desired time of day: " + _objModelMail.timeOfDay;
-
-                smtpServer.Send(mail);
-                return View(_objModelMail);
-
-            }
-            catch
-            {
-                return View("Error");
-            }
-        }
         [Authorize()]
         public ActionResult ScheduleConsult()
         {
@@ -193,24 +156,21 @@ namespace LibraryMVC4.Controllers
         public ActionResult LeaveConsultFdbk()
         {
             return Redirect("https://ncu.co1.qualtrics.com/jfe/form/SV_3ryXQEaJc38GjaJ");
-
         }
         [Authorize()]
         public ActionResult LeaveFeedback()
         {
             LibSecurity.IsLoggedIn = true;
             return View();
-
         }
 
         [HttpPost]
         public ActionResult LeaveFeedbackPost(home _objFeedback)
         {
-            var myPost = _homeRepository.AddUserPost(_objFeedback);
-                        
-            return View();
-                
+            var myPost = _homeRepository.AddUserPost(_objFeedback);                        
+            return View();                
         }
+
         [HttpPost]
         public ActionResult GetRadioId(home _objModel, int id)
         {
@@ -237,14 +197,10 @@ namespace LibraryMVC4.Controllers
 
         public ActionResult GetRadio()
         {
-            //see if you can write this code in the model. 
-
-            home _myRadioList = new home();
-
+           home _myRadioList = new home();
             return View(_myRadioList); 
-
-
         }
+
         public ActionResult GetResMonthFdbk()
         {
             return PartialView("ResMonthFdbk"); 
@@ -301,17 +257,9 @@ namespace LibraryMVC4.Controllers
         [HttpPost]
         public JsonResult FindFaqs(string searchText, int maxResults)
         {
-            using (var _libEntity = new LibEntities())
-            {
-                var result = (from s in _libEntity.quest_lib
-                              where s.lib_q_edit.ToLower().Contains(searchText.ToLower())
-                              && s.q_status == "Submitted to KB"
-                              && s.cat_id != false
-                              select s).Distinct().Take(maxResults).ToList();
+            var getFindFaqs = _homeRepository.FindFaqs(searchText, maxResults);
 
-                return Json(result);
-            }
-
+            return getFindFaqs;
         }
 
     }

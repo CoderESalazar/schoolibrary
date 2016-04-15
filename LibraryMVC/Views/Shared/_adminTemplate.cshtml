@@ -6,32 +6,22 @@
 
 <html>
 <head>
-
-    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/bundles/bootstrap")
+    @Styles.Render("~/bundles/content")
+    @Styles.Render("~/bundles/themes/baseAll")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-    @RenderSection("scripts", required: false)
-  
+    @Scripts.Render("~/bundles/jqueryui")
     <meta name="viewport" content="width=device-width" />
     <title>Library Admin Area</title>
-
     <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="/Images/favicon.ico" type="image/x-icon" />
-
+    @*<script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>*@
+ 
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce.js"></script>
     @*<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">*@
-
-    <link href="/Content/webgrid.css" rel="stylesheet" />
-    <link href="/Content/font-awesome.min.css" rel="stylesheet" />
-    <link href="/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css" />
-    <link href="/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
-    <link href="/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
-    <script src="/Scripts/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="/Scripts/library.js" type="text/javascript"></script>
-    <script src="/Scripts/jquery-ui-1.10.4.custom.js" type="text/javascript"></script>
-    <script src="/Scripts/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-    <script src="/Scripts/jquery.validate.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script>
 </head>
 <body style="background-color: #EDEDED;">
 
@@ -45,8 +35,7 @@
         </div>
     </div>
 
-
     @Scripts.Render("~/Scripts/bootstrap.js")
-
+    @RenderSection("scripts", required: false)
 </body>
 </html>

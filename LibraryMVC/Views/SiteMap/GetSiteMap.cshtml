@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LibraryMVC4.Models.SiteMapRecursion>
+﻿@model IEnumerable<LibraryMVC4.Models.structure>
 
 @{
     ViewBag.Title = "GetSiteMap";
@@ -11,7 +11,7 @@
 
 @SiteMap(Model, 0)
 
-@helper SiteMap(IEnumerable<LibraryMVC4.Models.SiteMapRecursion> root, int? iParentId)
+@helper SiteMap(IEnumerable<LibraryMVC4.Models.structure> root, int? iParentId)
     { 
     
         if (root.Any(c => c.ParentId == iParentId))

@@ -9,93 +9,133 @@
 
 <h2>Edit Course Guide</h2>
 
-    <input type="hidden" value="@ViewBag.headerId" id="HeaderId" />
+<input type="hidden" value="@ViewBag.headerId" id="HeaderId" />
+
+@foreach (var guideId in Model.GroupBy(id => id.GuideId))
+{
+    @Html.HiddenFor(item => guideId.Key)
+
+}
+
+@foreach (var c in Model.GroupBy(item => item.CGuideTitle))
+{
+    @*@("Edit the Title: ")*@ 
     
-    @foreach (var guideId in Model.GroupBy(id => id.GuideId))
+    <h3>@(c.Key)</h3>
+    
+    @*@Html.TextBoxFor(title => c.Key, new { @style = "width: 400px;" })*@<br/>
+
+    foreach (var k in c.GroupBy(item => item.GuideBody))
     {
-        @Html.HiddenFor(item => guideId.Key)
 
-    }   
+        @("*Use the update button to update this content. You must click one of the tabs to view the update button.")<br />
 
-    @foreach (var c in Model.GroupBy(item => item.CGuideTitle))
+        @Html.TextAreaFor(item => k.Key, new { @cols = 100, @rows = 5 })
+
+    }
+
+    <br />
+    <br />
+
+    //not certain if we can do a nested using statement
+    @("Add to Tab List: ") @Html.TextBox("newTab") @(" ") <button id="Add">Add</button>
+
+    <br />
+    <br />
+
+    @("Tab List: ") @Html.Action("TabList", "CourseGuide") @(" ") <button id="AddTab">Add Tab</button>
+
+        <br />
+        <br />
+    //we have an interesting drop down menu that could be handled asychronously using JQuery
+
+    foreach (var g in c.Where(t => t.TitleHeader != "Home"))
     {
-        <h2>@Html.DisplayFor(title => c.Key)</h2>
 
-        <br />
-
-        @("Course Guide Title: ") @Html.TextBoxFor(title => c.Key, new { style = "width: 500px;" })
-        <br />
-        <br />
-
-        foreach (var t in Model.GroupBy(item => item.CourseCode))
+        if (g.HeaderId == ViewBag.headerId)
         {
-            @( " Course Code: ") @Html.TextBoxFor(coursecode => t.Key)
+
+            @Html.ActionLink(g.TitleHeader, "editguide", new { controller = "courseguide", guidesId = g.GuideId, headerId = g.HeaderId }, new { @class = "btn btn-primary btn-sm active" })
+            <span>@("  ")</span><span>@("  ") </span>
+
+
         }
-        
-        <br />
-        <br />
 
-        //not certain if we can do a nested using statement
-        @("Add to Tab List: ") @Html.TextBox("newTab") @(" ") <button id="Add">Add</button>
-
-        <br />
-        <br />
-
-        @("Tab List: ") @Html.Action("TabList", "CourseGuide") @(" ") <button id="AddTab">Add Tab</button>
-
-
-        <br />
-        <br />
-        //we have an interesting drop down menu that could be handled asychronously using JQuery
-
-        foreach (var g in c.Where(item => item.HeaderId != 0))
+        else if (g.HeaderId.HasValue)
         {
-            
-            if (g.HeaderId == ViewBag.headerId)
-            {
-                
-                @Html.ActionLink(g.TitleHeader, "editguide", new { controller = "courseguide", guidesId = g.GuideId, headerId = g.HeaderId }, new { style = "background-color: red;" })
-
-            }
-
-            else { 
 
             @Html.ActionLink(g.TitleHeader, "editguide", new { controller = "courseguide", guidesId = g.GuideId, headerId = g.HeaderId }, new { @class = "btn btn-primary btn-sm" })
 
             <span>@( "  ")</span> <span>@( "  ")</span>
-    
-            }
+
         }
+        else
+        {
+            <span>@( "  ")</span> <span>@( "  ")</span>
+        }
+    }
 
     <br /><br />
     @Html.Action("GetHeaderBody", "CourseGuide")
 
     <script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $('#submit').click(function () {
-            tinyMCE.triggerSave('#HeaderBody');
+        jQuery(document).ready(function ($) {
+            $('#submit').click(function () {
+                tinyMCE.triggerSave('#HeaderBody');
 
+            });
         });
-    });
     </script>
 
+    if (ViewBag.headerId != 0)
+    {
+        <br />
 
-    <br />
+        @("Display ")
 
-    <input type="submit" id="update" value="Update" />
+        foreach (var m in Model.GroupBy(item => item.DisplayId))
+        {
+            if (m.Key == true)
+            {
+                @Html.CheckBoxFor(check => m.Key, new { @checked = m.Key })
+            }
+            else
+            {
+                @Html.CheckBoxFor(check => m.Key)
+            }
+        }
+        <br />
+        <br />
+        <input type="submit" id="update" value="Update" />
+    }
 
 }
 
 <div align="right">
- 
-        <input type="hidden" value="@ViewBag.headerId" id="HeaderId" />
 
-        <input type="hidden" value="@ViewBag.guideId" id="GuideId" /> 
+    <input type="hidden" value="@ViewBag.headerId" id="HeaderId" />
 
-        <button type="submit" id="delete" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    <input type="hidden" value="@ViewBag.guideId" id="GuideId" />
+
+    @if (ViewBag.headerId != 0)
+    {
+        <input type="submit" id="delete" value="Delete?" data-confirm="Are you sure you want to delete this tab?" />
+    }
 </div>
 
 <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+
+        $('#m_Key').change(function () {
+            if ($(this).attr('checked')) {
+                cb = $(this);
+                cb.val(cb.prop('checked'));
+            }
+
+        });
+
+    });
+
     jQuery(document).ready(function ($) {
         $('#Add').click(function () {
 
@@ -122,7 +162,7 @@
         $('#AddTab').click(function () {
 
             var tabId = $('#TabId').val();
-            var guideId = $('#guideId_Key').val();           
+            var guideId = $('#guideId_Key').val();
 
             $.post('@Url.Action("AddNewTab", "CourseGuide")', { guideId: guideId, tabId: tabId })
 
@@ -138,56 +178,57 @@
 
         $('#delete').click(function () {
 
-            var guideId = $('#GuideId').val();
-            var headerId = $('#HeaderId').val();
+            var proceed = confirm($(this).data('confirm'));
 
-            $.post('@Url.Action("DeleteTab", "CourseGuide")', { guideId: guideId, headerId: headerId })
+            if (proceed == true) {
+                var guideId = $('#GuideId').val();
+                var headerId = $('#HeaderId').val();
 
-                .done(function (data) {
-                    alert("Tab Deleted");
-                    
-            });
+                $.post('@Url.Action("DeleteTab", "CourseGuide")', { guideId: guideId, headerId: headerId })
+
+                    .done(function (data) {
+                        alert("Tab Deleted");
+                        window.onbeforeunload = null;
+                    });
+
+            }
         });
 
     });
-
-
     jQuery(document).ready(function ($) {
         $('#update').click(function () {
 
-            //var guideId = $('#guideId_Key').val();
-            //var headerId = $('#HeaderId').val();
-            //var cguideId =  $('#c_Key').val();
-            //var courseCode = $('#t_Key').val();
-            //var tabList = $('#TabId').val();
-            //var headerBody = $('#HeaderBody').val();
-            //var guideBody = $('#GuideBody').val();
+            var checkbox = $('#m_Key').val();
 
             $.ajax({
                 url: '@Url.Action("UpdateCourseGuide", "CourseGuide")',
                 type: 'POST',
-                dataType: 'json',               
+                dataType: 'json',
                 data: {
                     GuideId: $('#guideId_Key').val(),
                     HeaderId: $('#HeaderId').val(),
-                    CGuideTitle: $('#c_Key').val(),
+                    //CGuideTitle: $('#c_Key').val(),
                     CourseCode: $('#t_Key').val(),
                     TabList: $('#TabId').val(),
                     HeaderBody: $('#HeaderBody').val(),
-                    GuideBody: $('#GuideBody').val()
-                }               
+                    DisplayId: $('#m_Key').val(),
+                    GuideBody: $('#k_Key').val()
+                }
 
             })
-            .done(function (data)
-            {
+            .done(function (data) {
                 //location.reload("Success!");
-                alert("Tab was updated!");
+                alert("Page Successfully Updated!");
+                window.onbeforeunload = null;
             })
             .fail(function (jqXHR, response) { alert("Request failed: " + response.textStatus); });
             //.always(function () { alert("Complete"); });
-       
+
         });
     });
+
+
+
 
 
 </script>

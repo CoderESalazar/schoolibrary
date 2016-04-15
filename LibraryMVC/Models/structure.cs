@@ -23,7 +23,7 @@ namespace LibraryMVC4.Models
         public int? DisplayOrder { get; set; }
 
         //Alert bit field
-        public bool Display { get; set; }
+        //public bool Display { get; set; }
                
         //PageTitle used for breadcrumb
         public string PageTitle { get; set; }

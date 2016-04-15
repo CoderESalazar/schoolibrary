@@ -87,8 +87,8 @@ namespace LibraryMVC4.Repository
             {
                 var getLibraryAdmin = (from lg in ncuConn.letmein_groups
                                        from lu in lg.letmein_users
-                                       where lu.user_id == "7304205318" && lg.letmein_group_id == "LibraryAdmin"
-                                       //where lu.user_id == LibSecurity.UserId && lg.letmein_group_id == "LibraryAdmin"
+                                       //where lu.user_id == "7304205318" && lg.letmein_group_id == "LibraryAdmin"
+                                       where lu.user_id == LibSecurity.UserId && lg.letmein_group_id == "LibraryAdmin"
                                        select new user
                                        {
                                            LibAdminGroup = lg.letmein_group_id

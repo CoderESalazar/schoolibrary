@@ -1,8 +1,9 @@
-﻿<span style="float: left;">@Html.Action("GetLibraryAdminLink", "home")</span>
-<a class="libFooter" href="http://www.ncu.edu/corporate-information/privacy-statement-and-consumer-information" target="_blank">
-    PRIVACY
-    POLICY AND CONSUMER INFORMATION
-</a> | <a class="libFooter" href="/dw/index/22"
-          target="_blank">CONTACT US</a> | <a class="libFooter" href="/sitemap/getsitemap">LIBRARY SITEMAP</a> <br />
-    NCU is regionally accredited by WASC Senior College and University Commission (WSCUC), 985 Atlantic Avenue, Suite 100, Alameda, CA 94501, 510.748.9001, <a href="http://www.wascsenior.org" target="_blank" style="color: white;">http://www.wascsenior.org</a>. Copyright 2015. All rights reserved.
-<span style="float: right;"><a target="_blank" href="https://www.facebook.com/NorthcentralU"><img src="~/Images/facebook.gif" /></a> &nbsp;&nbsp;<a target="_blank" href="https://twitter.com/NorthcentralU"><img src="~/Images/icon-twitter.gif" /></a>&nbsp;&nbsp;<a target="_blank" href="https://www.youtube.com/user/NorthcentralUniv"><img src="~/Images/icon-youtube.gif" /></a></span>
+﻿<span class="libFooter">
+    <span class="libFooter" style="float: left;">@Html.Action("GetLibraryAdminLink", "home")</span>
+    <a class="libFooter" href="http://www.ncu.edu/corporate-information/privacy-statement-and-consumer-information" target="_blank">
+        PRIVACY
+        POLICY AND CONSUMER INFORMATION
+    </a> | <a href="/dw/index/22" target="_blank">CONTACT US</a> | @Html.ActionLink("LIBRARY SITEMAP", "getsitemap", "SiteMap")<br />
+    NCU is regionally accredited by WASC Senior College and University Commission (WSCUC), 985 Atlantic Avenue, Suite 100, Alameda, CA 94501, 510.748.9001, <a href="http://www.wascsenior.org" target="_blank">http://www.wascsenior.org</a>. Copyright 2015. All rights reserved.
+    <span style="float: right;"><a target="_blank" href="https://www.facebook.com/NorthcentralU"><img src="~/Images/facebook.gif" /></a> &nbsp;&nbsp;<a target="_blank" href="https://twitter.com/NorthcentralU"><img src="~/Images/icon-twitter.gif" /></a>&nbsp;&nbsp;<a target="_blank" href="https://www.youtube.com/user/NorthcentralUniv"><img src="~/Images/icon-youtube.gif" /></a></span>
+</span>

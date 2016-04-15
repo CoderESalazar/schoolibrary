@@ -36,22 +36,22 @@
     {
         if (resource.SpecResourceTitle != null && resource.GuideResourceId.ToString() != null)
         {
-            if (resource.GuideId == 0)
+            if (resource.GuideId == null)
             {
                 <div style="text-indent: 5px;">@Html.ActionLink(resource.SpecResourceTitle, "EditResource", new { id = resource.GuideResourceId })</div>
             }
             else
             {
                 using (Html.BeginForm("DeleteResource", "Guide", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {   
-                    @Html.Hidden("DeptDiscpId", resource.DeptDiscpId)                
-                    @Html.Hidden("GuideResourceId", resource.GuideResourceId) 
-                    <br/><button id="test" onclick="return confirm('Do you want to delete?')">Delete?</button><span style="text-indent: 5px;">@resource.SpecResourceTitle</span><br/>    
+                {
+                    @Html.Hidden("DeptDiscpId", resource.DeptDiscpId)
+                    @Html.Hidden("GuideResourceId", resource.GuideResourceId)
+                    @*<br/><button id="test" onclick="return confirm('Do you want to delete?')"><img src="~/Images/delete_icon.png" alt="Delete"/>Delete?</button><span style="text-indent: 5px;">@resource.SpecResourceTitle</span><br/>*@
+                    <input type="image" style="vertical-align: middle;" src="~/Images/delete_icon.png" alt="Submit" onclick="return confirm('Do you want to delete?')"><span style="text-indent: 5px;">@resource.SpecResourceTitle</span><br />
+
                 }
             }
         }
     }
-}
-<br />
-<br />
 
+}

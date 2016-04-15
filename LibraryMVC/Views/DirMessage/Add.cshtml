@@ -1,0 +1,37 @@
+﻿@model LibraryMVC4.Models.home
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return to Director's Message Table", "Admin", "DirMessage")</div>
+
+<h2>Add Resource of the Month</h2>
+
+@using (Html.BeginForm("AddPost", "DirMessage", FormMethod.Post, new { enctype = "multi/form-data" }))
+{
+    <fieldset>
+
+    <h3>Message Title</h3>
+    @Html.EditorFor(t => t.LetterTitle, new { htmlAttributes = new { @class = "form-control" } })
+    <span style="color: red;">@Html.ValidationMessageFor(m => m.LetterTitle)</span>
+
+    <h3>Resource Text:</h3>
+    <div>
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.LetterContent)</span>
+        @Html.TextAreaFor(c => c.LetterContent)
+    </div>
+
+    <input type="submit" id="submit" name="Add" value="Add" />
+</fieldset>
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#submit').click(function () {
+            tinyMCE.triggerSave('#LetterContent');
+
+        });
+    });
+</script>

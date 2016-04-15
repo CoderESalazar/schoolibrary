@@ -2,18 +2,14 @@
 using LibraryMVC4.Models;
 using LibraryMVC4.Security;
 using System;
-using System.Transactions;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Web;
-using System.Data.SqlClient;
 using System.Net.Mail;
 using Ncu.Logging.Logger;
-using System.Web.Mvc;
-using LibraryMVC4.Utilities;
 using System.Data;
 using System.IO;
+using System.Web.UI.WebControls;
 
 namespace LibraryMVC4.Repository
 {
@@ -559,8 +555,7 @@ namespace LibraryMVC4.Repository
                 _ncuElrc.quest_tb.AddObject(quest_tb);
                 _ncuElrc.SaveChanges();
 
-                AddPhoneMethod(entity);  
-                
+                AddPhoneMethod(entity);
                 result = true;            
             }
             catch (Exception exception)
@@ -593,8 +588,8 @@ namespace LibraryMVC4.Repository
                     lib_q_edit = _objectList.UserQuestion,
                     lib_response = _objectList.LibrarianResponse,
                     u_last_name = _objectList.PatronLastName,
-                    q_type = _objectList.GetQTypeId,
-                    //there is one more field from the original and that is cat_id, which can be null and since this is phone we don't use it. I can't see there being any reason to add it. 
+                    q_type = _objectList.GetQTypeId
+                    
                 };
 
                 _ncuElrc.quest_lib.AddObject(quest_lib);
@@ -762,7 +757,7 @@ namespace LibraryMVC4.Repository
 
                     //if file's content length is zero or no files submitted. 
                     //see if this code can be moved to repository...might be called and used elsewhere in the application
-                    if (fileName.ContentLength > 0 && fileName.ContentLength < 250 * 1024 * 1024)
+                    if (fileName.ContentLength > 0 && fileName.ContentLength < 4 * 1024 * 1024)
                     {
                         int fileLen = fileName.ContentLength;
                         var input = new byte[fileLen];

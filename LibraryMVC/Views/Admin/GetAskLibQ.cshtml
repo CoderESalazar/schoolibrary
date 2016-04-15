@@ -82,18 +82,17 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
             Patron Question (Edited)
             <br />
             @*<span style="color: red;">@Html.ValidationMessageFor(m => m.LibResponseEdit)</span>*@
-            <div class="editor-field">
+            <div>
 
-                @Html.EditorFor(model => model.LibResponseEdit)
+                @Html.TextAreaFor(model => model.LibResponseEdit)
             </div>
             <br />
             <br />
             Librarian Response
             @*<span style="color: red;">@Html.ValidationMessageFor(m => m.LibrarianResponse)</span>*@
 
-            <div class="editor-field">
-
-                @Html.EditorFor(model => model.LibrarianResponse)
+            <div>
+                @Html.TextAreaFor(model => model.LibrarianResponse)
             </div>
 
             <input type="submit" value="Update" />

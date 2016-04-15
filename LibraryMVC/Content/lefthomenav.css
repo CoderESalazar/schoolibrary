@@ -1,0 +1,80 @@
+﻿
+.treeview
+{
+	width:178px;
+	margin-left:12px;
+	margin-top:2px;
+	border:0px solid red;
+}
+
+.treeview ul
+{ 
+	padding:10px 0 0;
+	margin:0px;
+}
+.treeview li
+{
+	list-style-type: none;
+	margin: 0 0 15px;
+}
+.treeview li li
+{
+	list-style-type: none;
+	margin: 0 0 5px;
+}
+.treeview li a
+{
+	font-family:arial;
+	font-size:12px;
+	color:#FFFFFF;
+	text-decoration: none;
+	font-weight: bold;
+    margin-left: 15px;	
+}
+.treeview li span
+{
+    margin-left: 15px;
+}
+.treeview li li a
+{
+	font-family:arial;
+	font-size:12px;
+	color:#FFFFFF;
+	text-decoration: none;
+	font-weight:normal;
+    margin-left: 15px;
+    display: block;
+}
+.treeview li a:hover
+{
+	color:#e8ae74;
+	text-decoration: None;
+}
+.treeview li.submenu
+{ 
+	background: url(../images/closed.gif) no-repeat left 3px;
+	cursor: hand !important;
+	cursor: pointer !important;
+}
+.treeview li.submenu ul
+{ 
+	display: none;
+	padding-left:15px;
+}
+.treeview .submenu ul li
+{
+	cursor: default;
+}
+
+.treeview a
+{
+	font-family:arial;
+	font-size:12px;
+	color:#FFFFFF;
+	text-decoration: none;
+}
+.treeview a:hover
+{
+	color:#e8ae74;
+	text-decoration: None;
+}

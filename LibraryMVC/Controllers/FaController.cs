@@ -78,7 +78,7 @@ namespace LibraryMVC4.Controllers
         [HttpPost]
         public ActionResult FaDbDelete(fa _objItems)
         {
-            var dbPage = _objItems.HighId;
+            var dbPage = _objItems.dbProgId;
             
             var faDbDelete = _faRepository.Delete(_objItems);
 
@@ -98,7 +98,6 @@ namespace LibraryMVC4.Controllers
             {
                 return Redirect("/fa/faedit/" + dbPage + "#DbAdded");
             }
-
            return Content("Database reference on this page already exists!");
         }
  

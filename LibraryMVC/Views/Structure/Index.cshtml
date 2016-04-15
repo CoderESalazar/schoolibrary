@@ -13,10 +13,12 @@
 <h2>Library Pages Area</h2>
 
 <div>Page Types: MM (main menu page), SW (link to specific page, e.g., GoogleScholar), DW (free-form text page), WL (page/set of weblinks on page), fa (pages organized by specific school, utilizes database master index in SQL Server)</div>
-<br/>
-<div>ParentID: input corresponding ParentId to chain your pages. For example, the Find an Article page is a subpage under the Research Resources page. If no ParentId exists, then it is either an MM page
-     or the page is an orphan and will not display on the Library site.</div>
-<br/>
+<br />
+<div>
+    ParentID: input corresponding ParentId to chain your pages. For example, the Find an Article page is a subpage under the Research Resources page. If no ParentId exists, then it is either an MM page
+    or the page is an orphan and will not display on the Library site.
+</div>
+<br />
 <div>LinkData: add corresponding reference. Can either be a link (SW), or corresponding Id from the DW or WL tables, etc. Note: MM pages do not have a LinkData reference.</div>
 
 <div id="content">
@@ -29,16 +31,23 @@
     <a href="#bottom" style="float: right; font-weight: bold;">Go to Bottom</a>
 
     <br />
-    @*<a href="#" class="add">Add New Library Page</a>*@
 
     @grid.GetHtml(
-                htmlAttributes: new { id = grid },
+                //htmlAttributes: new { id = grid },
                 tableStyle: "webgrid-table",
                 headerStyle: "webgrid-header",
                 footerStyle: "webgrid-footer",
                 alternatingRowStyle: "webgrid-alternating-row",
                 rowStyle: "webgrid-row-style",
                 columns: grid.Columns(
+                    grid.Column(header: "Action",
+                    format:
+                    @<text>
+                        <button class="edit-highId display-mode">Edit</button>
+                        <button class="save-highId edit-mode">Update</button>
+                        <button class="cancel-highId edit-mode">Cancel</button>
+                        <button class="delete-highId edit-mode">Delete</button>
+                    </text>),
                     grid.Column(columnName: "HighId", canSort: true,
                                 format: @<text>
                         <span class="display-mode">@item.HighId</span>
@@ -59,24 +68,16 @@
                         <span class="display-mode"><label id="lblParentId">@item.ParentId</label></span>
                         <input type="text" id="ParentId" value="@item.ParentId" class="edit-mode" />
                                 </text>),
-                    grid.Column(columnName: "LinkData", canSort: false,
-                                format: @<text>
-                        <span class="display-mode"><label id="lblLinkData">@item.LinkData</label></span>
-                        <input type="text" id="LinkData" value="@item.LinkData" class="edit-mode" />
-                                </text>),
                     grid.Column(columnName: "DisplayOrder", canSort: false,
                                 format: @<text>
                         <span class="display-mode"><label id="lblDisplayOrder">@item.DisplayOrder</label></span>
                         <input type="text" id="DisplayOrder" value="@item.DisplayOrder" class="edit-mode" />
                                 </text>),
-                grid.Column(header:"Action",
-                    format:
-                    @<text>
-                        <button class="edit-highId display-mode">Edit</button>
-                        <button class="save-highId edit-mode">Update</button>
-                        <button class="cancel-highId edit-mode">Cancel</button>
-                        <button class="delete-highId edit-mode">Delete</button>
-                    </text>))
+                    grid.Column(columnName: "LinkData", canSort: false,
+                                format: @<text>
+                        <span class="display-mode"><label id="lblLinkData">@item.LinkData</label></span>
+                        <input type="text" id="LinkData" value="@item.LinkData" class="edit-mode" />
+                                </text>))
                     )
 
 
@@ -174,47 +175,7 @@
 
 
         })
-        //$('#add').on('click', function () {
 
-
-        //    $('table').append('<tr>' +
-        //                 '<td><span><input id="' + Title + '" type="text" /></span></td>' +
-        //                 '<td><span><input id="' + PageType + '" type="text" /></span></td>' +
-        //                 '<td><span><input id="' + ParentId + '" type="text" /></span></td>' +
-        //                 '<td><span><input id="' + LinkData + '" type="text" /></span></td>' +
-        //                 '<td><span><input id="' + DisplayOrder + '" type="text" /></span></td>' +
-        //                 '</tr>');
-
-
-
-        //var existrow = $('.save').length;
-        //if (existrow == 0) {
-        //    var index = $('#grid tbody tr').length + 1;
-
-        //var Title = "Title" + index;
-        //var PageType = "PageType" + index;
-        //var ParentId = "ParentId" + index;
-        //var LinkData = "LinkData" + index;
-        //var DisplayOrder = "DisplayOrder" + index;
-        //var Save = "Save_" + index;
-        //var Cancel = "Cancel_" + index;
-
-        //var tr = '<tr class="webgrid-alternating-row"><td></td>' +
-        //         '<td><span><input id="' + Title + '" type="text" /></span></td>' +
-        //         '<td><span><input id="' + PageType + '" type="text" /></span></td>' +
-        //         '<td><span><input id="' + ParentId + '" type="text" /></span></td>' +
-        //         '<td><span><input id="' + LinkData + '" type="text" /></span></td>' +
-        //         '<td><span><input id="' + DisplayOrder + '" type="text" /></span></td>' +
-        //         '</tr>'
-        //$('#grid tbody').append(tr);
-
-        //}
-        //else {
-
-        //    alert('First save your previous record!')
-
-        //}
-        //});
     </script>
 
 

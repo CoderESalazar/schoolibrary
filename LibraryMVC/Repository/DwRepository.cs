@@ -148,9 +148,6 @@ namespace LibraryMVC4.Repository
         }
         public structure GetById(int id)
         {
-
-            //string keyId = id.ToString();
-
             using (var _libEntity = new LibEntities())
             { 
                 var editDw = (from dw in _libEntity.elrc_dw_info

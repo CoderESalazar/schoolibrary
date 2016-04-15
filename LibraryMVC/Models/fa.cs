@@ -19,5 +19,7 @@ namespace LibraryMVC4.Models
         public string Title { get; set; }
         public int HighId { get; set; }
 
+        public int? dbProgId { get; set; }
+
     }
 }

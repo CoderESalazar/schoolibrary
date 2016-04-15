@@ -29,6 +29,8 @@ namespace LibraryMVC4.Models
 
         public DateTime? DateTime { get; set; }
         public DateTime? LibDateTime { get; set; }
+
+        [Required(ErrorMessage = "*Required")]
         public string Category { get; set; }//this set to new_cat in the table. Different from cat_id
         public int? CatDesc { get; set; }//this is set to cat_des in the qt table, but also lib_cat in the ql_table. Different from cat_name or cat_id        
         public DateTime? EmailSent { get; set; }
@@ -81,7 +83,9 @@ namespace LibraryMVC4.Models
 
         public string UserQNoValidation { get; set; }
 
- 
-  } 
+        public bool Display { get; set; }
+
+
+    } 
 
 }

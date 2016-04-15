@@ -1,0 +1,42 @@
+﻿@model LibraryMVC4.Models.wl
+
+@{
+    ViewBag.Title = "EditHeader";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to WL Page", "getwlpage", new { id = (int)ViewBag.structId })
+
+<h2>Edit Header</h2>
+
+<br />
+@using (Html.BeginForm("updateheader", "wl", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+       <span style="color: red;">@Html.ValidationMessageFor(item => item.Category)</span>
+        HeaderTitle: @Html.TextBoxFor(item => item.Category, new { @style = "width: 500px;" })
+
+        <br />
+        <br />
+        Display Order: @Html.TextBoxFor(item => item.Order, new { @style = "width: 50px;" })
+
+    </fieldset>
+
+
+    <br />
+    <br />
+    @Html.HiddenFor(item => item.ParentId)
+    @Html.HiddenFor(item => item.PrimaryKey)
+    @Html.Hidden("HighId", (int)ViewBag.structId)
+    <input type="submit" id="submit" value="Update" />
+
+}
+<div align="right">
+@using (Html.BeginForm("deleteheader", "wl", FormMethod.Post))
+{
+    @Html.HiddenFor(item => item.PrimaryKey)
+    @Html.HiddenFor(item => item.ParentId)
+    @Html.Hidden("HighId", (int)ViewBag.structId)
+    <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+}
+</div>

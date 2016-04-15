@@ -1,0 +1,30 @@
+﻿@model LibraryMVC4.Models.blog
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+@Html.ActionLink("Back to List", "Index")
+<h2>Add Post</h2>
+
+@using (Html.BeginForm())
+{
+    <hr />
+    <h3>Post Title</h3>
+    @Html.EditorFor(model => model.BlogHeader, new { htmlAttributes = new { @class = "form-control" } })
+    <span style="color: red;">@Html.ValidationMessageFor(model => model.BlogHeader)</span>
+
+    <h3>Post Text</h3>
+    <span style="color: red;">@Html.ValidationMessageFor(model => model.BlogText)</span>
+    @Html.TextAreaFor(model => model.BlogText, new { htmlAttributes = new { @class = "form-control" } })
+
+
+    <input type="submit" value="Create" class="btn btn-default" />
+}
+
+<script type="text/javascript">
+        $('form input[type=submit]').click(function () {
+            tinyMCE.triggerSave();
+        });
+</script>

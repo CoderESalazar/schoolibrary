@@ -46,7 +46,7 @@
         <br />
         <br />
 
-        @Html.ActionLink("WL Area", "", "")
+        @Html.ActionLink("WL Area", "admin", "Wl")
 
         <br />
         <br />
@@ -76,12 +76,12 @@
         <br />
         <br />    
         
-        @Html.ActionLink("Resource of the Month", "", "")
+        @Html.ActionLink("Resource of the Month", "Index", "ResOfMonth")
 
         <br />
         <br />
 
-        @Html.ActionLink("Director's Message", "", "")
+        @Html.ActionLink("Director's Message", "admin", "DirMessage")
 
         <br />
         <br />
@@ -89,6 +89,10 @@
         @Html.ActionLink("Library Alert Message", "GetAlerts", "structure")
 
         <br />
+        <br /> 
+
+        @Html.ActionLink("Library Posts", "Index", "blog")
+        <br /> 
 
     </div>
 </body>

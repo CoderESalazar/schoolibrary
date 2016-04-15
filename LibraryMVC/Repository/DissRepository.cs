@@ -252,7 +252,7 @@ namespace LibraryMVC4.Repository
                                      cFirstName = c.chair_mentor_first_name,
                                      cMidName = c.chair_mentor_middle_name,
                                      cLastName = c.chair_mentor_last_name,
-                                     Name = c.chair_mentor_first_name + " " + c.chair_mentor_middle_name + " " + c.chair_mentor_last_name,
+                                     Name = c.chair_mentor_first_name + " " + c.chair_mentor_middle_name != null ? c.chair_mentor_middle_name : null + " " + c.chair_mentor_last_name,
                                      dissTitle = c.i899a_title_of_diss,
                                      degProgCode = c.degree_program_code.ToUpper(),
                                      dissId = c.dissertation_id,

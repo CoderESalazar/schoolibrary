@@ -74,7 +74,6 @@ namespace LibraryMVC4.Repository
                     {
                         dbTitle = getFields.db_title,
                         dbDesc = getFields.desc_resource,
-                        //dbUrl = getFields.url_id,
                         entered_datetime = DateTime.Now,
                         dbProg = entity.HighId,
                         dbIndexNum = entity.dbKeyId
@@ -108,18 +107,19 @@ namespace LibraryMVC4.Repository
             {
                 var deleteEvent = _libEntity.find_article.FirstOrDefault(c => c.db_num == entity.dbNum);
 
-                if (deleteEvent == null)
-                {
-                    return false;
-                }
-                else
+                try
                 {
                     _libEntity.DeleteObject(deleteEvent);
                     _libEntity.SaveChanges();
 
                     return true;
-                }
 
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
@@ -137,7 +137,8 @@ namespace LibraryMVC4.Repository
                                      dbTitle = fa.dbTitle,
                                      dbDescript = fa.dbDesc,
                                      dbUrl = db.url_id,
-                                     dbNum = db.key_id
+                                     dbNum = fa.db_num,
+                                     dbProgId = fa.dbProg
 
                                  }).ToList();
 

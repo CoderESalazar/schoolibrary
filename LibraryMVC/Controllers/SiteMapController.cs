@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
 using LibraryMVC4.Entity;
+using System.Threading.Tasks;
 
 namespace LibraryMVC4.Controllers
 {
@@ -22,9 +23,9 @@ namespace LibraryMVC4.Controllers
             _sitemapRepository = sRepository;
         }
       
-        public ActionResult GetSiteMap()
+        public async Task<ActionResult> GetSiteMap()
         {
-            var getSiteMap = _sitemapRepository.GetAll();
+            var getSiteMap = await Task.Run(() => _sitemapRepository.GetAll());
 
             return View(getSiteMap);           
             

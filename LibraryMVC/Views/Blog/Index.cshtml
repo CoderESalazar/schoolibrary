@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LibraryMVC4.Models.blog>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+
+    var blogGrid = new WebGrid(Model, canPage: false, canSort: false);
+}
+
+@Html.ActionLink("Go back to Library Admin", "index", "admin")
+
+<h2>Blog Posts</h2>
+
+@Html.ActionLink("Add New Post", "Create")
+
+<div id="content">
+
+    @blogGrid.GetHtml(
+    htmlAttributes: new { id = blogGrid },
+       mode: WebGridPagerModes.All,
+       firstText: "<< First",
+       lastText: "Last >>",
+       tableStyle: "webgrid-table",
+       headerStyle: "webgrid-header",
+       footerStyle: "webgrid-footer",
+       alternatingRowStyle: "webgrid-alternating-row",
+       rowStyle: "webgrid-row-style",
+       columns: blogGrid.Columns(
+       blogGrid.Column(columnName: "BlogId", header: " ",
+                    format: @<text>@Html.ActionLink("Select", "EditPost", new { id = item.BlogId }, null) </text>),
+                                                       blogGrid.Column(columnName: "BlogHeader", header: "Post Title"),
+                                                       blogGrid.Column(columnName: "DateTime", header: "Date/Time")                                                       
+                                                     ))
+</div>

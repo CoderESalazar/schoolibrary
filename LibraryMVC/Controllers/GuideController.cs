@@ -8,6 +8,7 @@ using LibraryMVC4.Models;
 using LibraryMVC4.Repository;
 using System.Collections;
 using LibraryMVC4.Controllers.Attributes;
+using System.Threading.Tasks;
 
 namespace LibraryMVC4.Controllers
 {
@@ -25,21 +26,22 @@ namespace LibraryMVC4.Controllers
             _guideRepository = repository;
         }
         //[ChildActionOnly]
-        public ActionResult Index(guides model)
+        public async Task<ActionResult> Index(guides model)
         {
             //these are the course guides
-            var courseGuides = _guideRepository.GetCourseGuides();
+
+            var courseGuides = await Task.Run(() => _guideRepository.GetCourseGuides());
 
             model.GuideList = courseGuides.Select(m => new SelectListItem()
-                {
+            {
 
-                    Text = m.CourseCode,
-                    Value = m.GuidesId.ToString()
+                Text = m.CourseCode,
+                Value = m.GuidesId.ToString()
 
-                });
+            });
 
             //we are going to try to add our specialization guides below our course guides. 
-            var specGuides = _guideRepository.GetSpecTitleList();
+            var specGuides = await Task.Run(() => _guideRepository.GetSpecTitleList());
 
             model.SpecList = specGuides.Select(m => new SelectListItem()
             {
@@ -89,18 +91,19 @@ namespace LibraryMVC4.Controllers
 
                 return View(thisMyGuide);
 
-            } else
+            }
+            else
             {
 
                 if (model.HeaderId != null)
                 {
                     ViewBag.headerId = model.HeaderId;
-                }    
-            
-            var getMyGuide = _guideRepository.GetGuideTabs(guideId);
-            return View(getMyGuide);
+                }
 
-            }                   
+                var getMyGuide = _guideRepository.GetGuideTabs(guideId);
+                return View(getMyGuide);
+
+            }
 
         }
 
@@ -226,7 +229,7 @@ namespace LibraryMVC4.Controllers
         public ActionResult EditResource(int id)
         {
             var editResourcePage = _guideRepository.EditResourcePage(id);
-            
+
             return View(editResourcePage);
         }
         [HttpPost]
@@ -255,7 +258,7 @@ namespace LibraryMVC4.Controllers
         public ActionResult DeleteResource([Bind(Include = "GuideResourceId,DeptDiscpId")] guides _objItems)
         {
             var deleteResource = _guideRepository.DeleteResource(_objItems.GuideResourceId);
-            
+
             return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + "#ResourceDeleted");
         }
 
@@ -270,7 +273,7 @@ namespace LibraryMVC4.Controllers
         public ActionResult DeleteHeader(guides _objItems)
         {
             int? id = _objItems.HeaderId;
-            
+
             var deleteHeader = _guideRepository.DeleteHeader((int)id);
 
             if ((bool)deleteHeader == false)
@@ -280,10 +283,11 @@ namespace LibraryMVC4.Controllers
                 return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + error);
             }
             string success = "#HeaderSuccessfullyRemoved";
-            
+
             return Redirect("/guide/specguide/" + _objItems.DeptDiscpId + success);
 
         }
+        [LibraryAdmin]
         public ActionResult DisplaySpec(bool boolId, int id)
         {
             var updateDisplay = _guideRepository.UpdateDisplay(boolId, id);

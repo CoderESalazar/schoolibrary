@@ -9,10 +9,10 @@
 
 <hr />
 <a href="/admin/GetAskLibqs">Return to admin</a>
-<br/> 
+<br />
 @ViewBag.LibUserId
 
-<br/> 
+<br />
 
 @*This is will be re-assign dropdown menu. Just select desired and re-assignment is complete.*@
 
@@ -27,7 +27,7 @@ User Name: @Html.DisplayFor(m => Model.PatronName)
 User Id: @Html.DisplayFor(m => Model.PatronId)
 <br />
 <br />
-Address: @Html.DisplayFor(m => Model.PatronPhysicalAddress) 
+Address: @Html.DisplayFor(m => Model.PatronPhysicalAddress)
 <br />
 <br />
 Phone: @Html.DisplayFor(m => Model.PatronPhone)
@@ -54,77 +54,52 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
 @using (Html.BeginForm("LibAreaPost", "Admin", new { Model.QuestId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-        <fieldset>
-            <h3>Questions Status</h3>
+    <fieldset>
+        <h3>Questions Status</h3>
 
-            @Html.Action("GetCatQs", "admin")
-            
-            <h3>Editing Areas</h3>
-            @*<span style="color: red;">@Html.ValidationMessageFor(m => m.CatId)</span>*@
-            Select Category: @Html.Action("GetCatList", "admin")
+        @Html.Action("GetCatQs", "admin")
 
-            <br />
-            <br />
-            Patron Question 
-            <br />
-            <span style="color: red;">@Html.ValidationMessageFor(m => m.UserQuestion)</span>
-            <div class="editor-field">
-            @Html.EditorFor(model => model.UserQuestion)
-            </div>
-            <br />
-            <br />
-            Librarian Response
-            <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.LibrarianResponse)</span>
-            <div class="editor-field">
-            @Html.EditorFor(model => model.LibrarianResponse, new { id = "myTextArea" })
-            </div> 
-            
-            @*See if we can limit file name "FileUpload to only 50characters, which is what this is set to in the database, otherwise this will bomb."*@     
-           
-            <input type="file" id="uploadfile" name="FileUpload" />  <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.FileUpload)</span>       
-   
-            <br/> 
+        <h3>Editing Areas</h3>
+        @*<span style="color: red;">@Html.ValidationMessageFor(m => m.CatId)</span>*@
+        Select Category: @Html.Action("GetCatList", "admin")
 
-         
-            <input type="submit" id="submit" value="Submit" data-confirm="Are you sure you want to submit this question to the KnowledgeBase?" />
-                            
-       </fieldset>
+        <br />
+        <br />
+        Patron Question
+        <br />
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.UserQuestion)</span>
+        <div>
+            @Html.TextAreaFor(model => model.UserQuestion)
+        </div>
+        <br />
+        <br />
+        Librarian Response
+        <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.LibrarianResponse)</span>
+        <div>
+            @Html.TextAreaFor(model => model.LibrarianResponse, new { id = "myTextArea" })
+        </div>
 
+        @*See if we can limit file name "FileUpload to only 50characters, which is what this is set to in the database, otherwise this will bomb."*@
 
+        <input type="file" id="uploadfile" name="FileUpload" />  <span style="color: red;font-weight: 700;">@Html.ValidationMessageFor(m => m.FileUpload)</span>
+
+        <br/>
+        <input type="submit" id="submit" value="Submit" data-confirm="Are you sure you want to submit this question to the KnowledgeBase?" />
+
+    </fieldset>
 }
 
 <div align="right">
-    @using (Html.BeginForm("Delete", "admin", new { id = Model.QuestId }, FormMethod.Post  ))
-    {     
+    @using (Html.BeginForm("Delete", "admin", new { id = Model.QuestId }, FormMethod.Post))
+    {
 
         <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
-              
+
     }
 </div>
 
 <script type="text/javascript">
-
-    jQuery(document).ready(function ($) {
-
-        $('#submit').click(function () {
-
-            var len = $("#uploadfile").val().length;
-            var kbSelect = $("#CatQId").val();
-
-            if (len > 50) {
-         
-                alert('File name exceeds 50 characters! Please rename file and reselect.');
-                return false;
-            }
-          
-            if (kbSelect == 'Submitted to KB') {
-                return confirm($(this).data('confirm'));
-
-            } 
-            
-        });
-    });
-
+//see library.js for additional scripts. Script below appears there. 
     jQuery(document).ready(function ($) {
         $('#submit').click(function () {
             tinyMCE.triggerSave('#LibrarianResponse');
@@ -132,5 +107,43 @@ Course Activity (if provided): @Html.DisplayFor(m => Model.AssignNum)
         });
     });
 
+    //$('#uploadfile').bind('change', function () {
+
+    //    var filesize = this.files[0].size;
+    //    var len = $("#uploadfile").val().length;
+
+    //    if (len > 50) {
+
+    //        alert('File name exceeds 50 characters! Please rename file and reselect.');
+
+    //        return false;
+    //    }
+    //    if (filesize > 4194304) {
+    //        confirm("File size exceeds 4MB! Proceeding further will result in a page error.");
+
+    //        return false;
+    //    }
+
+    //});
+
+    jQuery(document).ready(function ($) {
+
+        $('#submit').click(function () {
+
+            var kbSelect = $("#CatQId").val();
+
+            if (kbSelect == 'Submitted to KB') {
+
+                return confirm($(this).data('confirm'));
+            }
+
+        });
+    });
+
+    //var f = document.querySelectorAll('input[type=file]');
+    //var clearInput = function () { this.value = '' };
+    //for (var i = 0; i < f.length; i++) {
+    //    f[i].addEventListener('click', clearInput);
+    //}
 </script>
 

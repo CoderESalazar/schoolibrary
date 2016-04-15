@@ -17,16 +17,17 @@
 
         @Html.HiddenFor(c => c.PrimaryKey)
 
-        @("Alert Title"): @Html.TextBoxFor(m => m.Title, new { style = "width: 300px;" }) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>
+        <h3>Alert Title</h3>
+        @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } }) @(" ") <span style="color: red;">@Html.ValidationMessageFor(m => m.Title)</span>
 
         <br />
         <br />
 
         <h3>Alert Text</h3>
 
-        <div class="editor-field">
+        <div>
             <span style="color: red;">@Html.ValidationMessageFor(m => m.Text)</span>
-            @Html.EditorFor(c => c.Text)
+            @Html.TextAreaFor(c => c.Text)
 
         </div>
         <br />

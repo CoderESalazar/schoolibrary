@@ -1,38 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using LibraryMVC4.Models;
 using LibraryMVC4.Entity;
 using LibraryMVC4.Security;
+using System.Web.Mvc;
 
 namespace LibraryMVC4.Repository
 {
     public class HomeRepository : IHome<home>
-    {
-        //private LibEntities _libEntity = new LibEntities();
-        //private ncuEntities ncuConn = new ncuEntities();
-        
+    {        
         public IEnumerable<home> GetBlogPosts()
         {
-
-            using (var ncuConn = new ncuEntities())
+            using (var _libEntity = new LibEntities())
             {
-                var BlogItems = (from ba in ncuConn.blog_arenas
-                                 join bc in ncuConn.blog_categories on ba.blog_arena_id equals bc.blog_arena_id
-                                 join bh in ncuConn.blog_header on bc.blog_cat_id equals bh.blog_cat_id
-                                 where ba.blog_arena_id == 2
-                                 orderby bh.update_datetime descending
-                                 select new home
-                                 {
-                                     BlogHeader = bh.header_title,
-                                     BlogHeaderId = bh.blog_header_id,
-                                     BlobBlob = bh.blog_blob
+                var getPosts = (from blog in _libEntity.blog_tb
+                                orderby blog.EnteredDateTime descending
+                                select new home
+                                {
+                                    BlogHeaderId = blog.BlogId,
+                                    BlogHeader = blog.BlogHeader,
+                                    BlobBlob = blog.BlogText,
+                                    DateTime = blog.EnteredDateTime
 
-                                 }).Take(3).ToList();
+                                }).Take(3).ToList();
 
-                return BlogItems;
+                return getPosts;
             }
+       
         }
         //believe this dropdown menu is now can be replaced by catlist. 
         public IEnumerable<home> GetFAQList()
@@ -245,6 +240,22 @@ namespace LibraryMVC4.Repository
                 _libEntity.Connection.Close();
             }
             return result;
+        }
+
+        public JsonResult FindFaqs(string search, int results)
+        {
+            using (var _libEntity = new LibEntities())
+            {
+                var result = new JsonResult();
+
+                result.Data = (from s in _libEntity.quest_lib
+                              where s.lib_q_edit.ToLower().Contains(search.ToLower())
+                              && s.q_status == "Submitted to KB"
+                              && s.cat_id != false
+                              select s).Distinct().Take(results).ToList();
+
+                return result;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using LibraryMVC4.Repository;
 using LibraryMVC4.Models;
 using LibraryMVC4.Security;
 using LibraryMVC4.Controllers.Attributes;
+using System.Threading.Tasks;
 
 namespace LibraryMVC4.Controllers
 {
@@ -26,11 +27,11 @@ namespace LibraryMVC4.Controllers
             _sitemapRepository = sRepository;
         }
 
-        public ActionResult Index(int id)
+        public async Task<ActionResult> Index(int id)
         {
             ViewBag.getCount = _sitemapRepository.GetSite(id).Count();
 
-            ViewData["getBread"] = _sitemapRepository.GetSite(id);
+            ViewData["getBread"] = await Task.Run(() => _sitemapRepository.GetSite(id));
 
             var dwP = _repository.List(id);
             return View(dwP);

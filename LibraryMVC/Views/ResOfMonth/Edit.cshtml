@@ -1,0 +1,59 @@
+﻿@model LibraryMVC4.Models.res
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_adminTemplate.cshtml";
+}
+
+<div>@Html.ActionLink("Return to Resource Month Table", "Index", "ResOfMonth")</div>
+
+
+<h2>Edit - @Model.ResourceTitle</h2>
+
+@using (Html.BeginForm("Edit", "ResOfMonth", FormMethod.Post, new { enctype = "mulipart/form-data" }))
+{
+    <fieldset>
+        @Html.HiddenFor(t => t.EntryId)
+        Resource Title: @Html.TextBoxFor(t => t.ResourceTitle, new { style = "width: 400px;" })
+        <span style="color: red;">@Html.ValidationMessageFor(m => m.ResourceTitle)</span>
+        <br />
+        <br />
+
+        <h3>Resource Text:</h3>
+
+        <div>
+            <span style="color: red;">@Html.ValidationMessageFor(m => m.ResourceText)</span>
+            @Html.TextAreaFor(c => c.ResourceText)
+        </div>
+
+        @("Display")
+
+        @if (Model.Display == true)
+        {
+            @Html.CheckBoxFor(t => t.Display, new { @checked = Model.Display })
+        }
+        else
+        {
+            @Html.CheckBoxFor(t => t.Display)
+        }
+
+        <br />
+        <br />
+
+        <input type="submit" name="Update" value="Update" />
+
+    </fieldset>
+}
+
+<div align="right">
+    @using (Html.BeginForm("Delete", "ResOfMonth", FormMethod.Post))
+    {
+        @Html.HiddenFor(t => t.EntryId)
+
+        <button type="submit" onclick="return confirm('Do you want to Delete?')">Delete</button>
+    }
+
+</div>
+
+
+

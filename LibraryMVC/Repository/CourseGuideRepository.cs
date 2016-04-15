@@ -20,23 +20,8 @@ namespace LibraryMVC4.Repository
 
         public IEnumerable<guides> GetAll()
         {
-            using (var _ncuElrc = new LibEntities())
-            {
-                var getCourseGuides = (from c in _ncuElrc.GetCourseGuides()
-                                       select new guides
-                                       {
-                                           GuideId = c.guide_id,
-                                           CourseCode = c.course_code,
-                                           CourseName = c.course_name,
-                                           Enrollees = c.Enrollees,
-                                           School = c.company_department_name,
-                                           Display = c.display_id,
-                                           LastName = c.last_name
-
-                                       }).ToList();
-
-                return getCourseGuides;
-            }
+            throw new NotImplementedException();
+           
         }
 
         public guides GetById(int? id)
@@ -47,13 +32,13 @@ namespace LibraryMVC4.Repository
                                    join ecg in _ncuElrc.elrc_cr_guides on ech.guide_id equals ecg.guide_id
                                    where ech.header_id == id
                                    select new guides
-                                      {
-                                          GuideBody = ecg.guide_body,
-                                          HeaderBody = ech.header_body, 
-                                          TitleHeader = ech.header_title,
-                                          HeaderId = ech.header_id
+                                   {
+                                       GuideBody = ecg.guide_body,
+                                       HeaderBody = ech.header_body,
+                                       TitleHeader = ech.header_title,
+                                       HeaderId = ech.header_id
 
-                                      }).FirstOrDefault();
+                                   }).FirstOrDefault();
 
                 return getHeaderId;
             }
@@ -61,7 +46,24 @@ namespace LibraryMVC4.Repository
 
         public IEnumerable<guides> List(string id)
         {
-            throw new NotImplementedException();
+            using (var _ncuElrc = new LibEntities())
+            {
+                var getCourseGuides = (from c in _ncuElrc.GetCourseGuides(id)
+                                       select new guides
+                                       {
+                                           GuideId = c.guide_id,
+                                           CourseCode = c.course_code,
+                                           CourseName = c.course_name,
+                                           Enrollees = c.Enrollees,
+                                           School = c.company_department_name,
+                                           Display = c.display_id,
+                                           LastName = c.last_name,
+                                           CourseEndDate = c.course_end_date                                         
+
+                                       }).ToList();
+
+                return getCourseGuides;
+            }
         }
 
         public IEnumerable<guides> GetSite(int id)
@@ -76,39 +78,43 @@ namespace LibraryMVC4.Repository
 
         public object Edit(guides entity)
         {
-           using (var _libEntities = new LibEntities())
-           {
-               bool result = false;
+            var _libEntities = new LibEntities();
+            bool result = false;
+            try
+            {
+                elrc_cr_headers ech = _libEntities.elrc_cr_headers.FirstOrDefault(t => t.header_id == entity.HeaderId);
 
-               if(entity.GuideBody != null)
-               {
-                   elrc_cr_guides ecg = _libEntities.elrc_cr_guides.FirstOrDefault(t => t.guide_id == entity.GuideId);
+                ech.header_body = entity.HeaderBody;
 
-                   ecg.guide_title = entity.CGuideTitle;
-                   ecg.course_code = entity.CourseCode;
-                   ecg.guide_body = entity.GuideBody;
-                   ecg.update_datetime = DateTime.Now;
-                   ecg.update_by = LibSecurity.UserId;
+                _libEntities.SaveChanges();                
 
-                   _libEntities.SaveChanges();
-                   result = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
-               }
+            finally
+            {
 
-               if(entity.HeaderBody != null)
-               {           
-                   elrc_cr_headers ech = _libEntities.elrc_cr_headers.FirstOrDefault(t => t.header_id == entity.HeaderId);
-        
-                   ech.header_body = entity.HeaderBody;
+                //we need to fix this code because the update could throw an exception. 
 
-                   _libEntities.SaveChanges();
-                   result = true;
-               }
-                   
+                elrc_cr_guides ecg = _libEntities.elrc_cr_guides.FirstOrDefault(t => t.guide_id == entity.GuideId);
+                                
+                ecg.display_id = entity.DisplayId;
+                ecg.guide_body = entity.GuideBody;
+                ecg.update_datetime = DateTime.Now;
+                ecg.update_by = LibSecurity.UserId;
 
-               return result;
-           }
+                _libEntities.SaveChanges();
 
+                _libEntities.Connection.Close();
+                _libEntities.Dispose();
+
+                result = true;
+            }
+
+            return result;
         }
 
         public object Add(guides entity)
